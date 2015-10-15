@@ -16,8 +16,13 @@ class UserTableSeeder extends Seeder
 
         /*
         factory(App\User::class)->create([
+<<<<<<< HEAD
         'name' => 'Adrian',
             'email' => 'adrian@codizer.com',
+=======
+            'name' => 'Angel',
+            'email' => 'angel@codizer.com',
+>>>>>>> modulo-admin
             'role' => 'admin',
             'password' => bcrypt('secret')
         ]);
