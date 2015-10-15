@@ -15,8 +15,8 @@ class UserTableSeeder extends Seeder
         DB::table('users')->truncate();
 
         factory(App\User::class)->create([
-            'name' => 'Adrian',
-            'email' => 'adrian@codizer.com',
+            'name' => 'Angel',
+            'email' => 'angel@codizer.com',
             'role' => 'admin',
             'password' => bcrypt('secret')
         ]);
