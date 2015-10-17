@@ -62,10 +62,15 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('panel', [
+    Route::get('admin', [
         'uses' => 'AdminController@index',
         'as' => 'panel'
     ]);
-
 });
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::resource('colecciones', 'FormsController');
+});
+
+
 

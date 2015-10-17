@@ -12,4 +12,25 @@ class Form extends Model
      * @var string
      */
     protected $table = 'forms';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'description', 'user_id'];
+    protected $hidden = ['remember_token'];
+
+    /*
+     * Lógica de las colecciones
+     */
+    public function getTitleAttribute()
+    {
+        return $this->name;
+    }
+
+    public function getTitleAndDescAttribute()
+    {
+        return $this->name . ' ' . $this->description;
+    }
 }

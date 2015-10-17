@@ -36,4 +36,15 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+
+    /*
+     * Crear una relacion en base a objetos
+     */
+    public function collectionsForm()
+    {
+        // Edad
+        // return \Carbon\Carbon::parse($this->created_at)->age;
+        return $this->hasOne('App\Form');
+    }
 }

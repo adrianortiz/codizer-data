@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\User;
+use App\Form;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
-class AdminController extends Controller
+class FormsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin/panel');
+        $forms = Form::paginate(5);
+        return view('admin.colections.index', compact('forms'));
     }
 
     /**
@@ -26,7 +28,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.colections.create');
     }
 
     /**
@@ -35,9 +37,11 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Requests\EditFormRequest $request)
     {
-        //
+        $form = new Form($request->all());
+        $form->save();
+        return \Redirect::route('admin.colecciones.index');
     }
 
     /**
@@ -59,7 +63,9 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $form = Form::findOrFail($id);
+
+        return view('admin.colections.edit', compact('form'));
     }
 
     /**
@@ -69,9 +75,13 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\EditFormRequest $request, $id)
     {
-        //
+        $form = Form::findOrFail($id);
+        $form->fill($request->all());
+        $form->save();
+
+        return \Redirect::route('admin.colecciones.index');
     }
 
     /**
@@ -80,8 +90,21 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+
+        $form = Form::findOrFail($id);
+        $form->delete();
+
+        $message = 'La colección ' . $form->name . ' fue eliminada';
+
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => $message
+            ]);
+        }
+
+        Session::flash('message', $message);
+        return \Redirect::route('admin.colecciones.index');
     }
 }

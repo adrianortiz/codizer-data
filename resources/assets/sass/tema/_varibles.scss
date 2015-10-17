@@ -1,0 +1,47 @@
+// Varibles
+$blanco: #FFFFFF;
+$gris-100: #F2F3F3;
+$gris-200: #F2F2F2;
+$azul-100: #1A91F2;
+$azul-400: #3F454C;
+
+$border-5: 5px;
+
+$sombra-max: 5px 9px 13px 0px rgba(0,0,0,0.15);
+$sombra-min: 0px 1px 3px 0px rgba(0,0,0,0.15);
+
+// clase helper
+// Extend
+%transition-box{
+  // Cuando hay muchos valores que se repiten
+}
+
+body {
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+
+
+
+
+// MIXINS
+
+@mixin prefixer($property, $value, $prefixes: webkit moz ms o) {
+  #{$property}: #{$value};
+  @each $prefix in $prefixes {
+    #{'-' + $prefix + '-' + $property}: #{$value};
+  }
+}
+
+@mixin transition($value: .3s ease) {
+  @include prefixer(transition, $value);
+}
+
+@mixin box-sizing($value: border-box) {
+  @include prefixer(box-sizing, $value);
+}
+
+/*
+    @include box-sizing(border-box);
+    @include transition(.3s ease);
+*/

@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layout-admin')
 
 @section('title', @trans('title.admin'))
 
@@ -12,6 +12,8 @@
                         <ul>
                             <li><a href="#">Edit profile</a></li>
                             <li><a href="#">Change password</a></li>
+                            <p>
+                            </p>
                         </ul>
                     </div>
                 </div>
