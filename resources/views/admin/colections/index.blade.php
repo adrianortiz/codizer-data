@@ -49,7 +49,6 @@
 
     {!! Form::open(['route' => ['admin.colecciones.destroy', ':USER_ID'], 'method' => 'DELETE', 'id' => 'form-delete']) !!}
     {!! Form::close() !!}
-
 @endsection
 
 @section('scripts')

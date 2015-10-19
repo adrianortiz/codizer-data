@@ -61,7 +61,7 @@
     <ul>
         <li><p>Administración</p></li>
         <li><a href="#"><div>Cuenta</div></a></li>
-        <li><a href="/admin/colecciones"><div>Colecciones</div></a></li>
+        <li><a href="{{ url('/admin/colecciones') }}"><div>Colecciones</div></a></li>
         <li><a href="#"><div>Estadísticas</div></a></li>
         <li><p>Datos</p></li>
         <li><a href="#"><div>Acerca de...</div></a></li>
@@ -69,9 +69,8 @@
 </div>
 <div class="admin-contanier-global">
 
-
-
 @yield('content')
+
 
 
 </div>
@@ -87,8 +86,10 @@
             <button id="no">No</button>
         </div>
     </div>
-
 </div>
+
+@yield('complements-builder')
+
 
 <!-- Scripts -->
 <script src="{{ asset('/js/jquery.min.js') }}"></script>

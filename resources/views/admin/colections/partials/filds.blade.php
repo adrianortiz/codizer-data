@@ -5,7 +5,7 @@
 
 <div class="form-group">
     <label for="description">@lang('collections.description_collection')</label>
-    {!! Form::text('description', null, ['id' => 'description', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Ingresa un nombre']) !!}
+    {!! Form::textarea('description', null, ['id' => 'description', 'class' => 'form-control', 'placeholder' => 'Ingresa un nombre']) !!}
 </div>
 
 @if (!Auth::guest())

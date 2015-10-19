@@ -10,7 +10,7 @@
     {!! Form::open(['route' => 'admin.colecciones.store', 'method' => 'POST']) !!}
 
         @include('admin.colections.partials.filds')
-        <button type="submit" class="btn btn-default">@lang('collections.btn_new_collection')</button>
+        <button type="submit" class="btn btn-primary">@lang('collections.btn_new_collection')</button>
 
     {!! Form::close() !!}
 
