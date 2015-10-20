@@ -8,11 +8,7 @@ class Form extends Model
 {
 
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+
     protected $fillable = ['name', 'description', 'user_id'];
     protected $hidden = ['remember_token'];
 
