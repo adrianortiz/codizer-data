@@ -4,9 +4,16 @@
 
 @section('content')
 
-    <h1>Icon > {{ $form->name  }}</h1>
 
-    @include('admin.colections.partials.menu')
+
+    <!-- REVISAR -->
+    <div class="head-menu">
+        <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> {{ $form->name  }} </h1>
+        @include('admin.colections.complements.partials.menu')
+    </div>
+
+
+
 
     @include('partials.errors')
     {!! Form::model($form, ['route' => ['admin.colecciones.update', $form], 'method' => 'PUT']) !!}

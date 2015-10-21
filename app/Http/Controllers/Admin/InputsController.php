@@ -92,8 +92,20 @@ class InputsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        $input = Input::findOrFail($id);
+        $input->delete();
+
+        $message = 'El Input ' . $input->name . ' fue eliminada';
+
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => $message
+            ]);
+        }
+
+        Session::flash('message', $message);
+        return \Redirect::route('admin.colecciones.index');
     }
 }

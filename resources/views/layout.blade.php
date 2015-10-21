@@ -5,11 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/global.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/index.css') }}">
 
     <title>@yield('title', 'App')</title>
 </head>
 <body>
+
+<div id="container-panel-left">
+    <img src="{{ asset('/images/logo-data.svg') }}" width="97" height="97">
+    <h1>Codizer data</h1>
+
+    @yield('msn-boton')
+
+
+    <a href="http://codizer.com/" class="btn codizer">By Codizer - 2015</a>
+</div>
+
+<!--
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -48,11 +60,21 @@
     </div>
 </nav>
 
+-->
+
 @yield('content')
 
 <!-- Scripts -->
 <script src="{{ asset('/js/jquery.min.js') }}"></script>
 <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+
+<script>
+    $(document).ready( function() {
+        $('.switch').click( function() {
+            $(this).toggleClass("switchOn");
+        });
+    });
+</script>
 
 @yield('scripts')
 </body>

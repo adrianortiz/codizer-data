@@ -10,16 +10,11 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-*/
 
-Route::get('/', [
-    'uses' => 'HomeController@index',
-    'as' => 'home'
-]);
+
+Route::get('/', function() {
+    return view('auth.login');
+});
 
 // Authentication routes...
 Route::get('login', [

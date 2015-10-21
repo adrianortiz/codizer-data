@@ -1,3 +1,61 @@
+/*
+  SWITCH
+*/
+
+.switch {
+  width: 200px;
+  height: 150px;
+  background: $gris-200;
+  z-index: 0;
+  margin: 0;
+  padding: 0;
+  @include prefixer(appearance, none);
+  border: none;
+  cursor: pointer;
+  border-radius: 53px;
+  @include transition(.3s ease);
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 196px;
+    height: 101px;
+    background: $blanco;
+    z-index: 1;
+    border-radius: 52px;
+  }
+
+  &:after {
+    content: '';
+    height: 100px;
+    width: 100px;
+    border-radius: 52px;
+    background: $blanco;
+    position: absolute;
+    z-index: 2;
+    top: 2px;
+    left: 2px;
+    /*
+    transition-duration: 300ms;
+    */
+    @include transition(.3s ease);
+    box-shadow: 0 2px 5px #999999;
+  }
+}
+
+.switchOn, .switchOn:before {
+  background: $azul-100 !important;
+  @include transition(.3s ease);
+}
+
+.switchOn:after {
+  @include transition(.3s ease);
+  left: 98px !important;
+}
+
+
 .form-group {
   margin: auto !important;
   padding: auto !important;

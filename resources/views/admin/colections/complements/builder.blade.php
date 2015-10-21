@@ -4,15 +4,18 @@
 
 @section('content')
 
-    <h1>Icon > COMPLEMENTS </h1>
+    <!-- REVISAR -->
+    <div class="head-menu">
+        <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> COMPLEMENTS </h1>
+        @include('admin.colections.complements.partials.menu')
+    </div>
 
-    @include('admin.colections.partials.menu')
-
-    <button id="btnCorto" onclick="showModalInputs('modal-textoCorto');">Texto corto</button>
-    <button id="btnLargo">Texto largo</button>
-    <button id="btnSelect">Selección</button>
-    <button id="btnOption">Opción</button>
-
+    <div id="collection-menu">
+        <button id="btnCorto" class="btn btn-default" onclick="showModalInputs('modal-textoCorto');"><span><img src="/images/input.svg"></span>Texto corto</button>
+        <button id="btnLargo" class="btn btn-default"><span><img src="/images/textarea.svg"></span>Texto largo</button>
+        <button id="btnSelect" class="btn btn-default"><span><img src="/images/select.svg"></span>Selección</button>
+        <button id="btnOption" class="btn btn-default"><span><img src="/images/option.svg"></span>Opción</button>
+    </div>
 
 
     {!! Form::open(['route' => ['admin.inputs.show', $form->id], 'method' => 'GET|HEAD', 'id' => 'form-show']) !!}
@@ -74,18 +77,24 @@
                     {!! Form::text('form_id', $form->id, ['id' => 'form_id', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Ingresa un titulo']) !!}
                 </div>
 
-
-
                 <div>
                     <button type="button" class="btn btn-danger" onclick="closeModalInputs('modal-textoCorto');">CANCELAR</button>
                     <button type="button" class="btn btn-primary" id="registro-textoCorto">GUARDAR</button>
                 </div>
 
-
                 {!! Form::close() !!}
 
             </div>
-            <div></div>
+            <div class="builder-form-preview">
+
+                <div class="form-preview">
+                    <div class="form-group">
+                        <label for="title">ASDASDSA</label>
+                        {!! Form::text('title', null, ['id' => 'title', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Ingresa un titulo']) !!}
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
@@ -101,6 +110,23 @@
 
 @endsection
 
+<div class="notificacion-text-fondo" id="modal-delete" style="display: none;">
+    <div class="notificacion-text">
+        <div>
+            <p>Mensaje</p>
+            <p>Esta acción no se puede deshacer.<br>¿Esta seguro?</p>
+        </div>
+        <div>
+            <button id="si">Si</button>
+            <button id="no">No</button>
+        </div>
+    </div>
+</div>
+
+
+
+{!! Form::open(['route' => ['admin.inputs.destroy', ':USER_ID'], 'method' => 'DELETE', 'id' => 'form-delete']) !!}
+{!! Form::close() !!}
 @section('scripts')
     <script src="{{ asset('/js/inputs.js') }}"></script>
 @endsection

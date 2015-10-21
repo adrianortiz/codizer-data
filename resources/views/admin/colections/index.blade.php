@@ -15,7 +15,11 @@
         </div>
     @endif
 
-    <h1>Colecciones</h1>
+        <div class="head-menu">
+            <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> Collecciones </h1>
+        </div>
+
+
             <p>Tienes {{ $forms->total() }} colecciones </p>
             <div class="collection-list-new">
                 <div class="collection-new-text">

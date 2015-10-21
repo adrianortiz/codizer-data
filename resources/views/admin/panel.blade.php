@@ -3,6 +3,11 @@
 @section('title', @trans('title.admin'))
 
 @section('content')
+
+    <div class="head-menu">
+        <h1><span><img src="/images/icon-user.svg"></span> <span> > </span> Hola {{ Auth::user()->name }} </h1>
+    </div>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">

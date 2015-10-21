@@ -151,3 +151,30 @@ h1 {
     color: $azul-400;
   }
 }
+
+
+.head-menu {
+  width: 100%;
+  height: 63px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-bottom: solid 2px $gris-100;
+
+  h1 {
+    float: left;
+
+    span:nth-child(2){
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+
+  .menu-global-collection {
+    float: right;
+    margin-bottom: 20px;
+  }
+}
+
+.icon-button {
+  margin-right: 10px;
+}

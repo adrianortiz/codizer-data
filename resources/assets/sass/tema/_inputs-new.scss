@@ -1,0 +1,39 @@
+.container-builder {
+  background-color: $blanco;
+  padding: 12px;
+  border-radius: 10px;
+  width: 99%;
+  height: 98%;
+  @include box-sizing(border-box);
+  @include centrarXY();
+
+  .builder-form-option {
+    float: left;
+    height: 98%;
+    width: 289px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-right: solid 1px $gris-100;
+    @include box-sizing(border-box);
+  }
+
+  .builder-form-preview {
+    float: right;
+    height: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    @include prefixer(width, calc(100% - 289px));
+    @include box-sizing(border-box);
+
+    .form-group {
+      width: 300px;
+      height: auto;
+      position: absolute;
+      left: 65%;
+      top: 50%;
+      @include prefixer(transform, translate(-65%, -50%));
+    }
+  }
+
+}
+

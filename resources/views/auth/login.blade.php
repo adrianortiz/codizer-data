@@ -1,15 +1,22 @@
-@extends('layout-login')
+@extends('layout')
 
 @section('title', @trans('title.login'))
 
-@section('content')
+@section('msn-boton')
+    <p>¿Aun sin cuenta? Registrate</p>
+    <a href="{{ route('register') }}" class="btn btn-login">@lang('auth.register_button')</a>
+@endsection
 
+@section('content')
+<div id="container-panel-right">
 
 
     @include('partials/errors')
 
     <div id="login-container">
         <div class="login-left">
+
+
 
         </div>
         <div class="login-right">
@@ -20,7 +27,7 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                             <div class="form-group txt-center">
-                                <label>@lang('auth.login_title')</label>
+                                <h1>@lang('auth.login_title')</h1>
                             </div>
 
                             <div class="form-group">
@@ -34,23 +41,28 @@
                             </div>
 
                             <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember"> @lang('auth.remember')
+                                    </label>
+                                </div>
+                            </div>
+                            <!--
+                                <input type="checkbox" name="remember" class="checkbox">
+                                <div class="switch"></div>
+                                -->
+
+                            <div class="form-group">
                                 <button type="submit" class="btn btn-primary">
                                     @lang('auth.login_button')
                                 </button>
-                                <label class="txt-right">
-                                    <input type="checkbox" name="remember"> @lang('auth.remember')
-                                </label>
                             </div>
-
-
-                            <div class="form-group">
-                                <a href="/password/email">@lang('auth.forgot_link')</a>
-                            </div>
-
-
-
 
                         </form>
         </div>
     </div>
+</div>
+
+
+
 @endsection
