@@ -11,7 +11,7 @@
     </div>
 
     <div id="collection-menu">
-        <button id="btnCorto" class="btn btn-default" onclick="showModalInputs('modal-textoCorto');"><span><img src="/images/input.svg"></span>Texto corto</button>
+        <button id="btnCorto" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Agregar nuevo input al formulario" onclick="showModalInputs('modal-textoCorto');"><span><img src="/images/input.svg"></span>Texto corto</button>
         <button id="btnLargo" class="btn btn-default"><span><img src="/images/textarea.svg"></span>Texto largo</button>
         <button id="btnSelect" class="btn btn-default"><span><img src="/images/select.svg"></span>Selección</button>
         <button id="btnOption" class="btn btn-default"><span><img src="/images/option.svg"></span>Opción</button>

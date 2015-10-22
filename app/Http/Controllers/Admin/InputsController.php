@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Input;
+use App\Form;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -107,5 +108,15 @@ class InputsController extends Controller
 
         Session::flash('message', $message);
         return \Redirect::route('admin.colecciones.index');
+    }
+
+    public function drawForm($id)
+    {
+
+        $form = Form::findOrFail($id);
+
+        $inputs = Input::where('form_id', $id)->get();
+
+        return view('admin.colections.complements.form', compact('form', 'inputs'));
     }
 }

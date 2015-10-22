@@ -66,7 +66,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('colecciones', 'FormsController');
         Route::resource('complements', 'ComplementsController');
         Route::resource('inputs', 'InputsController');
+
+        // DIBUJAR FORMULARIO
+        Route::get('coleccion/{id}/form', [
+            'uses' => 'InputsController@drawForm',
+            'as' => 'form'
+        ]);
+
     });
+
+
 });
 
 
