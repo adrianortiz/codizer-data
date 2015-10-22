@@ -20,7 +20,10 @@
         </div>
 
 
-            <p>Tienes {{ $forms->total() }} colecciones </p>
+            <div>
+                <p>Tienes <span class="badge">{{ $forms->total() }}</span> colecciones</p>
+            </div>
+
             <div class="collection-list-new">
                 <div class="collection-new-text">
                     <p>Nueva colección</p>

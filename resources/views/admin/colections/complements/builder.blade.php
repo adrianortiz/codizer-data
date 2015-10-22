@@ -98,9 +98,10 @@
         </div>
     </div>
 
-    <div class="alert alert-success" id="msj-success" onclick="closeModalInputs('msj-success');" style="display: none;">
+    <div class="alert alert-success" id="msj-success" style="display: none;">
         <div class="alert-title-success">
             Estado de la operación
+            <button type="button" class="close close-alert-codizer" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <ul>
             <li>Campo agregado al formulario correctamente</li>

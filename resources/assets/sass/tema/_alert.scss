@@ -1,3 +1,15 @@
+.close-alert-codizer {
+  opacity: 1;
+  span {
+    opacity: 1;
+    color: $blanco;
+    padding: 0px 8px;
+    border-radius: 20px;
+    border: solid 2px $blanco;
+    margin-left: 10px;
+  }
+}
+
 .notificacion-text-fondo {
   position: fixed;
   z-index: 99999;

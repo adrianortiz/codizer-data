@@ -3,7 +3,7 @@
  */
 
 
-// LIST INSPUTS
+// LIST INPUTS
 function listInputs()
 {
     var tablaDatos = $('#datos');
@@ -22,17 +22,32 @@ function listInputs()
 
 
 
-// SHOW/HIDE MODALS INPUTS
-function closeModalInputs( nameModal ) {
+
+/*
+    SHOW/HIDE MODALS INPUTS
+ */
+
+function closeModalInputs( nameModal )
+{
     $("#"+nameModal).fadeOut();
 }
 
-function showModalInputs(nameModal) {
+function showModalInputs(nameModal)
+{
     $("#"+nameModal).fadeIn();
 }
 
-// NEW INSPUT
-$("#registro-textoCorto").click( function() {
+
+
+
+
+
+/*
+    NEW INSPUT
+ */
+
+$("#registro-textoCorto").click( function()
+{
     var datos = $("#form-textoCorto").serializeArray();
     var route = $("#form-textoCorto").attr('action');
 
@@ -57,35 +72,40 @@ listInputs();
 
 
 
+/*
+    DELETE INPUT WITH AJAX
+ */
 
-function eliminarInput(objX) {
+var objX = null;
 
+function eliminarInput(objThis)
+{
     $('#modal-delete').fadeIn();
-
-    $('#si').click(function (e) {
-        e.preventDefault();
-        var div = $(objX).parent('div').parent('div');
-        var id = div.data('id');
-        var form = $('#form-delete');
-        var url = form.attr('action').replace(':USER_ID', id);
-        var data = form.serialize();
-
-        div.fadeOut();
-
-        $('.notificacion-text-fondo').fadeOut();
-        $.post(url, data, function (result) {
-            console.log(result.message);
-        }).fail(function () {
-            console.log('Input no eliminado');
-            div.fadeIn();
-        });
-    });
-
-    $('#no').click(function (e) {
-        $('#modal-delete').fadeOut();
-        div = null; id = null; form = null; url = null; data = null;
-    });
-
-
+    objX = objThis;
 }
+
+$('#si').click(function (e) {
+    e.preventDefault();
+    var div = $(objX).parent('div').parent('div');
+    var id = div.data('id');
+    var form = $('#form-delete');
+    var url = form.attr('action').replace(':USER_ID', id);
+    var data = form.serialize();
+
+    div.fadeOut();
+
+    $('.notificacion-text-fondo').fadeOut();
+    $.post(url, data, function (result) {
+        div.remove();
+        console.log(result.message);
+    }).fail(function () {
+        console.log('Input no eliminado');
+        div.fadeIn();
+    });
+});
+
+$('#no').click(function (e) {
+    e.preventDefault();
+    $('#modal-delete').fadeOut();
+});
 

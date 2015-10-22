@@ -4,30 +4,42 @@
 
 $(document).ready(function () {
 
+
+
+    /*
+        DELETE A COLLECTION
+     */
+    var objX = null;
     $('.btn-eliminar').click(function (e) {
         e.preventDefault();
-        var div = $(this).parent('li').parent('ul').parent('div').parent('div');
+        $('.notificacion-text-fondo').fadeIn();
+        objX = this;
+    });
+
+    $('#si').click(function (e) {
+
+        e.preventDefault();
+        var div = $(objX).parent('li').parent('ul').parent('div').parent('div');
         var id = div.data('id');
         var form = $('#form-delete');
         var url = form.attr('action').replace(':USER_ID', id);
         var data = form.serialize();
 
-        $('.notificacion-text-fondo').fadeIn();
-
-        $('#si').click(function (e) {
-            div.fadeOut();
-            $('.notificacion-text-fondo').fadeOut();
-            $.post(url, data, function (result) {
-                console.log(result.message);
-            }).fail(function () {
-                console.log('La colección no fue eliminada');
-                div.fadeIn();
-            });
+        div.fadeOut();
+        $('.notificacion-text-fondo').fadeOut();
+        $.post(url, data, function (result) {
+            div.remove();
+            console.log(result.message);
+        }).fail(function () {
+            console.log('La colección no fue eliminada');
+            div.fadeIn();
         });
-
-        $('#no').click(function (e) {
-            $('.notificacion-text-fondo').fadeOut();
-        });
-
     });
+
+    $('#no').click(function (e) {
+        e.preventDefault();
+        $('.notificacion-text-fondo').fadeOut();
+    });
+
+
 });
