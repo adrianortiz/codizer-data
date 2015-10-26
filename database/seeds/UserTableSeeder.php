@@ -39,7 +39,7 @@ class UserTableSeeder extends Seeder
 
         \DB::table('forms')->insert([
             'name' => 'Alumnos',
-            'description' => 'Informacion de los alumnos de 8ITI1',
+            'description' => 'Información de los alumnos de 8ITI1',
             'user_id' => $id,
             'remember_token' => str_random(10)
         ]);

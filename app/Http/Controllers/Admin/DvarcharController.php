@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Dvarchar;
+use App\Input;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class DvarcharController extends Controller
 {
@@ -87,30 +89,70 @@ class DvarcharController extends Controller
 
 
     /**
-     * Store data form a newly created resource in storage.
-     *
      * @param Request $request
+     * @param $id = form_id
      */
 
     public function storeFormData(Request $request, $id)
     {
-        if ($request->has('val_text')) {
-            foreach ($request->input('val_text') as $texto) {
-                echo "Text: " . $texto . "<br>";
-            }
-        } else {
-            echo "No hay Text :( ";
+        // Generar un row_id para la fila de los datos a ingresar
+        $newRowId = 1;
+
+        $rowId = DB::table('dvarchars')
+            ->where('form_id', $id)
+            ->max('row_id');
+
+        if ( !($rowId == 0 || empty($rowId) )) {
+            $newRowId = $rowId + 1;
         }
 
-        echo "<br>";
+        // Obtener datos
+        $inputsID = $request->input('val_textx');
+        $inputsNom = $request->input('val_texty');
+
+        // Alamacenar datos
+        $control = 0;
+
+        if ($request->has('val_text')) {
+            foreach ($request->input('val_text') as $val_text) {
+                DB::table('dvarchars')->insert([
+                    'dtitle' => $inputsNom[$control],
+                    'content' => $val_text,
+                    'form_id' => $id,
+                    'input_id' => $inputsID[$control],
+                    'row_id' => $newRowId,
+                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                ]);
+
+                $control++;
+            }
+        }
+
+
+
+        $inputsID = $request->input('val_numx');
+        $inputsNom = $request->input('val_numy');
+        $control = 0;
 
         if ($request->has('val_num')) {
-            foreach ($request->input('val_num') as $numer) {
-                echo "Num: " . $numer . "<br>";
+            foreach ($request->input('val_num') as $val_num) {
+                DB::table('dvarchars')->insert([
+                    'dtitle' => $inputsNom[$control],
+                    'content' => $val_num,
+                    'form_id' => $id,
+                    'input_id' => $inputsID[$control],
+                    'row_id' => $newRowId,
+                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                ]);
+                $control++;
             }
-        } else {
-            echo "No hay Num :( ";
         }
+
+        // echo dd($inputsID);
+
+        // echo "<br>ID DE MI form_id ES: " . $id . "<br>Actual Row_id es: " . $rowId . "<br>Nuevo row_id es: " . $newRowId;
 
         /*
         $form = new Dvarchar($request->input('val_num')->all());

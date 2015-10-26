@@ -17,8 +17,11 @@
         @else
             @foreach($inputs as $input)
                 <div class="form-group">
-                    <label for="content" title="{{ $input->title }}"> {{ $input->title }} </label>
-                    {!! Form::text( $input->type_validation . '[]', old('content'), ['id' => 'content', 'class' => 'form-control', 'title' => $input->title]) !!}
+                    <label for="{{ $input->title }}" title="{{ $input->title }}"> {{ $input->title }} </label>
+                    {!! Form::text( $input->type_validation . '[]', old('content'), ['id' => $input->title, 'class' => 'form-control', 'title' => $input->title]) !!}
+                    {!! Form::text( $input->type_validation . 'x[]', $input->id) !!}
+                    {!! Form::text( $input->type_validation . 'y[]', $input->title) !!}
+
                 </div>
             @endforeach
             <button type="submit" class="btn btn-primary">Guardar datos</button>
