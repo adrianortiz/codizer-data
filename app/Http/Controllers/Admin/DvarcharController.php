@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Dvarchar;
+use App\Form;
 use App\Input;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class DvarcharController extends Controller
 {
@@ -16,9 +17,12 @@ class DvarcharController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $form = Form::findOrFail($id);
+        $inputs = Input::where('form_id', $id)->get();
+
+        return view('admin.colections.complements.listaDatos', compact('form', 'inputs'));
     }
 
     /**
@@ -124,7 +128,6 @@ class DvarcharController extends Controller
                     'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                 ]);
-
                 $control++;
             }
         }
@@ -179,5 +182,9 @@ class DvarcharController extends Controller
 
         return $valor1 . " - ". $valor2;
         */
+
+        $message = 'Datos almacenados';
+        Session::flash('message', $message);
+        return \Redirect::route('admin.colecciones.form.data.index', $id);
     }
 }

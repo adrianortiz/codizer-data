@@ -11,10 +11,12 @@
     </div>
 
     <div id="collection-menu">
-        <button id="btnCorto" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Agregar nuevo input al formulario" onclick="showModalInputs('modal-textoCorto');"><span><img src="/images/input.svg"></span>Texto corto</button>
+        <button id="btnCorto" class="btn btn-default" title="Agregar nuevo input al formulario" onclick="showModalInputs('modal-textoCorto');"><span><img src="{{ asset('/images/input.svg') }}"></span>Nuevo campo</button>
+        <!--
         <button id="btnLargo" class="btn btn-default"><span><img src="/images/textarea.svg"></span>Texto largo</button>
         <button id="btnSelect" class="btn btn-default"><span><img src="/images/select.svg"></span>Selección</button>
         <button id="btnOption" class="btn btn-default"><span><img src="/images/option.svg"></span>Opción</button>
+        -->
     </div>
 
 
@@ -52,30 +54,32 @@
                 {!! Form::open(['route' => 'admin.inputs.store', 'method' => 'POST', 'id' => 'form-textoCorto']) !!}
 
                 <div class="form-group">
-                    <label for="title">Titulo del campo</label>
-                    {!! Form::text('title', null, ['id' => 'title', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Ingresa un titulo']) !!}
+                    <label for="title">Título del campo</label>
+                    {!! Form::text('title', null, ['id' => 'title', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Ingresa un título', 'onkeyup' => 'chagenTitleInput();']) !!}
+                </div>
+
+                <div class="form-group">
+                    <label for="desc">Decripción del campo</label>
+                    {!! Form::textarea('description', null, ['id' => 'description', 'class' => 'form-control', 'placeholder' => 'Ingresa una descripción', 'onkeyup' => 'chagenDescInput();', 'title' => 'Descripción']) !!}
                 </div>
 
                 <div class="form-group">
                     <label for="type_validation">Tipo de dato</label>
                     {!! Form::select('type_validation', array(
                         'val_text' => 'Alfanumerico',
-                        'val_date' => 'Fecha',
+
                         'val_num' => 'Número',
-                        'moneda' => 'Moneda',
-                        'decimales' => 'Decimales'
+
                     ), 'alfanumerico', ['id' => 'type_validation']); !!}
+                    <!--
+                    'val_date' => 'Fecha',
+                    'moneda' => 'Moneda',
+                    'decimales' => 'Decimales'
+                    -->
                 </div>
 
-                <div class="form-group">
-                    <label for="type_input">type_input</label>
-                    {!! Form::text('type_input', 'input_text', ['id' => 'type_input', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Ingresa un titulo']) !!}
-                </div>
-
-                <div class="form-group">
-                    <label for="form_id">form_id</label>
-                    {!! Form::text('form_id', $form->id, ['id' => 'form_id', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Ingresa un titulo']) !!}
-                </div>
+                    {!! Form::hidden('type_input', 'input_text', ['id' => 'type_input', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Ingresa un titulo']) !!}
+                    {!! Form::hidden('form_id', $form->id, ['id' => 'form_id', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Ingresa un titulo']) !!}
 
                 <div>
                     <button type="button" class="btn btn-danger" onclick="closeModalInputs('modal-textoCorto');">CANCELAR</button>
@@ -87,10 +91,12 @@
             </div>
             <div class="builder-form-preview">
 
+                <h1 id="nav" class="page-header text-center">Vista Previa</h1>
+
                 <div class="form-preview">
                     <div class="form-group">
-                        <label for="title">ASDASDSA</label>
-                        {!! Form::text('title', null, ['id' => 'title', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Ingresa un titulo']) !!}
+                        <label for="titleChange" id="titleChangeTo">Título del campo</label><span id="descChangeTo" title="Descripción de este campo." data-toggle="tooltip" data-placement="right" style="margin-left: 5px;"> <img src="{{ asset('/images/icon-help.svg') }}"></span>
+                        {!! Form::text('title', null, ['id' => 'titleChange', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Agregar información']) !!}
                     </div>
                 </div>
 

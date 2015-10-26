@@ -13,7 +13,11 @@ function listInputs()
     tablaDatos.empty();
     $.get(route, function(res) {
         $(res).each(function(key,value){
-            tablaDatos.append('<div class="container-input-base" data-id="'+ value.id +'"><div>'+ contador +'</div><div><span><img src="/images/input.svg"></span>'+ value.title +'</div><div><a href="#"><span><img src="/images/icon-edit.svg"></span></a></div><div><a href="#" class="input-delete" onclick="eliminarInput(this);"><span><img src="/images/icon-delete.svg"></span></a></div></div>');
+            if ( value.type_validation == 'val_text' )
+                tablaDatos.append('<div class="container-input-base" data-id="'+ value.id +'"><div>'+ contador +'</div><div><span><img src="/images/input.svg"></span>'+ value.title +'<span style="float: right; font-weight: bolder; width: 120px; text-align: center; border-left: solid 1px #D8D8D8;">Alfanumérico</span></div><div><a href="#"><span><img src="/images/icon-edit.svg"></span></a></div><div><a href="#" class="input-delete" onclick="eliminarInput(this);"><span><img src="/images/icon-delete.svg"></span></a></div></div>');
+
+            if ( value.type_validation == 'val_num' )
+                tablaDatos.append('<div class="container-input-base" data-id="'+ value.id +'"><div>'+ contador +'</div><div><span><img src="/images/input.svg"></span>'+ value.title +'<span style="float: right; font-weight: bolder; width: 120px; text-align: center; border-left: solid 1px #D8D8D8;">Numérico</span></div><div><a href="#"><span><img src="/images/icon-edit.svg"></span></a></div><div><a href="#" class="input-delete" onclick="eliminarInput(this);"><span><img src="/images/icon-delete.svg"></span></a></div></div>');
             contador++;
         });
     });
@@ -108,4 +112,18 @@ $('#no').click(function (e) {
     e.preventDefault();
     $('#modal-delete').fadeOut();
 });
+
+// Change title & help title
+function chagenTitleInput ()
+{
+    $('#titleChangeTo').text( $('#title').val() );
+}
+
+function chagenDescInput ()
+{
+    $("span#descChangeTo").attr("data-original-title", $('#description').val() );
+}
+
+$('[data-toggle="tooltip"]').tooltip();
+
 

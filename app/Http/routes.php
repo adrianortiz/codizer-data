@@ -79,6 +79,12 @@ Route::group(['middleware' => 'auth'], function () {
             'as' => 'admin.colecciones.form.data.store'
         ]);
 
+        // SHOW DATA FROM COLLECTION
+        Route::get('coleccion/form/{id}/lista', [
+            'uses' => 'DvarcharController@index',
+            'as' => 'admin.colecciones.form.data.index'
+        ]);
+
     });
 
 
