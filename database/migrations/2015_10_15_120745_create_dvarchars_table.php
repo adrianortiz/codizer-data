@@ -19,6 +19,7 @@ class CreateDvarcharsTable extends Migration
             $table->string('content');
             $table->integer('form_id');
             $table->integer('input_id');
+            $table->integer('row_id');
 
             $table->timestamps();
         });

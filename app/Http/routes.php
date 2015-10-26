@@ -73,6 +73,12 @@ Route::group(['middleware' => 'auth'], function () {
             'as' => 'form'
         ]);
 
+        // SAVE FORMULARIO
+        Route::get('coleccion/form/{id}/new', [
+            'uses' => 'DvarcharController@storeFormData',
+            'as' => 'admin.colecciones.form.data.store'
+        ]);
+
     });
 
 

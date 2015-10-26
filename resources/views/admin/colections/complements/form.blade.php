@@ -10,25 +10,26 @@
         @include('admin.colections.complements.partials.menu')
     </div>
 
-    <form class="form-horizontal" role="form" method="POST" action="{{ route('form') }}">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    {!! Form::open(['route' => ['admin.colecciones.form.data.store', $form], 'method' => 'GET']) !!}
 
         @if(count($inputs) === 0)
             <h1>Aun no tienes datos :( </h1>
         @else
             @foreach($inputs as $input)
                 <div class="form-group">
-                    <label for="content"> {{ $input->title }} </label>
-                    {!! Form::text('content', old('content'), ['id' => 'content', 'class' => 'form-control']) !!}
+                    <label for="content" title="{{ $input->title }}"> {{ $input->title }} </label>
+                    {!! Form::text( $input->type_validation . '[]', old('content'), ['id' => 'content', 'class' => 'form-control', 'title' => $input->title]) !!}
                 </div>
             @endforeach
+            <button type="submit" class="btn btn-primary">Guardar datos</button>
         @endif
-    </form>
+
+     {!! Form::close() !!}
 
 
 @endsection
 
 
 @section('scripts')
-    <!-- <script src="{{ asset('/js/inputs.js') }}"></script> -->
+    <script src="{{ asset('/js/form.js') }}"></script>
 @endsection

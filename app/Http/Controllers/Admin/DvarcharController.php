@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Input;
-use App\Form;
+use App\Dvarchar;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class InputsController extends Controller
+class DvarcharController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,15 +37,7 @@ class InputsController extends Controller
      */
     public function store(Request $request)
     {
-        // if($request->ajax()) { return response()->json([ "mensaje" => $request->all() ]); }
-        if ( $request->ajax())
-        {
-            Input::create($request->all());
-            return response()->json([
-               "mensaje" => "creado"
-            ]);
-        }
-
+        //
     }
 
     /**
@@ -57,11 +48,7 @@ class InputsController extends Controller
      */
     public function show($id)
     {
-        $inputs = Input::where('form_id', $id)->get();
-
-        return response()->json(
-            $inputs->toArray()
-        );
+        //
     }
 
     /**
@@ -93,47 +80,62 @@ class InputsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Request $request)
+    public function destroy($id)
     {
-        $input = Input::findOrFail($id);
-        $input->delete();
-
-        $message = 'El Input ' . $input->name . ' fue eliminada';
-
-        if ($request->ajax()) {
-            return response()->json([
-                'message' => $message
-            ]);
-        }
-
-        Session::flash('message', $message);
-        return \Redirect::route('admin.colecciones.index');
+        //
     }
-
-
-
-
-
-
-
-
 
 
     /**
-     * Draw form from conllection data
+     * Store data form a newly created resource in storage.
      *
-     * @param $id
-     * @return \Illuminate\View\View
+     * @param Request $request
      */
 
-    public function drawForm($id)
+    public function storeFormData(Request $request, $id)
     {
+        if ($request->has('val_text')) {
+            foreach ($request->input('val_text') as $texto) {
+                echo "Text: " . $texto . "<br>";
+            }
+        } else {
+            echo "No hay Text :( ";
+        }
 
-        $form = Form::findOrFail($id);
+        echo "<br>";
 
-        $inputs = Input::where('form_id', $id)->get();
+        if ($request->has('val_num')) {
+            foreach ($request->input('val_num') as $numer) {
+                echo "Num: " . $numer . "<br>";
+            }
+        } else {
+            echo "No hay Num :( ";
+        }
 
-        return view('admin.colections.complements.form', compact('form', 'inputs'));
+        /*
+        $form = new Dvarchar($request->input('val_num')->all());
+        $form->save();
+        */
+
+
+        /*
+        $inputs = $request->all();
+
+        $valor1 = "No Existe val_text";
+        $valor2 = "No Existe val_num";
+
+        foreach($inputs as $input) {
+
+            if ($request->has('val_text')) {
+                $valor1 = "Existe val_text: ";
+            }
+
+            if ($request->has('val_num')) {
+                $valor2 = "Existe val_num: ";
+            }
+        }
+
+        return $valor1 . " - ". $valor2;
+        */
     }
-
 }
