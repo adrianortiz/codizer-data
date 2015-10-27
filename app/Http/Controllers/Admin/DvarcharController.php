@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Dvarchar;
 use App\Form;
 use App\Input;
 use Illuminate\Http\Request;
@@ -19,10 +20,41 @@ class DvarcharController extends Controller
      */
     public function index($id)
     {
-        $form = Form::findOrFail($id);
-        $inputs = Input::where('form_id', $id)->get();
 
-        return view('admin.colections.complements.listaDatos', compact('form', 'inputs'));
+        $form = Form::findOrFail($id);
+
+        // Columnas de los datos
+        $dTitlesColums = DB::table('dvarchars')
+            ->distinct()
+            ->select('dtitle')
+            ->where('form_id', $id)
+            ->groupBy('input_id')
+            ->get();
+
+
+        // Filas de la tabla
+        $dTitlesRows = DB::table('dvarchars')
+            ->distinct()
+            ->select('row_id')
+            ->where('form_id', $id)
+            ->groupBy('row_id')
+            ->paginate(3);
+
+
+        // CREAR ARRAY
+        $arrayRows = array();
+        foreach ($dTitlesRows as $dTitlesRow) {
+            $arrayRows[] = Dvarchar::where('form_id', '=', $id)
+                ->where('row_id', '=', $dTitlesRow->row_id)
+                ->groupBy('input_id')
+                ->get();
+        }
+
+
+        // dd($arrayRows);
+        $numList = 1;
+        $rowIdDelete = 0;
+        return view('admin.colections.complements.listaDatos', compact('form', 'inputs', 'dTitlesColums', 'numList', 'dTitlesRows', 'arrayRows', 'rowIdDelete'));
     }
 
     /**
@@ -86,9 +118,22 @@ class DvarcharController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $input = Dvarchar::where('row_id', $id);
+        $input->delete();
+
+        $message = 'Registro eliminado';
+
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => $message
+            ]);
+        }
+
+        Session::flash('message', $message);
+        return \Redirect::route('admin.colecciones.complements.listaDatos');
+
     }
 
 

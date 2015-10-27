@@ -7,8 +7,8 @@
     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
         <li><a href="{{ route('admin.colecciones.edit', $form) }}">EDITAR COLECCIÓN</a></li>
         <li><a href="{{ route('admin.complements.edit', $form) }}">COMPLEMENTS</a></li>
-        <li><a href="{{ route('form', $form) }}">AGREGAR DATOS</a></li>
-        <li><a href="{{ route('admin.colecciones.form.data.index', $form) }}">GESTIONAR DATOS</a></li>
+        <li><a href="{{ route('form', $form) }}">NUEVO REGISTRO</a></li>
+        <li><a href="{{ route('admin.colecciones.form.data.index', $form) }}">GESTIONAR REGISTROS</a></li>
         <li><a href="{{ url('/admin/colecciones') }}">MIS COLECCIONES</a></li>
     </ul>
 </div>

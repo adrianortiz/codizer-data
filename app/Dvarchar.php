@@ -11,5 +11,5 @@ class Dvarchar extends Model
      *
      * @var string
      */
-    protected $table = 'dvarchar';
+    protected $table = 'dvarchars';
 }

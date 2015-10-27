@@ -15,35 +15,52 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            @foreach($dTitlesColums as $dTitlesColum)
+                <th>{{ $dTitlesColum->dtitle }}</th>
+            @endforeach
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
+
+            @foreach($arrayRows as $arrayRow)
+                <tr>
+                    <th scope="row">{{ $numList++ }}</th>
+                    @foreach($arrayRow++ as $row)
+                        <td>{{ $row->content }}</td>
+                        <div style="display: none;">{{ $rowIdDelete = $row->row_id }}</div>
+                    @endforeach
+                    <td>
+                        <a href="#" class="input-delete" onclick="eliminarInput(this, {{ $rowIdDelete }});">
+                            <span>
+                                <img src="/images/icon-delete.svg">
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            @endforeach
+
         </tbody>
     </table>
 
+    <div class="listar-data">
+        {!! $dTitlesRows->render() !!}
+    </div>
+
+    <!--
+    <h1>FILAS</h1>
+    @foreach($dTitlesRows as $dTitlesRow)
+        {{ $dTitlesRow->row_id }}
+    @endforeach
+        -->
+
+
 @endsection
 
+@include('admin.colections.complements.partials.alert-delete')
+
+{!! Form::open(['route' => ['admin.colecciones.form.data.list.destroy', ':USER_ID'], 'method' => 'DELETE', 'id' => 'form-delete']) !!}
+{!! Form::close() !!}
 
 @section('scripts')
-    <!-- <script src="{{ asset('/js/form.js') }}"></script> -->
+    <script src="{{ asset('/js/lists.js') }}"></script>
 @endsection

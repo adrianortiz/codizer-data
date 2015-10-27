@@ -85,6 +85,12 @@ Route::group(['middleware' => 'auth'], function () {
             'as' => 'admin.colecciones.form.data.index'
         ]);
 
+        // DESTROY ROW DATA
+        Route::delete('coleccion/form/lista/row/{id}/delete', [
+            'uses' => 'DvarcharController@destroy',
+            'as' => 'admin.colecciones.form.data.list.destroy'
+        ]);
+
     });
 
 
