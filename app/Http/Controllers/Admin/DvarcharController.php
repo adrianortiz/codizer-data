@@ -38,7 +38,7 @@ class DvarcharController extends Controller
             ->select('row_id')
             ->where('form_id', $id)
             ->groupBy('row_id')
-            ->paginate(3);
+            ->paginate(5);
 
 
         // CREAR ARRAY
@@ -51,7 +51,7 @@ class DvarcharController extends Controller
         }
 
 
-        // dd($arrayRows);
+        //dd($arrayRows);
         $numList = 1;
         $rowIdDelete = 0;
         return view('admin.colections.complements.listaDatos', compact('form', 'inputs', 'dTitlesColums', 'numList', 'dTitlesRows', 'arrayRows', 'rowIdDelete'));
