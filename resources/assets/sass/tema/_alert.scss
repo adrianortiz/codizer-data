@@ -119,3 +119,14 @@
   border-left: solid 4px #7ED321;
 }
 
+.input-base {
+  width: auto !important;
+  border: solid 2px transparent !important;
+  cursor: pointer;
+  @include transition(.3s ease);
+
+  &:focus {
+    background-color: $gris-100 !important;
+    border-bottom-color: transparent !important;
+  }
+}

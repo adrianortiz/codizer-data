@@ -14,15 +14,18 @@
             </ul>
         </div>
     @endif
-
-        <div class="head-menu">
-            <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> Collecciones </h1>
-        </div>
-
+        <div class="head-fixed">
+            <div class="head-menu">
+                <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> Collecciones </h1>
+            </div>
 
             <div>
                 <p>Tienes <span class="badge">{{ $forms->total() }}</span> colecciones</p>
             </div>
+
+        </div>
+
+        <div class="container-inputs-list" id="datos">
 
             <div class="collection-list-new">
                 <div class="collection-new-text">
@@ -53,6 +56,7 @@
             <div class="listar-data">
                 {!! $forms->render() !!}
             </div>
+        </div>
 
     {!! Form::open(['route' => ['admin.colecciones.destroy', ':USER_ID'], 'method' => 'DELETE', 'id' => 'form-delete']) !!}
     {!! Form::close() !!}

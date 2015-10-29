@@ -28,9 +28,12 @@
 .container-inputs-list {
   margin: 0 auto;
   padding: 0 auto;
+  margin-top: 70px;
   width: 98%;
-  min-height: 300px;
+  min-height: 500px;
   padding-top: 30px;
+  padding-right: 15px;
+  // overflow: auto;
 
 }
 
@@ -81,4 +84,8 @@
     border-left: solid 1px #D6D6D6;
     text-align: center;
   }
+}
+
+.max-top {
+  padding-top: 70px;
 }

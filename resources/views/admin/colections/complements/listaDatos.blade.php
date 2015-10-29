@@ -5,42 +5,55 @@
 @section('content')
 
     <!-- REVISAR -->
-    <div class="head-menu">
-        <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> GESTIONAR DATOs: COLECCIÓN {{ $form->name  }}</h1>
-        @include('admin.colections.complements.partials.menu')
+    <div class="head-fixed">
+        <div class="head-menu">
+            <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> GESTIONAR DATOs: COLECCIÓN {{ $form->name  }}</h1>
+            @include('admin.colections.complements.partials.menu')
+        </div>
     </div>
 
 
-    <table class="table table-condensed">
-        <thead>
-        <tr>
-            <th>#</th>
-            @foreach($dTitlesColums as $dTitlesColum)
-                <th>{{ $dTitlesColum->dtitle }}</th>
-            @endforeach
-        </tr>
-        </thead>
-        <tbody>
+<div class="container-inputs-list" id="datos">
 
-            @foreach($arrayRows as $arrayRow)
-                <tr>
-                    <th scope="row">{{ $numList++ }}</th>
-                    @foreach($arrayRow++ as $row)
-                        <td>{{ $row->content }}</td>
-                        <div style="display: none;">{{ $rowIdDelete = $row->row_id }}</div>
-                    @endforeach
-                    <td>
-                        <a href="#" class="input-delete" onclick="eliminarInput(this, {{ $rowIdDelete }});">
-                            <span>
-                                <img src="/images/icon-delete.svg">
-                            </span>
-                        </a>
-                    </td>
-                </tr>
-            @endforeach
+    @if(count($dTitlesColums) === 0)
+        <p>Sin registros > <a href="{{ route('form', $form) }}">NUEVO REGISTRO</a></p>
+    @else
 
-        </tbody>
-    </table>
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th>#</th>
+                @foreach($dTitlesColums as $dTitlesColum)
+                    <th>{{ $dTitlesColum->dtitle }}</th>
+                @endforeach
+            </tr>
+            </thead>
+            <tbody>
+
+                @foreach($arrayRows as $arrayRow)
+                    <tr>
+                        <th scope="row">{{ $numList++ }}</th>
+                        @foreach($arrayRow++ as $row)
+                            <td>
+                                <!-- {!! $row->content !!} -->
+                                {!! Form::text('content', $row->content, ['id' => $numList, 'class' => 'form-control input-base', 'onclick' => 'getVaInput(this);', 'onblur' => 'updateInput(this,'. $row->id .');']) !!}
+                            </td>
+                            <div style="display: none;">{{ $rowIdDelete = $row->row_id }}</div>
+                        @endforeach
+                        <td>
+                            <a href="#" class="input-delete" onclick="eliminarInput(this, {{ $rowIdDelete }});" style="margin-right: 60px; text-align: center">
+                                <span>
+                                    <img src="/images/icon-delete.svg">
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+    @endif
+    </div>
 
     <div class="listar-data">
         {!! $dTitlesRows->render() !!}
@@ -59,6 +72,10 @@
 @include('admin.colections.complements.partials.alert-delete')
 
 {!! Form::open(['route' => ['admin.colecciones.form.data.list.destroy', ':USER_ID'], 'method' => 'DELETE', 'id' => 'form-delete']) !!}
+{!! Form::close() !!}
+
+{!! Form::open(['route' => ['admin.colecciones.form.data.list.update.input', ':USER_ID'], 'method' => 'PUT', 'id' => 'form-update']) !!}
+    {!! Form::text('content', old('content'), ['id' => 'contentUpdate', 'class' => 'form-control']) !!}
 {!! Form::close() !!}
 
 @section('scripts')

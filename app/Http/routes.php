@@ -91,6 +91,12 @@ Route::group(['middleware' => 'auth'], function () {
             'as' => 'admin.colecciones.form.data.list.destroy'
         ]);
 
+        // SAVE FORMULARIO
+        Route::put('coleccion/form/lista/row/{id}/update', [
+            'uses' => 'DvarcharController@update',
+            'as' => 'admin.colecciones.form.data.list.update.input'
+        ]);
+
     });
 
 

@@ -109,7 +109,19 @@ class DvarcharController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::update('update dvarchars set content = ? where id = ?', [ $request->input('content') , $id]);
+
+        $message = 'Registro actualizado';
+
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => $message
+            ]);
+        }
+
+        Session::flash('message', $message);
+        return \Redirect::route('admin.colecciones.complements.listaDatos');
+
     }
 
     /**

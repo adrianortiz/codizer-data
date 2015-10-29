@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Dvarchar;
 use App\Input;
 use App\Form;
 use Illuminate\Http\Request;
@@ -98,7 +99,11 @@ class InputsController extends Controller
         $input = Input::findOrFail($id);
         $input->delete();
 
-        $message = 'El Input ' . $input->name . ' fue eliminada';
+        // Destroy all content from Input = $id
+        $dVarchars = Dvarchar::where('input_id', $id);
+        $dVarchars->delete();
+
+        $message = 'El Input ' . $input->name . ' y sus datos fueron eliminados';
 
         if ($request->ajax()) {
             return response()->json([

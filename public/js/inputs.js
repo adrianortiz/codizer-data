@@ -88,7 +88,8 @@ function eliminarInput(objThis)
     objX = objThis;
 }
 
-$('#si').click(function (e) {
+$('#si').click(function (e)
+{
     e.preventDefault();
     var div = $(objX).parent('div').parent('div');
     var id = div.data('id');

@@ -13,7 +13,7 @@
     {!! Form::open(['route' => ['admin.colecciones.form.data.store', $form], 'method' => 'GET']) !!}
 
         @if(count($inputs) === 0)
-            <h1>Aun no tienes datos :( </h1>
+            <p>Aun no generas un formulario, usa > <a href="{{ route('admin.complements.edit', $form) }}">COMPLEMENTS</a></p>
         @else
             @foreach($inputs as $input)
                 <div class="form-group">

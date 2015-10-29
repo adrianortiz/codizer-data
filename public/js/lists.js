@@ -32,7 +32,8 @@ function eliminarInput(objThis, deleteThis)
     toDeleteX = deleteThis;
 }
 
-$('#si').click(function (e) {
+$('#si').click(function (e)
+{
     e.preventDefault();
     var div = $(objX).parent('td').parent('tr');
     var id = toDeleteX;
@@ -52,10 +53,47 @@ $('#si').click(function (e) {
     });
 });
 
-$('#no').click(function (e) {
+$('#no').click(function (e)
+{
     e.preventDefault();
     $('#modal-delete').fadeOut();
 });
+
+
+
+/*
+ UPDATE DATA LIST SINGLE INPUT WITH AJAX
+ */
+
+var objY = null;
+var toUpdateY = null;
+
+function getVaInput(objThis)
+{
+    objY = objThis.value;
+}
+
+function updateInput(objThis, updateThis)
+{
+
+    if ( !(objY === objThis.value) ) {
+
+        $("#contentUpdate").val("" + objThis.value);
+
+        var id = updateThis;
+        var form = $('#form-update');
+        var url = form.attr('action').replace(':USER_ID', id);
+        var data = form.serialize();
+
+        $.post(url, data, function (result) {
+            console.log(result.message);
+        }).fail(function () {
+            alert('Input no actualizado');
+            objThis.value = objY;
+        });
+    }
+
+}
 
 
 

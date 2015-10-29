@@ -152,6 +152,14 @@ h1 {
   }
 }
 
+.head-fixed {
+  @include prefixer(width, calc(100% - 214px));
+  height: auto;
+  position: fixed;
+  top: 73px;
+  right: 0;
+  background-color: $blanco;
+}
 
 .head-menu {
   width: 100%;
@@ -159,6 +167,8 @@ h1 {
   padding: 10px;
   margin-bottom: 20px;
   border-bottom: solid 2px $gris-100;
+
+
 
   h1 {
     float: left;

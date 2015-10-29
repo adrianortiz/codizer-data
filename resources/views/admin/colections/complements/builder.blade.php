@@ -5,25 +5,28 @@
 @section('content')
 
     <!-- REVISAR -->
-    <div class="head-menu">
-        <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> COMPLEMENTS </h1>
-        @include('admin.colections.complements.partials.menu')
-    </div>
+    <div class="head-fixed">
+        <div class="head-menu">
+            <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> COMPLEMENTS </h1>
+            @include('admin.colections.complements.partials.menu')
+        </div>
 
-    <div id="collection-menu">
-        <button id="btnCorto" class="btn btn-default" title="Agregar nuevo input al formulario" onclick="showModalInputs('modal-textoCorto');"><span><img src="{{ asset('/images/input.svg') }}"></span>Nuevo campo</button>
-        <!--
-        <button id="btnLargo" class="btn btn-default"><span><img src="/images/textarea.svg"></span>Texto largo</button>
-        <button id="btnSelect" class="btn btn-default"><span><img src="/images/select.svg"></span>Selección</button>
-        <button id="btnOption" class="btn btn-default"><span><img src="/images/option.svg"></span>Opción</button>
-        -->
+        <div id="collection-menu">
+            <button id="btnCorto" class="btn btn-default" title="Agregar nuevo input al formulario" onclick="showModalInputs('modal-textoCorto');"><span><img src="{{ asset('/images/input.svg') }}"></span>Nuevo campo</button>
+            <!--
+            <button id="btnLargo" class="btn btn-default"><span><img src="/images/textarea.svg"></span>Texto largo</button>
+            <button id="btnSelect" class="btn btn-default"><span><img src="/images/select.svg"></span>Selección</button>
+            <button id="btnOption" class="btn btn-default"><span><img src="/images/option.svg"></span>Opción</button>
+            -->
+        </div>
+
     </div>
 
 
     {!! Form::open(['route' => ['admin.inputs.show', $form->id], 'method' => 'GET|HEAD', 'id' => 'form-show']) !!}
     {!! Form::close() !!}
 
-    <div class="container-inputs-list" id="datos">
+    <div class="container-inputs-list max-top" id="datos">
 
         <!--
         <div class="container-input-base">
