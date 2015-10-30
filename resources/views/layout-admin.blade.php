@@ -68,7 +68,7 @@
         <li><p>Administración</p></li>
         <li><a href="{{ route('panel') }}"><div><span><img src="/images/icon-user.svg" class="icon-button"></span> Cuenta</div></a></li>
         <li><a href="{{ url('/admin/colecciones') }}"><div><span><img src="/images/icon-complements.svg" class="icon-button"></span> Colecciones</div></a></li>
-        <li><a href="#"><div><span><img src="/images/icon-estadistica.svg" class="icon-button"></span> Estadísticas</div></a></li>
+        <li><a href="{{ route('admin.statistics.index') }}"><div><span><img src="/images/icon-estadistica.svg" class="icon-button"></span> Estadísticas</div></a></li>
         <li><p>Datos</p></li>
         <li><a href="#"><div><span><img src="/images/icon-codizer.svg" class="icon-button"></span> Acerca de...</div></a></li>
     </ul>

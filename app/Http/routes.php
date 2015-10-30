@@ -57,6 +57,9 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 Route::group(['middleware' => 'auth'], function () {
 
+    /*
+     * ADMIN
+     */
     Route::get('admin', [
         'uses' => 'AdminController@index',
         'as' => 'panel'
@@ -95,6 +98,17 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('coleccion/form/lista/row/{id}/update', [
             'uses' => 'DvarcharController@update',
             'as' => 'admin.colecciones.form.data.list.update.input'
+        ]);
+
+
+        /*
+         * STATISTIC CONTROLLER
+         */
+
+        // VIEW STATISTICS
+        Route::get('estadisticas', [
+            'uses' => 'StatisticController@index',
+            'as' => 'admin.statistics.index'
         ]);
 
     });

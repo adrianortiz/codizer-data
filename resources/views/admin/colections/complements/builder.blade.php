@@ -73,7 +73,7 @@
 
                         'val_num' => 'Número',
 
-                    ), 'alfanumerico', ['id' => 'type_validation']); !!}
+                    ), 'alfanumerico', ['id' => 'type_validation']) !!}
                     <!--
                     'val_date' => 'Fecha',
                     'moneda' => 'Moneda',
