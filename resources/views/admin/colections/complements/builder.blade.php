@@ -19,7 +19,6 @@
             <button id="btnOption" class="btn btn-default"><span><img src="/images/option.svg"></span>Opción</button>
             -->
         </div>
-
     </div>
 
 
@@ -51,9 +50,12 @@
     <div class="notificacion-text-fondo" id="modal-textoCorto" style="display: none">
         <div class="container-builder">
             <div class="builder-form-option">
-                <h2>Texto corto</h2>
+                <div class="title-input-txt">
+                    <span></span>
+                    <h2>Texto corto</h2>
+                </div>
 
-                @include('partials.errors')
+
                 {!! Form::open(['route' => 'admin.inputs.store', 'method' => 'POST', 'id' => 'form-textoCorto']) !!}
 
                 <div class="form-group">
@@ -70,9 +72,7 @@
                     <label for="type_validation">Tipo de dato</label>
                     {!! Form::select('type_validation', array(
                         'val_text' => 'Alfanumerico',
-
                         'val_num' => 'Número',
-
                     ), 'alfanumerico', ['id' => 'type_validation']) !!}
                     <!--
                     'val_date' => 'Fecha',
@@ -84,9 +84,10 @@
                     {!! Form::hidden('type_input', 'input_text', ['id' => 'type_input', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Ingresa un titulo']) !!}
                     {!! Form::hidden('form_id', $form->id, ['id' => 'form_id', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Ingresa un titulo']) !!}
 
-                <div>
-                    <button type="button" class="btn btn-danger" onclick="closeModalInputs('modal-textoCorto');">CANCELAR</button>
+                <div class="btn-input-txt">
+                    <p>* Este campo será obligatorio</p>
                     <button type="button" class="btn btn-primary" id="registro-textoCorto">GUARDAR</button>
+                    <button type="button" class="btn btn-danger" onclick="closeModalInputs('modal-textoCorto');">CANCELAR</button>
                 </div>
 
                 {!! Form::close() !!}
@@ -94,12 +95,12 @@
             </div>
             <div class="builder-form-preview">
 
-                <h1 id="nav" class="page-header text-center">Vista Previa</h1>
+                <h1 id="nav" class="text-center">Vista Previa</h1>
 
                 <div class="form-preview">
                     <div class="form-group">
                         <label for="titleChange" id="titleChangeTo">Título del campo</label><span id="descChangeTo" title="Descripción de este campo." data-toggle="tooltip" data-placement="right" style="margin-left: 5px;"> <img src="{{ asset('/images/icon-help.svg') }}"></span>
-                        {!! Form::text('title', null, ['id' => 'titleChange', 'class' => 'form-control', 'type' => 'text', 'placeholder' => 'Agregar información']) !!}
+                        {!! Form::text('title', null, ['id' => 'titleChange', 'class' => 'form-control', 'type' => 'text', 'disabled', 'placeholder' => 'Contenido']) !!}
                     </div>
                 </div>
 
@@ -107,20 +108,14 @@
         </div>
     </div>
 
-    <div class="alert alert-success" id="msj-success" style="display: none;">
-        <div class="alert-title-success">
-            Estado de la operación
-            <button type="button" class="close close-alert-codizer" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-        <ul>
-            <li>Campo agregado al formulario correctamente</li>
-        </ul>
-    </div>
+    @include('partials.alert-ajax')
+
     @endsection
 
 @endsection
 
 @include('admin.colections.complements.partials.alert-delete')
+@include('partials.errors')
 
 
 {!! Form::open(['route' => ['admin.inputs.destroy', ':USER_ID'], 'method' => 'DELETE', 'id' => 'form-delete']) !!}

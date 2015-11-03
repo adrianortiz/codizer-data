@@ -1,5 +1,5 @@
 <div class="dropdown menu-global-collection">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <button class="btn btn-toolbar dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         <span><img src="/images/icon-menu.svg" class="icon-button"></span>
         MENÚ
         <span class="caret"></span>

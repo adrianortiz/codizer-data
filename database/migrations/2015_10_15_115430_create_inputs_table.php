@@ -18,6 +18,7 @@ class CreateInputsTable extends Migration
             $table->string('title');
             $table->enum('type_validation', ['val_text', 'val_date', 'val_num']);
             $table->enum('type_input', ['input_text', 'input_select']);
+            $table->string('description');
             $table->integer('form_id');
 
             $table->timestamps();

@@ -5,9 +5,11 @@
 @section('content')
 
     <!-- REVISAR -->
-    <div class="head-menu">
-        <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> FORMULARIO: {{ $form->name  }}</h1>
-        @include('admin.colections.complements.partials.menu')
+    <div class="head-fixed">
+        <div class="head-menu">
+            <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> FORMULARIO: {{ $form->name  }}</h1>
+            @include('admin.colections.complements.partials.menu')
+        </div>
     </div>
 
     {!! Form::open(['route' => ['admin.colecciones.form.data.store', $form], 'method' => 'GET']) !!}
@@ -17,8 +19,8 @@
         @else
             @foreach($inputs as $input)
                 <div class="form-group">
-                    <label for="{{ $input->title }}" title="{{ $input->title }}"> {{ $input->title }} </label>
-                    {!! Form::text( $input->type_validation . '[]', old('content'), ['id' => $input->title, 'class' => 'form-control', 'title' => $input->title]) !!}
+                    <label for="{{ $input->title }}">{{ $input->title }}</label>
+                    {!! Form::text( $input->type_validation . '[]', old('content'), ['id' => $input->title, 'class' => 'form-control', 'title' => $input->description, 'data-toggle' => 'tooltip', 'data-placement' => 'right']) !!}
                     {!! Form::hidden( $input->type_validation . 'x[]', $input->id) !!}
                     {!! Form::hidden( $input->type_validation . 'y[]', $input->title) !!}
                 </div>
@@ -31,6 +33,7 @@
 
 @endsection
 
+@include('partials.errors')
 
 @section('scripts')
     <script src="{{ asset('/js/form.js') }}"></script>

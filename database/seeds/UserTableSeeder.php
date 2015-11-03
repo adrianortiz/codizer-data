@@ -37,12 +37,260 @@ class UserTableSeeder extends Seeder
             'remember_token' => str_random(10),
         ]);
 
-        \DB::table('forms')->insert([
+        $idForm = \DB::table('forms')->insertGetId([
             'name' => 'Alumnos',
             'description' => 'Información de los alumnos de 8ITI1',
             'user_id' => $id,
             'remember_token' => str_random(10)
         ]);
+
+
+
+
+        // GENERAR INPUTS DEL FORMULARIO Alumnos
+
+        \DB::table('inputs')->insert([
+            'title'             => 'Nombre',
+            'type_validation'   => 'val_text',
+            'type_input'        => 'input_text',
+            'description'       => 'Nombre Alumno',
+            'form_id'           => $idForm,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('inputs')->insert([
+            'title'             => 'Edad',
+            'type_validation'   => 'val_num',
+            'type_input'        => 'input_text',
+            'description'       => 'Edad Alumno',
+            'form_id'           => $idForm,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('inputs')->insert([
+            'title'             => 'Sexo',
+            'type_validation'   => 'val_text',
+            'type_input'        => 'input_text',
+            'description'       => 'Sexo Alumno',
+            'form_id'           => $idForm,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('inputs')->insert([
+            'title'             => 'Peso',
+            'type_validation'   => 'val_num',
+            'type_input'        => 'input_text',
+            'description'       => 'Peso Alumno',
+            'form_id'           => $idForm,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('inputs')->insert([
+            'title'             => 'Estatura',
+            'type_validation'   => 'val_num',
+            'type_input'        => 'input_text',
+            'description'       => 'Estatura Alumno',
+            'form_id'           => $idForm,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('inputs')->insert([
+            'title'             => 'Municipio',
+            'type_validation'   => 'val_text',
+            'type_input'        => 'input_text',
+            'description'       => 'Municipio donde recide Alumno',
+            'form_id'           => $idForm,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('inputs')->insert([
+            'title'             => 'Colonia',
+            'type_validation'   => 'val_text',
+            'type_input'        => 'input_text',
+            'description'       => 'Colonia donde recide Alumno',
+            'form_id'           => $idForm,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('inputs')->insert([
+            'title'             => 'Costo Semana',
+            'type_validation'   => 'val_num',
+            'type_input'        => 'input_text',
+            'description'       => 'Gastor por semana',
+            'form_id'           => $idForm,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('inputs')->insert([
+            'title'             => 'Ida (Min)',
+            'type_validation'   => 'val_num',
+            'type_input'        => 'input_text',
+            'description'       => 'Minutos que tarda',
+            'form_id'           => $idForm,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('inputs')->insert([
+            'title'             => 'Regreso (Min)',
+            'type_validation'   => 'val_num',
+            'type_input'        => 'input_text',
+            'description'       => 'Minutos que tarda',
+            'form_id'           => $idForm,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('inputs')->insert([
+            'title'             => 'Medio de transporte',
+            'type_validation'   => 'val_text',
+            'type_input'        => 'input_text',
+            'description'       => 'Medio de transporte que usar con más frecuencia',
+            'form_id'           => $idForm,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+
+
+
+
+
+
+        // REGISTROS DE LA BD 1
+        \DB::table('dvarchars')->insert([
+            'dtitle'    => 'Nombre',
+            'content'   => 'Alan Rojar Herrera',
+            'form_id'   => $idForm,
+            'input_id'  => '1',
+            'row_id'    => '1',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('dvarchars')->insert([
+            'dtitle'    => 'Sexo',
+            'content'   => 'Masculino',
+            'form_id'   => $idForm,
+            'input_id'  => '3',
+            'row_id'    => '1',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('dvarchars')->insert([
+            'dtitle'    => 'Municipio',
+            'content'   => 'Ecatepec de Morelos',
+            'form_id'   => $idForm,
+            'input_id'  => '6',
+            'row_id'    => '1',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('dvarchars')->insert([
+            'dtitle'    => 'Colonia',
+            'content'   => 'Izcalli Jardines',
+            'form_id'   => $idForm,
+            'input_id'  => '7',
+            'row_id'    => '1',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+
+        \DB::table('dvarchars')->insert([
+            'dtitle'    => 'Medio de transporte',
+            'content'   => 'Camion',
+            'form_id'   => $idForm,
+            'input_id'  => '11',
+            'row_id'    => '1',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('dvarchars')->insert([
+            'dtitle'    => 'Edad',
+            'content'   => '22',
+            'form_id'   => $idForm,
+            'input_id'  => '2',
+            'row_id'    => '1',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('dvarchars')->insert([
+            'dtitle'    => 'Peso',
+            'content'   => '80',
+            'form_id'   => $idForm,
+            'input_id'  => '4',
+            'row_id'    => '1',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('dvarchars')->insert([
+            'dtitle'    => 'Estatura',
+            'content'   => '186',
+            'form_id'   => $idForm,
+            'input_id'  => '5',
+            'row_id'    => '1',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('dvarchars')->insert([
+            'dtitle'    => 'Costo Semana',
+            'content'   => '300',
+            'form_id'   => $idForm,
+            'input_id'  => '8',
+            'row_id'    => '1',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+        \DB::table('dvarchars')->insert([
+            'dtitle'    => 'Ida (Min)',
+            'content'   => '45',
+            'form_id'   => $idForm,
+            'input_id'  => '9',
+            'row_id'    => '1',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+
+        \DB::table('dvarchars')->insert([
+            'dtitle'    => 'Regreso (Min)',
+            'content'   => '40',
+            'form_id'   => $idForm,
+            'input_id'  => '10',
+            'row_id'    => '1',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         // Usurio Alex

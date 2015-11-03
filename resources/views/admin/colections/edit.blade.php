@@ -7,11 +7,12 @@
 
 
     <!-- REVISAR -->
-    <div class="head-menu">
-        <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> {{ $form->name  }} </h1>
-        @include('admin.colections.complements.partials.menu')
+    <div class="head-fixed">
+        <div class="head-menu">
+            <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> {{ $form->name  }} </h1>
+            @include('admin.colections.complements.partials.menu')
+        </div>
     </div>
-
 
 
 

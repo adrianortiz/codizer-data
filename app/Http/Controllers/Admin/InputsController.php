@@ -37,16 +37,13 @@ class InputsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Requests\CreateInputRequest $request)
     {
         // if($request->ajax()) { return response()->json([ "mensaje" => $request->all() ]); }
-        if ( $request->ajax())
-        {
             Input::create($request->all());
             return response()->json([
-               "mensaje" => "creado"
+               "message" => "Campo creado correctamente."
             ]);
-        }
 
     }
 

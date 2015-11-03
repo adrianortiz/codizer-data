@@ -38,6 +38,10 @@ function closeModalInputs( nameModal )
 
 function showModalInputs(nameModal)
 {
+    $('#title').val('');
+    $('#description').val('');
+    $('#titleChangeTo').text('Título del campo');
+    $("span#descChangeTo").attr("data-original-title", 'Descripción de este campo.' );
     $("#"+nameModal).fadeIn();
 }
 
@@ -61,12 +65,28 @@ $("#registro-textoCorto").click( function()
         dataType: 'json',
         data: datos,
 
-        success:function(){
+        success: function (result) {
             closeModalInputs('modal-textoCorto');
+            $('#msj-success-state').html(result.message);
             $('#msj-success').fadeIn();
             listInputs();
         }
+
+    }).fail(function( jqXHR, textStatus ) {
+
+        $('#msj-danger-state').empty();
+        $(jqXHR).each(function(key,error){
+            // console.log( error.responseJSON );
+            if ( !(error.responseJSON.title == null) )
+                $('#msj-danger-state').append('<li>' + error.responseJSON.title + '</li>');
+
+            if ( !(error.responseJSON.description == null) )
+                $('#msj-danger-state').append('<li>' + error.responseJSON.description + '</li>');
+        });
+
+        $('#msj-danger').fadeIn();
     });
+
 });
 
 listInputs();
@@ -102,17 +122,25 @@ $('#si').click(function (e)
     $('.notificacion-text-fondo').fadeOut();
     $.post(url, data, function (result) {
         div.remove();
-        console.log(result.message);
+        $('#msj-success-state').html('<li>' + result.message + '</li>');
+        $('#msj-success').fadeIn();
     }).fail(function () {
-        console.log('Input no eliminado');
         div.fadeIn();
+        $('#msj-danger-state').html('<li>Input no eliminado</li>');
+        $('#msj-danger').fadeIn();
     });
 });
 
-$('#no').click(function (e) {
+$('#no').click(function (e)
+{
     e.preventDefault();
     $('#modal-delete').fadeOut();
 });
+
+
+
+
+
 
 // Change title & help title
 function chagenTitleInput ()
@@ -125,6 +153,12 @@ function chagenDescInput ()
     $("span#descChangeTo").attr("data-original-title", $('#description').val() );
 }
 
-$('[data-toggle="tooltip"]').tooltip();
 
+// Hide alerts
+$(".alert").click(function() {
+    $(".alert").fadeOut();
+});
+
+
+$('[data-toggle="tooltip"]').tooltip();
 

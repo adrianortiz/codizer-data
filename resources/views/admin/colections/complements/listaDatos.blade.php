@@ -26,13 +26,14 @@
                 @foreach($dTitlesColums as $dTitlesColum)
                     <th>{{ $dTitlesColum->dtitle }}</th>
                 @endforeach
+                    <th>Eliminar</th>
             </tr>
             </thead>
             <tbody>
 
                 @foreach($arrayRows as $arrayRow)
                     <tr>
-                        <th scope="row">{{ $numList++ }}</th>
+                        <th scope="row"><h4 style="margin-top: 7px;">{{ $numList++ }}</h4></th>
                         @foreach($arrayRow++ as $row)
                             <td>
                                 <!-- {!! $row->content !!} -->
@@ -40,10 +41,10 @@
                             </td>
                             <div style="display: none;">{{ $rowIdDelete = $row->row_id }}</div>
                         @endforeach
-                        <td>
-                            <a href="#" class="input-delete" onclick="eliminarInput(this, {{ $rowIdDelete }});" style="margin-right: 60px; text-align: center">
+                        <td class="text-center">
+                            <a href="#" class="input-delete" onclick="eliminarInput(this, {{ $rowIdDelete }} );">
                                 <span>
-                                    <img src="/images/icon-delete.svg">
+                                    <img src="/images/icon-delete.svg" style="padding-top: 7px;">
                                 </span>
                             </a>
                         </td>

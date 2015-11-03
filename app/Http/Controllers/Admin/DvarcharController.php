@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Dvarchar;
 use App\Form;
-use App\Input;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class DvarcharController extends Controller
 {
@@ -156,6 +155,7 @@ class DvarcharController extends Controller
 
     public function storeFormData(Request $request, $id)
     {
+
         // Generar un row_id para la fila de los datos a ingresar
         $newRowId = 1;
 

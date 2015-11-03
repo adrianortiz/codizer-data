@@ -18,5 +18,5 @@ class Input extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'type_validation', 'type_input', 'form_id'];
+    protected $fillable = ['title', 'type_validation', 'type_input', 'form_id', 'description'];
 }
