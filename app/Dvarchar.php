@@ -14,4 +14,5 @@ class Dvarchar extends Model
     protected $table = 'dvarchars';
 
     protected $fillable = ['dtitle', 'content', 'form_id', 'input_id', 'val_text', 'val_textx', 'val_texty', 'val_num', 'val_numx', 'val_numy'];
+
 }

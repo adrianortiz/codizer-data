@@ -65,7 +65,13 @@ Route::group(['middleware' => 'auth'], function () {
         'as' => 'panel'
     ]);
 
+    Route::get('admin/{id}/editar', [
+        'uses' => 'AdminController@edit',
+        'as' => 'admin.edit'
+    ]);
+
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+
         Route::resource('colecciones', 'FormsController');
         Route::resource('complements', 'ComplementsController');
         Route::resource('inputs', 'InputsController');

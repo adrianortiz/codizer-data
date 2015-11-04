@@ -24,9 +24,9 @@ class CreateDVarcharRequest extends Request
     public function rules()
     {
         return [
-            'val_text'    => 'required|array',
-            'val_textx'   => 'required|array',
-            'val_texty'   => 'required|array',
+            'val_text[]'    => 'required|array|content',
+            'val_textx[]'   => 'required|array',
+            'val_texty[]'   => 'required|array',
         ];
     }
 }

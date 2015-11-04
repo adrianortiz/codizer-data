@@ -59,7 +59,9 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        dd($user);
+        return view('admin/admin-edit');
     }
 
     /**

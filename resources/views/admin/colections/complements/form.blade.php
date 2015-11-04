@@ -12,6 +12,7 @@
         </div>
     </div>
 
+    <div class="container-inputs-list min-top">
     {!! Form::open(['route' => ['admin.colecciones.form.data.store', $form], 'method' => 'GET']) !!}
 
         @if(count($inputs) === 0)
@@ -29,6 +30,7 @@
         @endif
 
      {!! Form::close() !!}
+    </div>
 
 
 @endsection

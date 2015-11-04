@@ -15,17 +15,17 @@
     </div>
 
 
+    <div class="container-inputs-list min-top">
 
-    @include('partials.errors')
-    {!! Form::model($form, ['route' => ['admin.colecciones.update', $form], 'method' => 'PUT']) !!}
+        @include('partials.errors')
+        {!! Form::model($form, ['route' => ['admin.colecciones.update', $form], 'method' => 'PUT']) !!}
 
-        @include('admin.colections.partials.filds')
-        <button type="submit" class="btn btn-primary">@lang('collections.btn_edit_collection')</button>
+            @include('admin.colections.partials.filds')
+            <button type="submit" class="btn btn-primary">@lang('collections.btn_edit_collection')</button>
 
-    {!! Form::close() !!}
+        {!! Form::close() !!}
 
-    @include('admin.colections.partials.delete')
-
-
+        @include('admin.colections.partials.delete')
+    </div>
 
 @endsection

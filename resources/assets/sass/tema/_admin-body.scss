@@ -15,6 +15,7 @@ h1 {
   float:left;
   @include box-sizing(border-box);
   @include transition(.3s ease);
+  
 
   &:hover {
     background-color: $gris-200;
@@ -59,6 +60,10 @@ h1 {
         background-color: $azul-100;
         @include box-sizing(border-box);
         @include transition(.3s ease);
+        background-image: url("../images/new.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 60%;
       }
     }
   }

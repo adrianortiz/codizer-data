@@ -4,15 +4,22 @@
 
 @section('content')
 
-    <h1>Nueva colección</h1>
+        <!-- REVISAR -->
+    <div class="head-fixed">
+        <div class="head-menu">
+            <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> NUEVA COLECCIÓN </h1>
+        </div>
+    </div>
 
-    @include('partials.errors')
-    {!! Form::open(['route' => 'admin.colecciones.store', 'method' => 'POST']) !!}
+    <div class="container-inputs-list min-top">
+        @include('partials.errors')
+        {!! Form::open(['route' => 'admin.colecciones.store', 'method' => 'POST']) !!}
 
-        @include('admin.colections.partials.filds')
-        <button type="submit" class="btn btn-primary">@lang('collections.btn_new_collection')</button>
+            @include('admin.colections.partials.filds')
+            <button type="submit" class="btn btn-primary">@lang('collections.btn_new_collection')</button>
 
-    {!! Form::close() !!}
+        {!! Form::close() !!}
+    </div>
 
 
 
