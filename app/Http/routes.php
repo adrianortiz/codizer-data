@@ -117,6 +117,16 @@ Route::group(['middleware' => 'auth'], function () {
             'as' => 'admin.statistics.index'
         ]);
 
+        Route::post('estadisticas/colums', [
+            'uses' => 'StatisticController@showColums',
+            'as' => 'admin.statistics.index.columns'
+        ]);
+
+        Route::post('estadisticas/colums/data', [
+            'uses' => 'StatisticController@getDataColumns',
+            'as' => 'admin.statistics.index.columns.data'
+        ]);
+
     });
 
 

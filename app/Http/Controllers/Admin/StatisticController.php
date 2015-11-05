@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Dvarchar;
 use App\Form;
+use App\Input;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -21,27 +22,50 @@ class StatisticController extends Controller
 
     public function index()
     {
-        $datos = Dvarchar::select('content')
-            ->where('form_id', '1')
-            ->where('dtitle', 'edad')
-            ->first();
-
-        $datos->edad2 = $datos->content * 2;
-        $datos->nombreEdad = "Eres un puto";
-        $datos->content = 'Mi edad es: = ' . $datos->content;
-
-        /*
-        foreach( $datos as $dato){
-            $dato->edad2 = $dato->content * 2;
-            echo $dato->content . '<br>';
-            echo $dato->edad2 . '<br>';
-        }*/
-
-        dd($datos);
-
-        /*
         $collections = Form::where('user_id', Auth::user()->id)->get();
-        return view('admin.statistics.index', compact('collections'));*/
+        return view('admin.statistics.index', compact('collections'));
+    }
+
+
+
+    /**
+     * Show Columns from Collection selected
+     *
+     * @param Request $request
+     */
+    public function showColums(Request $request) {
+
+        $columns = Input::where('form_id', $request->id)->get();
+        $columns->message = "Correcto";
+        return response()->json(
+            $columns->toArray()
+        );
+
+    }
+
+    public function getDataColumns(Request $request) {
+
+        // $titlesColumns = $request->input('title');
+        // dd($titlesColumns, $request->frecuencia);
+
+        $arrayDataType = array();
+        if ($request->has('title')) {
+            foreach ($request->input('title') as $titleX) {
+                $arrayDataType[] =  Dvarchar::select('content')
+                                    ->where('form_id', $request->form)
+                                    ->where('dtitle', $titleX)
+                                    ->get();
+            }
+        }
+
+        return response()->json(
+            $arrayDataType[0]->toArray()
+        );
+
+        dd($request->all());
+        dd($arrayDataType[0]->toArray()[0]);  // dd( $request->all());
+
+
     }
 
 
@@ -112,13 +136,5 @@ class StatisticController extends Controller
         //
     }
 
-    /**
-     * Show Columns from Collection selected
-     *
-     * @param Request $request
-     * @param $id
-     */
-    public function showColums(Request $request, $id) {
-        return "CONECTADO";
-    }
+
 }

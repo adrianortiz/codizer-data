@@ -37,7 +37,7 @@ class DvarcharController extends Controller
             ->select('row_id')
             ->where('form_id', $id)
             ->groupBy('row_id')
-            ->paginate(5);
+            ->paginate(40);
 
 
         // CREAR ARRAY

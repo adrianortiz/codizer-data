@@ -21,7 +21,7 @@
             @foreach($inputs as $input)
                 <div class="form-group">
                     <label for="{{ $input->title }}">{{ $input->title }}</label>
-                    {!! Form::text( $input->type_validation . '[]', old('content'), ['id' => $input->title, 'class' => 'form-control', 'title' => $input->description, 'data-toggle' => 'tooltip', 'data-placement' => 'right']) !!}
+                    {!! Form::text( $input->type_validation . '[]', old('content'), ['id' => $input->title, 'class' => 'form-control', 'required', 'title' => $input->description, 'data-toggle' => 'tooltip', 'data-placement' => 'right']) !!}
                     {!! Form::hidden( $input->type_validation . 'x[]', $input->id) !!}
                     {!! Form::hidden( $input->type_validation . 'y[]', $input->title) !!}
                 </div>
