@@ -23,6 +23,7 @@ class StatisticController extends Controller
     public function index()
     {
         $collections = Form::where('user_id', Auth::user()->id)->get();
+
         return view('admin.statistics.index', compact('collections'));
     }
 
@@ -58,13 +59,17 @@ class StatisticController extends Controller
             }
         }
 
-        return response()->json(
-            $arrayDataType[0]->toArray()
-        );
+        // PROCESOS DE ESTADISTICA
+        $media = Dvarchar::media($arrayDataType[0]->all());
 
-        dd($request->all());
-        dd($arrayDataType[0]->toArray()[0]);  // dd( $request->all());
+        // RESPUESTA JSON PARA GRAFICAR
+        return response()->json([
+            // $arrayDataType[0]->toArray()
+            "media" => $media
+        ]);
 
+        // dd($request->all());
+        // dd($arrayDataType[0]->toArray()[0]);  // dd( $request->all());
 
     }
 
