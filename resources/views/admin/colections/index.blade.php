@@ -16,7 +16,7 @@
     @endif
         <div class="head-fixed">
             <div class="head-menu">
-                <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> Collecciones </h1>
+                <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> Colecciones de datos</h1>
             </div>
 
             <div>

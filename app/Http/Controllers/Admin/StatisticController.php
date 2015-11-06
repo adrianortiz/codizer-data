@@ -36,7 +36,10 @@ class StatisticController extends Controller
      */
     public function showColums(Request $request) {
 
-        $columns = Input::where('form_id', $request->id)->get();
+        $columns = Input::where('form_id', $request->id)
+                        ->where('type_validation', 'val_num')
+                        ->orWhere('type_validation', 'val_double')
+                        ->get();
         $columns->message = "Correcto";
         return response()->json(
             $columns->toArray()
@@ -49,6 +52,7 @@ class StatisticController extends Controller
         // $titlesColumns = $request->input('title');
         // dd($titlesColumns, $request->frecuencia);
 
+        dd( $request->all() );
         $arrayDataType = array();
         if ($request->has('title')) {
             foreach ($request->input('title') as $titleX) {

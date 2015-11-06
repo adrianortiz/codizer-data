@@ -12,12 +12,25 @@ function listInputs()
     var contador = 1;
     tablaDatos.empty();
     $.get(route, function(res) {
+        var nomVal = null;
         $(res).each(function(key,value){
+
             if ( value.type_validation == 'val_text' )
-                tablaDatos.append('<div class="container-input-base" data-id="'+ value.id +'"><div>'+ contador +'</div><div><span><img src="/images/input.svg"></span>'+ value.title +'<span style="float: right; font-weight: bolder; width: 120px; text-align: center; border-left: solid 1px #D8D8D8;">Alfanumérico</span></div><div><a href="#"><span><img src="/images/icon-edit.svg"></span></a></div><div><a href="#" class="input-delete" onclick="eliminarInput(this);"><span><img src="/images/icon-delete.svg"></span></a></div></div>');
+                nomVal = 'Texto';
+
+            if ( value.type_validation == 'val_text_num' )
+                nomVal = 'Alfanumerico';
 
             if ( value.type_validation == 'val_num' )
-                tablaDatos.append('<div class="container-input-base" data-id="'+ value.id +'"><div>'+ contador +'</div><div><span><img src="/images/input.svg"></span>'+ value.title +'<span style="float: right; font-weight: bolder; width: 120px; text-align: center; border-left: solid 1px #D8D8D8;">Numérico</span></div><div><a href="#"><span><img src="/images/icon-edit.svg"></span></a></div><div><a href="#" class="input-delete" onclick="eliminarInput(this);"><span><img src="/images/icon-delete.svg"></span></a></div></div>');
+                nomVal = 'Numérico';
+
+            if ( value.type_validation == 'val_double' )
+                nomVal = 'Decimales';
+
+            if ( value.type_validation == 'val_date' )
+                nomVal = 'Fecha';
+
+            tablaDatos.append('<div class="container-input-base" data-id="'+ value.id +'"><div>'+ contador +'</div><div><span><img src="/images/input.svg"></span>'+ value.title +'<span style="float: right; font-weight: bolder; width: 120px; text-align: center; border-left: solid 1px #D8D8D8;">' + nomVal + '</span></div><div><a href="#"><span><img src="/images/icon-edit.svg"></span></a></div><div><a href="#" class="input-delete" onclick="eliminarInput(this);"><span><img src="/images/icon-delete.svg"></span></a></div></div>');
             contador++;
         });
     });

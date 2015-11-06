@@ -20,11 +20,11 @@
     @else
 
         <table class="table table-condensed">
-            <thead>
+            <thead scope="row">
             <tr>
                 <th>#</th>
                 @foreach($dTitlesColums as $dTitlesColum)
-                    <th>{{ $dTitlesColum->dtitle }}</th>
+                    <th style="font-size: 14px;">{{ $dTitlesColum->dtitle }}</th>
                 @endforeach
                     <th>Eliminar</th>
             </tr>

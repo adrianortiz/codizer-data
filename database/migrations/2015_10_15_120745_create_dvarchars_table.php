@@ -20,7 +20,7 @@ class CreateDvarcharsTable extends Migration
             $table->integer('form_id');
             $table->integer('input_id');
             $table->integer('row_id');
-            $table->enum('type_validation', ['val_text', 'val_date', 'val_num']);
+            $table->enum('type_validation', ['val_text', 'val_text_num', 'val_num', 'val_double', 'val_date']);
 
             $table->timestamps();
         });

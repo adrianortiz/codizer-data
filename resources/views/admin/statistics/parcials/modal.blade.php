@@ -32,13 +32,33 @@
 
                 <div id="form-colums-div" style="display: none">
                     {!! Form::open(['route' => 'admin.statistics.index.columns.data', 'method' => 'POST', 'id' => 'form-columns-data']) !!}
+
+                        <div class="form-group">
+                            <label>COLUMNAS</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="num_colums">No. Columnas a graficar</label>
+                            {!! Form::select('num_colums', array(
+                                '1' => '1 columna',
+                                '2' => '2 o más columnas',
+                            ), 'num_colums', ['id' => 'num_colums', 'class' => 'form-control']) !!}
+                        </div>
+
                         <div id="list-colums">
                             <div class="list-group" id="container-checks">
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label for="group">Grupos de...</label>
+                            {!! Form::number('gruop', 2, ['id'=> 'group', 'class' => 'form-control']) !!}
+                        </div>
+
                         <div class="form-group">
                             <label for="frecuencia">Gráficar</label>
                             {!! Form::select('frecuencia', array(
+                                'histograma' => 'Histograma',
                                 'estadistico' => 'Estadisticos',
                                 'grafico' => 'Graficos',
                                 'porvar' => 'Por Variable',

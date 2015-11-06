@@ -50,10 +50,10 @@ class UserTableSeeder extends Seeder
         // GENERAR INPUTS DEL FORMULARIO Alumnos
 
         \DB::table('inputs')->insert([
-            'title'             => 'Nombre',
+            'title'             => 'Nombre Completo',
             'type_validation'   => 'val_text',
             'type_input'        => 'input_text',
-            'description'       => 'Nombre Alumno',
+            'description'       => 'Nombre completo del alumno',
             'form_id'           => $idForm,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
@@ -63,37 +63,37 @@ class UserTableSeeder extends Seeder
             'title'             => 'Edad',
             'type_validation'   => 'val_num',
             'type_input'        => 'input_text',
-            'description'       => 'Edad Alumno',
+            'description'       => 'Edad del alumno',
             'form_id'           => $idForm,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
         ]);
 
         \DB::table('inputs')->insert([
-            'title'             => 'Sexo',
+            'title'             => 'Sexo (Masculino, Femenino)',
             'type_validation'   => 'val_text',
             'type_input'        => 'input_text',
-            'description'       => 'Sexo Alumno',
+            'description'       => 'Sexo del Alumno (Masculino o Femenino)',
             'form_id'           => $idForm,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
         ]);
 
         \DB::table('inputs')->insert([
-            'title'             => 'Peso',
-            'type_validation'   => 'val_num',
+            'title'             => 'Peso (Kg)',
+            'type_validation'   => 'val_double',
             'type_input'        => 'input_text',
-            'description'       => 'Peso Alumno',
+            'description'       => 'Peso del Alumno (Eje: 1.73)',
             'form_id'           => $idForm,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
         ]);
 
         \DB::table('inputs')->insert([
-            'title'             => 'Estatura',
+            'title'             => 'Estatura (cm)',
             'type_validation'   => 'val_num',
             'type_input'        => 'input_text',
-            'description'       => 'Estatura Alumno',
+            'description'       => 'Estatura del Alumno (Eje: 173)',
             'form_id'           => $idForm,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
@@ -103,7 +103,7 @@ class UserTableSeeder extends Seeder
             'title'             => 'Municipio',
             'type_validation'   => 'val_text',
             'type_input'        => 'input_text',
-            'description'       => 'Municipio donde recide Alumno',
+            'description'       => 'Municipio donde recide el Alumno',
             'form_id'           => $idForm,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
@@ -111,39 +111,39 @@ class UserTableSeeder extends Seeder
 
         \DB::table('inputs')->insert([
             'title'             => 'Colonia',
-            'type_validation'   => 'val_text',
+            'type_validation'   => 'val_text_num',
             'type_input'        => 'input_text',
-            'description'       => 'Colonia donde recide Alumno',
+            'description'       => 'Colonia donde recide el Alumno',
             'form_id'           => $idForm,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
         ]);
 
         \DB::table('inputs')->insert([
-            'title'             => 'Costo Semana',
-            'type_validation'   => 'val_num',
+            'title'             => 'Costo por Semana (pesos)',
+            'type_validation'   => 'val_double',
             'type_input'        => 'input_text',
-            'description'       => 'Gastor por semana',
+            'description'       => 'Gastos realizados por semana',
             'form_id'           => $idForm,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
         ]);
 
         \DB::table('inputs')->insert([
-            'title'             => 'Ida (Min)',
+            'title'             => 'Tiempo Ida (minutos)',
             'type_validation'   => 'val_num',
             'type_input'        => 'input_text',
-            'description'       => 'Minutos que tarda',
+            'description'       => 'Minutos que tarda en ir a la Universidad',
             'form_id'           => $idForm,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
         ]);
 
         \DB::table('inputs')->insert([
-            'title'             => 'Regreso (Min)',
+            'title'             => 'Tiempo Regreso (minutos)',
             'type_validation'   => 'val_num',
             'type_input'        => 'input_text',
-            'description'       => 'Minutos que tarda',
+            'description'       => 'Minutos que tarda en volver de la Universidad',
             'form_id'           => $idForm,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
@@ -153,7 +153,7 @@ class UserTableSeeder extends Seeder
             'title'             => 'Medio de transporte',
             'type_validation'   => 'val_text',
             'type_input'        => 'input_text',
-            'description'       => 'Medio de transporte que usar con más frecuencia',
+            'description'       => 'Medio de transporte que usa con más frecuencia',
             'form_id'           => $idForm,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
@@ -163,7 +163,7 @@ class UserTableSeeder extends Seeder
 
 
 
-
+        /*
 
         // REGISTROS DE LA BD 1
         \DB::table('dvarchars')->insert([
@@ -277,7 +277,7 @@ class UserTableSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
         ]);
-
+        */
 
 
 

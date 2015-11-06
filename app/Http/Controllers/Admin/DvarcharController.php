@@ -108,13 +108,19 @@ class DvarcharController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::update('update dvarchars set content = ? where id = ?', [ $request->input('content') , $id]);
+
+        $content = Dvarchar::changeValToTypeValidation(
+            Dvarchar::findOrFail($id)->type_validation,
+            $request->input('content'));
+
+        DB::update('update dvarchars set content = ? where id = ?', [ $content, $id]);
 
         $message = 'Registro actualizado';
 
         if ($request->ajax()) {
             return response()->json([
-                'message' => $message
+                'message' => $message,
+                'content' => $content
             ]);
         }
 
@@ -156,89 +162,16 @@ class DvarcharController extends Controller
     public function storeFormData(Request $request, $id)
     {
 
-        // Generar un row_id para la fila de los datos a ingresar
-        $newRowId = 1;
+        $typeValidations = ['val_text', 'val_text_num', 'val_num', 'val_double', 'val_date'];
 
-        $rowId = DB::table('dvarchars')
-            ->where('form_id', $id)
-            ->max('row_id');
 
-        if ( !($rowId == 0 || empty($rowId) )) {
-            $newRowId = $rowId + 1;
+        $newRowId = Dvarchar::getNewRowId( $id );
+
+        foreach( $typeValidations as $typeValidation)
+        {
+            if ($request->has( $typeValidation ))
+                Dvarchar::storeData( $request, $id, $typeValidation, $newRowId);
         }
-
-        // Obtener datos
-        $inputsID = $request->input('val_textx');
-        $inputsNom = $request->input('val_texty');
-
-        // Alamacenar datos
-        $control = 0;
-
-        if ($request->has('val_text')) {
-            foreach ($request->input('val_text') as $val_text) {
-                DB::table('dvarchars')->insert([
-                    'dtitle' => $inputsNom[$control],
-                    'content' => $val_text,
-                    'form_id' => $id,
-                    'input_id' => $inputsID[$control],
-                    'row_id' => $newRowId,
-                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
-                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
-                ]);
-                $control++;
-            }
-        }
-
-
-
-        $inputsID = $request->input('val_numx');
-        $inputsNom = $request->input('val_numy');
-        $control = 0;
-
-        if ($request->has('val_num')) {
-            foreach ($request->input('val_num') as $val_num) {
-                DB::table('dvarchars')->insert([
-                    'dtitle' => $inputsNom[$control],
-                    'content' => $val_num,
-                    'form_id' => $id,
-                    'input_id' => $inputsID[$control],
-                    'row_id' => $newRowId,
-                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
-                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
-                ]);
-                $control++;
-            }
-        }
-
-        // echo dd($inputsID);
-
-        // echo "<br>ID DE MI form_id ES: " . $id . "<br>Actual Row_id es: " . $rowId . "<br>Nuevo row_id es: " . $newRowId;
-
-        /*
-        $form = new Dvarchar($request->input('val_num')->all());
-        $form->save();
-        */
-
-
-        /*
-        $inputs = $request->all();
-
-        $valor1 = "No Existe val_text";
-        $valor2 = "No Existe val_num";
-
-        foreach($inputs as $input) {
-
-            if ($request->has('val_text')) {
-                $valor1 = "Existe val_text: ";
-            }
-
-            if ($request->has('val_num')) {
-                $valor2 = "Existe val_num: ";
-            }
-        }
-
-        return $valor1 . " - ". $valor2;
-        */
 
         $message = 'Datos almacenados';
         Session::flash('message', $message);

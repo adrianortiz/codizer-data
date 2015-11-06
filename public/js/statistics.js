@@ -46,7 +46,7 @@ $("#get-columns").click( function()
 
         success: function (result) {
 
-            formColumns.append('<div class="form-group"><label>COLUMNAS</label></div><div class="btn-group-vertical" data-toggle="buttons" style="width: 233px;">');
+            formColumns.append('<div class="form-group"><label>Seleccionar columnas</label></div><div class="btn-group-vertical" data-toggle="buttons" style="width: 233px;">');
 
             $(result).each(function(key,value){
                 formColumns.append('<label class="btn btn-primary inactive check-input"><input type="checkbox" name="title[]" autocomplete="off" value="'+ value.title +'">' + value.title + '</label>');

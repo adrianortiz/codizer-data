@@ -87,6 +87,8 @@ function updateInput(objThis, updateThis)
 
         $.post(url, data, function (result) {
             console.log(result.message);
+            objThis.value = result.content;
+
         }).fail(function () {
             alert('Input no actualizado');
             objThis.value = objY;
