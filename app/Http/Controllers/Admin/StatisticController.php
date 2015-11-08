@@ -54,7 +54,7 @@ class StatisticController extends Controller
         // $titlesColumns = $request->input('title');
         // dd($titlesColumns, $request->frecuencia);
 
-        dd( $request->all() );
+        // dd( $request->all() );
         $arrayDataType = array();
         if ($request->has('title')) {
             foreach ($request->input('title') as $titleX) {

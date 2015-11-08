@@ -45,5 +45,8 @@
 @include('admin.statistics.parcials.modal')
 
 @section('scripts')
+    <script src="{{ asset('/js/highcharts.js') }}"></script>
     <script src="{{ asset('/js/statistics.js') }}"></script>
+    <script src="{{ asset('/js/module/data.js') }}"></script>
+    <script src="{{ asset('/js/module/exporting.js') }}"></script>
 @endsection

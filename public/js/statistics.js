@@ -142,15 +142,45 @@ function getDataToGraphics()
 
         success: function (res) {
             hideShowAlert('msj-success', 'Datos de la gráfica obtenidos');
-
+            /*
             divData.append('<div><h1>Gráfica X</h1>');
-
             $(res).each(function(key,value){
-
                 divData.append('<p>' + value.content + '</p>');
             });
-
             divData.append('</div>');
+            */
+
+            divData.highcharts({
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Fruit Consumption'
+                },
+                xAxis: {
+                    categories: ['Apples', 'Bananas', 'Oranges']
+                },
+                yAxis: {
+                    title: {
+                        text: 'Fruit eaten'
+                    }
+                },
+                series: [{
+                    name: 'Jane',
+                    data: [1, 0, 4]
+                }, {
+                    name: 'John',
+                    data: [5, 7, 3]
+                }],
+
+                tooltip: {
+                    shared: true,
+                    crosshairs: true
+                }
+            });
+
+
+
         }
 
     }).fail(function( jqXHR, textStatus ) {
@@ -192,4 +222,23 @@ function hideShowAlert(show, desc)
     $(".alert").click();
     $('#' + show + '-state').html(desc);
     $('#' + show).fadeIn();
+}
+
+
+function randString(n)
+{
+    if(!n)
+    {
+        n = 5;
+    }
+
+    var text = '';
+    var possible = 'abcdefghijklmnopqrstuvwxyz';
+
+    for(var i=0; i < n; i++)
+    {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return text;
 }
