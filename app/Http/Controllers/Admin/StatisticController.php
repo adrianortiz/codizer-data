@@ -38,8 +38,10 @@ class StatisticController extends Controller
 
         $columns = Input::where('form_id', $request->id)
                         ->where('type_validation', 'val_num')
-                        ->orWhere('type_validation', 'val_double')
+                        ->orWhere('form_id', $request->id)
+                        ->where('type_validation', 'val_double')
                         ->get();
+
         $columns->message = "Correcto";
         return response()->json(
             $columns->toArray()

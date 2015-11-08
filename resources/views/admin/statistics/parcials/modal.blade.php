@@ -38,17 +38,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="num_colums">No. Columnas a graficar</label>
+                            <label for="num_colums">No. Columnas a gráficar</label>
                             {!! Form::select('num_colums', array(
                                 '1' => '1 columna',
                                 '2' => '2 o más columnas',
                             ), 'num_colums', ['id' => 'num_colums', 'class' => 'form-control']) !!}
                         </div>
 
-                        <div id="list-colums">
-                            <div class="list-group" id="container-checks">
-                            </div>
-                        </div>
+                        <div class="form-group"><label>Seleccionar columnas</label></div>
+                        <div id="list-colums" class="btn-group-vertical" data-toggle="buttons" style="width: 233px;"></div>
 
                         <div class="form-group">
                             <label for="group">Grupos de...</label>
@@ -65,7 +63,7 @@
                             ), 'frecuencia', ['id' => 'frecuencia', 'class' => 'form-control']) !!}
                         </div>
                         {!! Form::hidden('form', '123', ['id' => 'controlX']) !!}
-                        <div class="form-group"><a id="get-data" class="btn btn-primary">ENVIAR</a></div>
+                        <div class="form-group"><a id="get-data" class="btn btn-primary">GRÁFICAR</a></div>
                     {!! Form::close() !!}
 
 

@@ -71,8 +71,11 @@
                 <div class="form-group">
                     <label for="type_validation">Tipo de dato</label>
                     {!! Form::select('type_validation', array(
-                        'val_text' => 'Alfanumerico',
-                        'val_num' => 'Número',
+                        'val_text'      => 'Texto',
+                        'val_text_num'  => 'Alfanumerico',
+                        'val_num'       => 'Número entero',
+                        'val_double'    => 'Numero + decimales',
+                        'val_date'      => 'fechas'
                     ), 'alfanumerico', ['id' => 'type_validation']) !!}
                     <!--
                     'val_date' => 'Fecha',

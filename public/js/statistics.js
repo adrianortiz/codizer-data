@@ -36,46 +36,41 @@ $("#get-columns").click( function()
     var datos = $("#form-columns").serializeArray();
     var route = $("#form-columns").attr('action');
     var formColumns = $('#list-colums');
+    formColumns.empty();
 
     $.ajax({
         url: route,
         type: 'POST',
         dataType: 'json',
-        async: false,
+        // async: false,
         data: datos,
 
-        success: function (result) {
-
-            formColumns.append('<div class="form-group"><label>Seleccionar columnas</label></div><div class="btn-group-vertical" data-toggle="buttons" style="width: 233px;">');
-
-            $(result).each(function(key,value){
-                formColumns.append('<label class="btn btn-primary inactive check-input"><input type="checkbox" name="title[]" autocomplete="off" value="'+ value.title +'">' + value.title + '</label>');
+        success: function (result)
+        {
+            $('#get-columns').attr("disabled", true);
+            $('#id').attr("disabled", true);
+            $(result).each(function(key,value)
+            {
+                formColumns.append('<label class="btn btn-primary inactive check-input"><input type="checkbox" name="title[]" autocomplete="off" class="hola" value="'+ value.title +'">' + value.title + '</label>');
             });
-
-            formColumns.append('</div>');
 
             hideShowAlert('msj-success', 'Columnas obtenidas');
 
-            $('#get-columns').slideUp( function() {
+            $('#get-columns').slideUp( function()
+            {
                 $('#form-colums-div').slideDown();
             });
 
-            // $('#id').attr('disabled', 'disabled');
             $('#controlX').val( $('#id').val());
 
-
-            $('#container-checks').on('click', 'label.check-input input', function(e)
-            {
-                e.preventDefault();
-                alert("Puto");
-            });
         }
 
-    }).fail(function( jqXHR, textStatus ) {
+    }).fail(function( jqXHR, textStatus )
+    {
 
         $('#msj-danger-state').empty();
-        $(jqXHR).each(function(key,error){
-
+        $(jqXHR).each(function(key,error)
+        {
             // console.log( error.responseJSON );
             /*
             if ( !(error.responseJSON.title == null) )
@@ -84,7 +79,6 @@ $("#get-columns").click( function()
             if ( !(error.responseJSON.description == null) )
                 $('#msj-danger-state').append('<li>' + error.responseJSON.description + '</li>');
                 */
-
             hideShowAlert('msj-danger', 'Ocurrio un problema');
         });
 
@@ -97,9 +91,44 @@ $("#get-columns").click( function()
 
 
 /*
- GET COLUMNS DATA FROM COLUMNS SELECTED
+     VALIDATE COLUMNS SELECTED BY NUM COLUMNS TO GRAPHICS
  */
 $("#get-data").click( function()
+{
+    var columsGraph = $('#num_colums').val();
+    var numColSelect = 0;
+
+    if( $('#group').val() >= 2 ) {
+
+        $('input:checkbox:checked').each( function() { numColSelect++; });
+
+        if (numColSelect == 0)
+            hideShowAlert('msj-danger', 'Seleccionar columnas a gráficar.');
+
+        if( columsGraph == 1 && numColSelect == 1)
+            getDataToGraphics();
+
+        if( columsGraph == 1 && numColSelect >= 2)
+            hideShowAlert('msj-danger', 'No puedes elegir más de 1 columna.<br>Porque seleccionaste 1 columna a gráficar.');
+
+        if( columsGraph == 2 && numColSelect >= 2)
+            getDataToGraphics();
+
+        if( columsGraph == 2 && numColSelect < 2)
+            hideShowAlert('msj-danger', 'Selecciona almenos 2 columnas.<br>Porque seleccionaste 2 o más columnas a gráficar.');
+
+        numColSelect = 0;
+    } else {
+        hideShowAlert('msj-danger', 'La graficación en grupos tiene que ser igual o mayor a 2.');
+    }
+
+});
+
+
+/*
+ GET COLUMNS DATA FROM COLUMNS SELECTED
+ */
+function getDataToGraphics()
 {
     var datos = $("#form-columns-data").serializeArray();
     var route = $("#form-columns-data").attr('action');
@@ -132,19 +161,20 @@ $("#get-data").click( function()
         });
 
     });
-
-});
-
+}
 
 
-
-$('#btn-limpiar').click( function() {
+$('#btn-limpiar').click( function()
+{
     resetClear();
 });
 
-function resetClear() {
-    // $('#id').attr('disabled', '');
-    $('#get-columns').slideDown( function() {
+function resetClear()
+{
+    $('#get-columns').attr("disabled", false);
+    $('#id').attr("disabled", false);
+    $('#get-columns').slideDown( function()
+    {
         $('#list-colums').empty(); // limpiar columnas
         $('#form-colums-div').slideUp(); // mostrar boton enviar collection
     });
