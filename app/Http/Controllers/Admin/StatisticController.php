@@ -58,12 +58,16 @@ class StatisticController extends Controller
         $arrayDataType = array();
         if ($request->has('title')) {
             foreach ($request->input('title') as $titleX) {
-                $arrayDataType[] =  Dvarchar::select('content')
+                $arrayDataType[] =  Dvarchar::select('dtitle', 'content', 'form_id')
                                     ->where('form_id', $request->form)
                                     ->where('dtitle', $titleX)
                                     ->get();
             }
         }
+
+        // dd( var_dump( $arrayDataType[0]->toArray() ) );
+
+        // dd( Dvarchar::byVar($arrayDataType[0]->all()) );
 
         // PROCESOS DE ESTADISTICA
         $media = Dvarchar::media($arrayDataType[0]->all());
@@ -71,7 +75,8 @@ class StatisticController extends Controller
         // RESPUESTA JSON PARA GRAFICAR
         return response()->json([
             // $arrayDataType[0]->toArray()
-            "media" => $media
+            // "media" => $media
+            Dvarchar::byVar($arrayDataType[0]->all())
         ]);
 
         // dd($request->all());

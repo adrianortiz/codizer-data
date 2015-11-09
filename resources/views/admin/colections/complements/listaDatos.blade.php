@@ -24,7 +24,7 @@
             <tr>
                 <th>#</th>
                 @foreach($dTitlesColums as $dTitlesColum)
-                    <th style="font-size: 14px;">{{ $dTitlesColum->dtitle }}</th>
+                    <th style="font-size: 14px;">{{ substr($dTitlesColum->dtitle, 0, 16) . '...' }}</th>
                 @endforeach
                     <th>Eliminar</th>
             </tr>

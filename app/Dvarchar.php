@@ -47,6 +47,9 @@ class Dvarchar extends Model
     static function changeValToTypeValidation( $typeValidation , $val_content)
     {
 
+        $val_content = ucwords($val_content);
+        $val_content = ucwords(strtolower($val_content));
+
         if($typeValidation == 'val_text')
             return (string) $val_content;
 
@@ -90,6 +93,26 @@ class Dvarchar extends Model
             ]);
             $control++;
         }
+    }
+
+
+    static function byVar( $datos )
+    {
+
+        $valRepetidos['categories'] = array();
+        $series['data'] = array();
+        foreach( array_count_values( Dvarchar::arrayDatosNum($datos) )  as $key => $value)
+        {
+            $valRepetidos['categories'][]   = $key;
+            $series['data'][]               = $value;
+        }
+
+        $array[0] = $valRepetidos;
+        $array[1] = 'Alumnos';
+        $array[2] = $series;
+        $array[3] = $datos[0]->dtitle;
+
+        return $array;
     }
 
     /**

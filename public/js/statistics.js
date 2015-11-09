@@ -128,12 +128,16 @@ $("#get-data").click( function()
 /*
  GET COLUMNS DATA FROM COLUMNS SELECTED
  */
+var graphDiv = 0;
 function getDataToGraphics()
 {
     var datos = $("#form-columns-data").serializeArray();
     var route = $("#form-columns-data").attr('action');
     var divData = $('#div-data');
+    var items = ['#C573F7','#8085e9', '#0088FF', '#FF2558', '#FF9500',
+        '#C573F7', '#FFCF00', '#2b908f', '#41D960', '#A3A5A8'];
 
+    var item = items[Math.floor(Math.random()*items.length)];
     $.ajax({
         url: route,
         type: 'POST',
@@ -141,7 +145,7 @@ function getDataToGraphics()
         data: datos,
 
         success: function (res) {
-            hideShowAlert('msj-success', 'Datos de la gráfica obtenidos');
+            $(".alert").click();
             /*
             divData.append('<div><h1>Gráfica X</h1>');
             $(res).each(function(key,value){
@@ -150,35 +154,37 @@ function getDataToGraphics()
             divData.append('</div>');
             */
 
-            divData.highcharts({
+            console.log( res[0][0]['categories'] );
+
+            graphDiv++;
+            $('#graph' + graphDiv).highcharts({
                 chart: {
-                    type: 'bar'
+                    // type: 'column'
                 },
                 title: {
                     text: 'Fruit Consumption'
                 },
                 xAxis: {
-                    categories: ['Apples', 'Bananas', 'Oranges']
+                     categories: res[0][0]['categories'].sort() // Categories
                 },
                 yAxis: {
                     title: {
-                        text: 'Fruit eaten'
+                        text: res[0][1] // Alumnos
                     }
                 },
                 series: [{
-                    name: 'Jane',
-                    data: [1, 0, 4]
-                }, {
-                    name: 'John',
-                    data: [5, 7, 3]
+                    name: res[0][3], // Edad
+                    data: res[0][2]['data']
+                // }, {
+                //    name: 'John',
+                //    data: [5, 7, 3]
                 }],
-
-                tooltip: {
-                    shared: true,
-                    crosshairs: true
-                }
+                colors: [item, '#434348', '#90ed7d', '#f7a35c', '#1A91F2',
+                    '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1']
             });
 
+            $('#graph' + graphDiv).before('<div><h2 style="text-align: center">Datos analizados</h2></div>');
+            $('#graph' + graphDiv).after('<div class="container-rangos"> <div><div></div><h3>19.67</h3><p>Media</p></div> <div><div></div><h3>19.67</h3><p>Mediana</p></div> <div><div></div><h3>19.67</h3><p>Moda</p></div> </div>');
 
 
         }
@@ -225,20 +231,55 @@ function hideShowAlert(show, desc)
 }
 
 
-function randString(n)
-{
-    if(!n)
-    {
-        n = 5;
-    }
 
-    var text = '';
-    var possible = 'abcdefghijklmnopqrstuvwxyz';
-
-    for(var i=0; i < n; i++)
-    {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-
-    return text;
+function filterPath(string) {
+    return string
+        .replace(/^\//,'')
+        .replace(/(index|default).[a-zA-Z]{3,4}$/,'')
+        .replace(/\/$/,'');
 }
+var locationPath = filterPath(location.pathname);
+var scrollElem = scrollableElement('html', 'body');
+
+$('a[href*=#]').each(function() {
+    var thisPath = filterPath(this.pathname) || locationPath;
+    if (  locationPath == thisPath
+        && (location.hostname == this.hostname || !this.hostname)
+        && this.hash.replace(/#/,'') ) {
+        var $target = $(this.hash), target = this.hash;
+        if (target) {
+            var targetOffset = $target.offset().top;
+            $(this).click(function(event) {
+                event.preventDefault();
+                $(scrollElem).animate({scrollTop: targetOffset}, 400, function() {
+                    location.hash = target;
+                });
+            });
+        }
+    }
+});
+
+
+// use the first element that is "scrollable"
+function scrollableElement(els) {
+    for (var i = 0, argLength = arguments.length; i <argLength; i++) {
+        var el = arguments[i],
+            $scrollElement = $(el);
+        if ($scrollElement.scrollTop()> 0) {
+            return el;
+        } else {
+            $scrollElement.scrollTop(1);
+            var isScrollable = $scrollElement.scrollTop()> 0;
+            $scrollElement.scrollTop(0);
+            if (isScrollable) {
+                return el;
+            }
+        }
+    }
+    return [];
+}
+
+
+$('#graphA1xx').click( function() {
+    $('#div-data').scrollTop( -1000 );
+});

@@ -47,6 +47,6 @@
 @section('scripts')
     <script src="{{ asset('/js/highcharts.js') }}"></script>
     <script src="{{ asset('/js/statistics.js') }}"></script>
-    <script src="{{ asset('/js/module/data.js') }}"></script>
-    <script src="{{ asset('/js/module/exporting.js') }}"></script>
+    <script src="{{ asset('/js/modules/data.js') }}"></script>
+    <script src="{{ asset('/js/modules/exporting.js') }}"></script>
 @endsection

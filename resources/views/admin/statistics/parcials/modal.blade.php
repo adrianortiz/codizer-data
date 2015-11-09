@@ -83,6 +83,10 @@
             <h1 id="nav" class="text-center">Gráficas</h1>
 
             <div class="form-preview" id="div-data">
+                @for( $i = 0; $i <= 30; $i++)
+                    <div id="graph{{$i}}"></div>
+                @endfor
+
 
             </div>
 
