@@ -103,8 +103,8 @@ class Dvarchar extends Model
         $series['data'] = array();
         foreach( array_count_values( Dvarchar::arrayDatosNum($datos) )  as $key => $value)
         {
-            $valRepetidos['categories'][]   = $key;
-            $series['data'][]               = $value;
+            $valRepetidos['categories'][]   = (double) $key;
+            $series['data'][]               = (double) $value;
         }
 
         $array[0] = $valRepetidos;

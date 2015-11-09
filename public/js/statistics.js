@@ -145,21 +145,14 @@ function getDataToGraphics()
         data: datos,
 
         success: function (res) {
+
             $(".alert").click();
-            /*
-            divData.append('<div><h1>Gráfica X</h1>');
-            $(res).each(function(key,value){
-                divData.append('<p>' + value.content + '</p>');
-            });
-            divData.append('</div>');
-            */
 
-            console.log( res[0][0]['categories'] );
-
+            console.log( res[0][0]['categories'].sort() );
             graphDiv++;
             $('#graph' + graphDiv).highcharts({
                 chart: {
-                    // type: 'column'
+                     type: 'column'
                 },
                 title: {
                     text: res[0][1] + '->' + res[0][3] // Alumnos
