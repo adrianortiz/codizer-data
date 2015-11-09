@@ -162,7 +162,7 @@ function getDataToGraphics()
                     // type: 'column'
                 },
                 title: {
-                    text: 'Fruit Consumption'
+                    text: res[0][1] + '->' + res[0][3] // Alumnos
                 },
                 xAxis: {
                      categories: res[0][0]['categories'].sort() // Categories
@@ -184,7 +184,7 @@ function getDataToGraphics()
             });
 
             $('#graph' + graphDiv).before('<div><h2 style="text-align: center">Datos analizados</h2></div>');
-            $('#graph' + graphDiv).after('<div class="container-rangos"> <div><div></div><h3>19.67</h3><p>Media</p></div> <div><div></div><h3>19.67</h3><p>Mediana</p></div> <div><div></div><h3>19.67</h3><p>Moda</p></div> </div>');
+            $('#graph' + graphDiv).after('<div class="container-rangos"> <div><div></div><h3>' + res[0][4].toFixed(2)  + '</h3><p>Media</p></div> <div><div></div><h3>0</h3><p>Mediana</p></div> <div><div></div><h3>0</h3><p>Moda</p></div> </div>');
 
 
         }

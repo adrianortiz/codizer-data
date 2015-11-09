@@ -111,6 +111,7 @@ class Dvarchar extends Model
         $array[1] = 'Alumnos';
         $array[2] = $series;
         $array[3] = $datos[0]->dtitle;
+        $array[4] = Dvarchar::media( $datos );
 
         return $array;
     }
