@@ -66,11 +66,11 @@ class StatisticController extends Controller
         }
 
         // dd( var_dump( $arrayDataType[0]->toArray() ) );
-
         // dd( Dvarchar::byVar($arrayDataType[0]->all()) );
 
         // PROCESOS DE ESTADISTICA
-        $media = Dvarchar::media($arrayDataType[0]->all());
+        //dd( Dvarchar::moda($arrayDataType[0]->all()) );
+
 
         // RESPUESTA JSON PARA GRAFICAR
         return response()->json([

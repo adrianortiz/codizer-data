@@ -103,8 +103,8 @@ class Dvarchar extends Model
         $series['data'] = array();
         foreach( array_count_values( Dvarchar::arrayDatosNum($datos) )  as $key => $value)
         {
-            $valRepetidos['categories'][]   = (double) $key;
-            $series['data'][]               = (double) $value;
+            $valRepetidos['categories'][]   = (float) $key;
+            $series['data'][]               = (float) $value;
         }
 
         $array[0] = $valRepetidos;
@@ -112,6 +112,8 @@ class Dvarchar extends Model
         $array[2] = $series;
         $array[3] = $datos[0]->dtitle;
         $array[4] = Dvarchar::media( $datos );
+        $array[5] = Dvarchar::mediana($datos);
+        $array[6] = Dvarchar::moda($datos);
 
         return $array;
     }
@@ -128,6 +130,7 @@ class Dvarchar extends Model
         return $array;
     }
 
+
     /**
      * @param $datos
      * @return float
@@ -136,4 +139,50 @@ class Dvarchar extends Model
 
         return array_sum( Dvarchar::arrayDatosNum($datos) ) / count( Dvarchar::arrayDatosNum($datos) );
     }
+
+    /**
+     * @param $datos
+     * @return float
+     */
+    static function mediana($datos){
+        $array = Dvarchar::arrayDatosNum($datos);
+        sort($array);
+
+        $N = count($array);
+        $div = $N / 2;
+
+        if($N % 2 == 0){
+            return ($array[$div - 1] + $array[$div]) / 2;
+        }else{
+            return $array[$div - 1];
+        }
+    }
+
+    /**
+     * @param $datos
+     * @return mixed|string
+     */
+    static function moda($datos){
+
+        $control = 0;
+
+        foreach( array_count_values(Dvarchar::arrayDatosNum($datos)) as $dato) {
+            if($dato >= 1) {
+                $control = $control+1;
+            }
+        }
+
+        if( $control == 0)
+        {
+            $moda   =  array_count_values(Dvarchar::arrayDatosNum($datos));
+            arsort($moda);
+            return key($moda);
+
+        }else{
+                return "No hay moda";
+        }
+
+    }
+
+
 }
