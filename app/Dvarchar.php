@@ -184,5 +184,229 @@ class Dvarchar extends Model
 
     }
 
+    static function order($datos){
+        $array = Dvarchar::arrayDatosNum($datos);
+        $distinct = array_unique($array);
+        sort($distinct);
+        return $distinct;
+    }
+
+    static function range($datos){
+        $order = Dvarchar::order($datos);
+        return ($order[count($order) - 1] - $order[0]);
+    }
+
+    static function width($datos, $group){
+        $range = Dvarchar::range($datos);
+
+        $width = 0;
+        for($i = 0; $i < $group; $i++){
+            $width = $range--;
+        }
+
+        return $width;
+    }
+
+    static function f_group($datos, $group){
+        $order = Dvarchar::order($datos);
+        $width = Dvarchar::width($datos, $group);
+
+        $f1 = $order[0] - 0.5;
+
+        $fi = array();
+        $ff = array();
+
+        for($i = 0; $i < $group; $i++){
+            $fi[$i] = $f1;
+            $f1 = $f1 + $width;
+            $ff[$i] = $f1;
+        }
+
+        return $f_group = array(0 => $fi, 1 => $ff);
+    }
+
+    static function marca($datos, $group){
+        $groups = Dvarchar::width($datos, $group);
+        $f_group = Dvarchar::f_group($datos, $group);
+
+        $marca = array();
+        for($i = 0; $i < $group; $i++){
+            $f_group[0][$i] = $f_group[0][$i] + ($groups / 2);
+            $marca[$i] = $f_group[0][$i];
+        }
+
+        return $marca;
+    }
+    static function freq($datos, $group){
+        $f_group = Dvarchar::f_group($datos, $group);
+        $array = Dvarchar::arrayDatosNum($datos);
+        sort($array);
+
+        $count = array();
+        $acum=0;
+
+        for($i = 0; $i < $group; $i++){
+            for($j = 0; $j < count($array); $j++){
+                if( $array[$j] > $f_group[0][$i] && $array[$j] < $f_group[1][$i] ){
+                    $acum = $acum + 1;
+                    $count[$i][] = $acum;
+                }else{
+                    $acum =0;
+                    $count[$i][] = $acum;
+                }
+            }
+        }
+
+        $freq = array();
+
+        for($i = 0; $i < $group; $i++){
+            $freq[] = count(array_unique($count[$i])) - 1;
+        }
+
+        return $freq;
+    }
+
+    static function freqacum($datos, $group){
+        $freq = Dvarchar::freq($datos, $group);
+
+        $freqacum = array();
+        $freqacum[] = $freq[0];
+
+        for($i = 1; $i < $group; $i++){
+            $freqacum[] = $freqacum[$i - 1] + $freq[$i];
+        }
+
+        return $freqacum;
+    }
+
+    static function desvm($datos, $group){
+        $marca = Dvarchar::marca($datos, $group);
+        $media = Dvarchar::media($datos);
+        $freq = Dvarchar::freq($datos, $group);
+
+        $desvm = array();
+        for($i = 0; $i < $group; $i++){
+            $desvm[] = $marca[$i] - $media;
+            $desvm[$i] = $desvm[$i] * $freq[$i];
+            $desvm[$i] = abs($desvm[$i]);
+        }
+
+        return array_sum($desvm) / array_sum($freq);
+    }
+
+    static function desves($datos, $group){
+        $marca = Dvarchar::marca($datos, $group);
+        $media = Dvarchar::media($datos);
+        $freq = Dvarchar::freq($datos, $group);
+
+        $deses = array();
+        for($i = 0; $i < $group; $i++){
+            $deses[] = ($marca[$i] - $media)^2;
+            $deses[$i] = $deses[$i] * $freq[$i];
+            $deses[$i] = abs($deses[$i]);
+        }
+
+        return sqrt( array_sum($deses) / array_sum($freq) );
+    }
+
+    static function varianza($datos, $group){
+        $marca = Dvarchar::marca($datos, $group);
+        $media = Dvarchar::media($datos);
+        $freq = Dvarchar::freq($datos, $group);
+
+        $varz = array();
+        for($i = 0; $i < $group; $i++){
+            $varz[] = ($marca[$i] - $media)^2;
+            $varz[$i] = $varz[$i] * $freq[$i];
+        }
+
+        return array_sum($varz) / array_sum($freq);
+    }
+
+    static function deciles($datos, $group){
+        $freq = Dvarchar::freq($datos, $group);
+        $f_group = Dvarchar::f_group($datos, $group);
+        $width = Dvarchar::width($datos, $group);
+        $freqacum = Dvarchar::freqacum($datos, $group);
+
+
+    }
+
+    static function percentiles($datos, $group){
+        $freq = Dvarchar::freq($datos, $group);
+        $f_group = Dvarchar::f_group($datos, $group);
+        $width = Dvarchar::width($datos, $group);
+        $freqacum = Dvarchar::freqacum($datos, $group);
+
+
+    }
+
+    static function cuartiles($datos, $group){
+        $freq = Dvarchar::freq($datos, $group);
+        $f_group = Dvarchar::f_group($datos, $group);
+        $width = Dvarchar::width($datos, $group);
+        $freqacum = Dvarchar::freqacum($datos, $group);
+
+
+    }
+
+    static function mo($datos, $group){
+        $freq = Dvarchar::freq($datos, $group);
+        $marca = Dvarchar::marca($datos, $group);
+        $media = Dvarchar::media($datos);
+
+        $sum = array();
+        $mo = array();
+        for($i = 0; $i < 3; $i++){
+            for($j = 0; $j < $group; $j++) {
+                $sum[$i][] = pow($marca[$j] - $media, $i + 2) * $freq[$j];
+                $mo[$i] = array_sum($sum[$i]) / array_sum($freq);
+            }
+        }
+
+        return $mo;
+    }
+
+    static function sesgomo($datos, $group){
+        $media = Dvarchar::media($datos);
+        $moda = Dvarchar::moda($datos);
+        $desves = Dvarchar::desves($datos, $group);
+
+        return ($media - $moda) / $desves;
+    }
+
+    static function sesgomediana($datos, $group){
+        $media = Dvarchar::media($datos);
+        $mediana = Dvarchar::mediana($datos);
+        $desves = Dvarchar::desves($datos, $group);
+
+        return 3 * ($media - $mediana) / $desves;
+
+    }
+
+    static function sesgoa($datos, $group){
+        $mo = Dvarchar::mo($datos, $group);
+        $desves = Dvarchar::desves($datos, $group);
+
+        return $mo[1] / pow($desves, 3);
+    }
+
+    static function curtosisa($datos, $group){
+        $mo = Dvarchar::mo($datos, $group);
+        $desves = Dvarchar::desves($datos, $group);
+
+        $curtosisa=array();
+        $res = $mo[2] / pow($desves, 4);
+        if($res == 3){
+            $curtosisa = array('Mesocurtica' => $res);
+        }elseif($res > 3){
+            $curtosisa = array('Leptocurtica' => $res);
+        }elseif($res < 3){
+            $curtosisa = array('Platicurtica' => $res);
+        }
+
+        return $curtosisa;
+    }
+
 
 }
