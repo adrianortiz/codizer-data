@@ -96,6 +96,10 @@ class Dvarchar extends Model
     }
 
 
+    /**
+     * @param $datos
+     * @return mixed
+     */
     static function byVar( $datos )
     {
 
@@ -183,6 +187,20 @@ class Dvarchar extends Model
         }
 
     }
+
+
+    /**
+     * @param $datos
+     * @param $group
+     * @return mixed
+     */
+    static function byAutoInterval( $datos, $group ){
+        $array[0] = Dvarchar::f_group($datos, $group)[0];
+        $array[1] = Dvarchar::freq($datos, $group);
+        $array[2] = Dvarchar::freqacum($datos, $group);
+        return $array;
+    }
+
 
     static function order($datos){
         $array = Dvarchar::arrayDatosNum($datos);
