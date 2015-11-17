@@ -45,8 +45,22 @@
 @include('admin.statistics.parcials.modal')
 
 @section('scripts')
-    <script src="{{ asset('/js/highcharts.js') }}"></script>
+
+
+    <script src="{{ asset('/js/canvas/canvas2image.js') }}"></script>
+    <script src="{{ asset('/js/canvas/Blob.js') }}"></script>
+    <script src="{{ asset('/js/canvas/canvas-toBlob.js') }}"></script>
+    <script src="{{ asset('/js/canvas/html2canvas.js') }}"></script>
+    <script src="{{ asset('/js/canvas/filesaver.js') }}"></script>
+    <script src="{{ asset('/js/chart.min.js') }}"></script>
+
+
+    <link rel="stylesheet" href="{{ asset('/css/nv.d3.css') }}">
+
+    <script src="{{ asset('/js/d3/d3.min.js') }}"></script>
+    <script src="{{ asset('/js/d3/nv.d3.min.js') }}"></script>
+    <script src="{{ asset('/js/d3/stream_layers.js') }}"></script>
+
     <script src="{{ asset('/js/statistics.js') }}"></script>
-    <script src="{{ asset('/js/modules/data.js') }}"></script>
-    <script src="{{ asset('/js/modules/exporting.js') }}"></script>
+
 @endsection

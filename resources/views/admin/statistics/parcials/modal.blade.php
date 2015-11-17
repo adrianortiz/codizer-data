@@ -83,12 +83,18 @@
             <h1 id="nav" class="text-center">Gráficas</h1>
 
             <div class="form-preview" id="div-data">
-                @for( $i = 0; $i <= 30; $i++)
-                    <div id="graph{{$i}}"></div>
+                @for( $i = -1; $i <= 100; $i++)
+                    <div id="graph{{$i}}" class="graphX">
+                        <div id="graphA{{$i}}" style="width: 100%; display: inline-block;"></div>
+                        <canvas id="graphB{{$i}}"></canvas>
+                        <div id="graphC{{$i}}" style="width: 100%; display: inline-block;"></div>
+                    </div>
                 @endfor
-
-
             </div>
+
+            <style>
+                #graph-1, #graph0 {display: none}
+            </style>
 
         </div>
     </div>
