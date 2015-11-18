@@ -56,6 +56,8 @@
                         <div class="form-group">
                             <label for="frecuencia">Gráficar</label>
                             {!! Form::select('frecuencia', array(
+                                'intervalAut' => 'Intervalo Auntomatico - Histograma',
+                                'intervalAutOji' => 'Intervalo Auntomatico - Ojiva',
                                 'histograma' => 'Histograma',
                                 'estadistico' => 'Estadisticos',
                                 'grafico' => 'Graficos',

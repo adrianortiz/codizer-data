@@ -149,9 +149,6 @@ function getDataToGraphics()
 
     var rint = Math.round(0xffffff * Math.random());
     var colorA = 'rgba(' + (rint >> 16) + ',' + (rint >> 8 & 255) + ',' + (rint & 255);
-
-    // rint = Math.round(0xffffff * Math.random());
-    // var colorB = 'rgba(' + (rint >> 16) + ',' + (rint >> 8 & 255) + ',' + (rint & 255);
     var colorB = items[Math.floor(Math.random()*items.length)];
 
     $.ajax({
@@ -163,11 +160,16 @@ function getDataToGraphics()
         success: function (res) {
 
             $(".alert").click();
-            //console.log( res[0][0]['categories'].sort() );
             graphDiv++;
 
-            // byVar(res, graphDiv, item);
-            jChar(res, graphDiv, items, colorB);
+            if(res[0][7] == 'byVar')
+                byVar(res, graphDiv, items, colorB);
+
+            if(res[0][7] == 'byAutoInterval')
+                byAutoInterval(res, graphDiv, items, colorB);
+
+            if(res[0][7] == 'intervalAutOji')
+                byAutoIntervalOji(res, graphDiv, items, colorB);
 
             $('#graph' + graphDiv).css({'height': 'auto', 'width': '44%'});
 
@@ -225,7 +227,8 @@ function hideShowAlert(show, desc)
 
 
 
-function filterPath(string) {
+function filterPath(string)
+{
     return string
         .replace(/^\//,'')
         .replace(/(index|default).[a-zA-Z]{3,4}$/,'')
@@ -234,7 +237,8 @@ function filterPath(string) {
 var locationPath = filterPath(location.pathname);
 var scrollElem = scrollableElement('html', 'body');
 
-$('a[href*=#]').each(function() {
+$('a[href*=#]').each(function()
+{
     var thisPath = filterPath(this.pathname) || locationPath;
     if (  locationPath == thisPath
         && (location.hostname == this.hostname || !this.hostname)
@@ -254,7 +258,8 @@ $('a[href*=#]').each(function() {
 
 
 // use the first element that is "scrollable"
-function scrollableElement(els) {
+function scrollableElement(els)
+{
     for (var i = 0, argLength = arguments.length; i <argLength; i++) {
         var el = arguments[i],
             $scrollElement = $(el);
@@ -273,7 +278,8 @@ function scrollableElement(els) {
 }
 
 
-$('#graphA1xx').click( function() {
+$('#graphA1xx').click( function()
+{
     $('#div-data').scrollTop( -1000 );
 });
 
@@ -281,7 +287,8 @@ $('#graphA1xx').click( function() {
 /*
     SAVE A IMAGE .PNG
  */
-function saveImg( toImage ) {
+function saveImg( toImage )
+{
     html2canvas($( toImage ), {
         onrendered: function(canvas) {
             theCanvas = canvas;
@@ -317,7 +324,8 @@ function deMayorAMenor(elem1, elem2)
 /*
     GRÁFICA BASE
  */
-function base(res, graphDiv, item) {
+function base(res, graphDiv, item)
+{
     $('#graphB' + graphDiv).highcharts({
         chart: {
             // type: 'column'
@@ -347,84 +355,13 @@ function base(res, graphDiv, item) {
 
 
 
-/*
- GRAFICAR POR VARIABLE
- */
-
-function byVar(res, graphDiv, item) {
-    $('#graphB' + graphDiv).highcharts({
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Monthly Average Rainfall'
-        },
-        subtitle: {
-            text: 'Source: WorldClimate.com'
-        },
-        xAxis: {
-            categories: [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec'
-            ],
-            crosshair: true
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Rainfall (mm)'
-            }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        series: [{
-            name: 'Tokyo',
-            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-
-        }, {
-            name: 'New York',
-            data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-
-        }, {
-            name: 'London',
-            data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-
-        }, {
-            name: 'Berlin',
-            data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
-
-        }]
-    });
-}
 
 
 /*
-    JCHAR
+* GRAFICAR POR VARIABLE
  */
 
-function jChar(res, graphDiv, colorA, colorB) {
+function byVar(res, graphDiv, colorA, colorB) {
 
     var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 
@@ -452,7 +389,7 @@ function jChar(res, graphDiv, colorA, colorB) {
             }*/
         ]
 
-        }
+        };
 
     var ctx = document.getElementById('graphB' + graphDiv ).getContext("2d");
     var myBarChart = new Chart(ctx).Bar(barChartData, {
@@ -473,4 +410,83 @@ function jChar(res, graphDiv, colorA, colorB) {
 
             }
         );
+}
+
+
+/*
+ * GRAFICAR POR VARIABLE
+ */
+
+function byAutoInterval(res, graphDiv, colorA, colorB) {
+    var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+    var barChartData = {
+        labels : res[0][4], // X
+        label: "HISTOGRAMA",
+        datasets : [
+            {
+                fillColor : colorB,
+                strokeColor : colorB,
+                highlightFill : colorB,
+                highlightStroke : colorB,
+                data : res[0][5]
+            }
+        ]
+    };
+    var ctx = document.getElementById('graphB' + graphDiv ).getContext("2d");
+    var myBarChart = new Chart(ctx).Bar(barChartData, {
+        responsive : true,
+        animateScale: true,
+        animationSteps: 60
+    });
+
+    $('#graphB' + graphDiv).click(
+        function(evt){
+
+            var activeBars = myBarChart.getBarsAtEvent(evt);
+
+            activeBars.forEach(function(dato) {
+                console.log(dato);
+            });
+        }
+    );
+}
+
+
+/*
+ * GRAFICAR POR VARIABLE
+ */
+
+function byAutoIntervalOji(res, graphDiv, colorA, colorB) {
+    var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+    var barChartData = {
+        labels : res[0][4], // X
+        label: "OJIVA",
+        datasets : [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "#E5E5E5",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data : res[0][5]
+            }
+        ]
+    };
+    var ctx = document.getElementById('graphB' + graphDiv ).getContext("2d");
+    var myBarChart = new Chart(ctx).Line(barChartData, {
+        responsive : true,
+        animateScale: true,
+        animationSteps: 60
+    });
+
+    $('#graphB' + graphDiv).click(
+        function(evt){
+            var activeBars = myBarChart.getBarsAtEvent(evt);
+            activeBars.forEach(function(dato) {
+                console.log(dato);
+            });
+        }
+    );
 }

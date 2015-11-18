@@ -118,7 +118,25 @@ class Dvarchar extends Model
         $array[4] = Dvarchar::media( $datos );
         $array[5] = Dvarchar::mediana($datos);
         $array[6] = Dvarchar::moda($datos);
+        $array[7] = 'byVar';
 
+        return $array;
+    }
+
+
+    /**
+     * @param $datos
+     * @param $group
+     * @return mixed
+     */
+    static function byAutoInterval( $datos, $group ){
+
+        $array[1] = 'Alumnos';
+        $array[3] = $datos[0]->dtitle; // Name columna
+
+        $array[4] = Dvarchar::f_group($datos, $group)[0];
+        $array[5] = Dvarchar::freq($datos, $group);
+        $array[6] = Dvarchar::freqacum($datos, $group);
         return $array;
     }
 
@@ -186,19 +204,6 @@ class Dvarchar extends Model
                 return "No hay moda";
         }
 
-    }
-
-
-    /**
-     * @param $datos
-     * @param $group
-     * @return mixed
-     */
-    static function byAutoInterval( $datos, $group ){
-        $array[0] = Dvarchar::f_group($datos, $group)[0];
-        $array[1] = Dvarchar::freq($datos, $group);
-        $array[2] = Dvarchar::freqacum($datos, $group);
-        return $array;
     }
 
 

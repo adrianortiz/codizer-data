@@ -49,17 +49,21 @@ class StatisticController extends Controller
 
     }
 
-    public function getDataColumns(Request $request) {
+    public function getDataColumns(Request $request)
+    {
 
-        // $titlesColumns = $request->input('title');
-        // dd($titlesColumns, $request->frecuencia);
-
+        /*
+         * Grupos a graficar
+         */
         $groups = 0;
-        if($request->gruop > 1){
+        if($request->gruop > 1)
+        {
             $groups = $request->gruop;
         }
 
-        // dd( $request->all() );
+        /*
+         * Obtener datos en base al request
+         */
         $arrayDataType = array();
         if ($request->has('title')) {
             foreach ($request->input('title') as $titleX) {
@@ -70,22 +74,38 @@ class StatisticController extends Controller
             }
         }
 
-        // dd( var_dump( $arrayDataType[0]->toArray() ) );
-        // dd( Dvarchar::byVar($arrayDataType[0]->all()) );
+        // respuesta
+        $res = null;
 
-        // PROCESOS DE ESTADISTICA
-        //dd( Dvarchar::moda($arrayDataType[0]->all()) );
+        /*
+         * GRAFICAR POR VARIABLE
+         */
+        if( $request->frecuencia == 'porvar'  )
+            $res = Dvarchar::byVar($arrayDataType[0]->all());
 
+        /*
+         * GRAFICAR POR INTERVALO AUTOMATICO - HISTOGRAMA
+         */
+        if( $request->frecuencia == 'intervalAut' )
+        {
+            $res = Dvarchar::byAutoInterval($arrayDataType[0]->all(), $groups);
+            $res[7] = 'byAutoInterval';
+        }
+
+        /*
+         * GRAFICAR POR INTERVALO AUTOMATICO - OJIVA
+         */
+        if( $request->frecuencia == 'intervalAutOji' )
+        {
+            $res = Dvarchar::byAutoInterval($arrayDataType[0]->all(), $groups);
+            $res[7] = 'intervalAutOji';
+        }
 
         // RESPUESTA JSON PARA GRAFICAR
         return response()->json([
-            // $arrayDataType[0]->toArray()
             // "media" => $media
-            Dvarchar::byVar($arrayDataType[0]->all())
+            $res
         ]);
-
-        // dd($request->all());
-        // dd($arrayDataType[0]->toArray()[0]);  // dd( $request->all());
 
     }
 
