@@ -18,21 +18,21 @@ Route::get('/', function() {
 
 // Authentication routes...
 Route::get('login', [
-    'uses' => 'Auth\AuthController@getLogin',
-    'as' => 'login'
+    'uses'  => 'Auth\AuthController@getLogin',
+    'as'    => 'login'
 ]);
 
 Route::post('login', 'Auth\AuthController@postLogin');
 
 Route::get('logout', [
-    'uses' => 'Auth\AuthController@getLogout',
-    'as' => 'logout'
+    'uses'  => 'Auth\AuthController@getLogout',
+    'as'    => 'logout'
 ]);
 
 // Registration routes...
 Route::get('register', [
-    'uses' => 'Auth\AuthController@getRegister',
-    'as' => 'register'
+    'uses'  => 'Auth\AuthController@getRegister',
+    'as'    => 'register'
 ]);
 Route::post('register', 'Auth\AuthController@postRegister');
 
@@ -61,13 +61,13 @@ Route::group(['middleware' => 'auth'], function () {
      * ADMIN
      */
     Route::get('admin', [
-        'uses' => 'AdminController@index',
-        'as' => 'panel'
+        'uses'  => 'AdminController@index',
+        'as'    => 'panel'
     ]);
 
     Route::get('admin/{id}/editar', [
-        'uses' => 'AdminController@edit',
-        'as' => 'admin.edit'
+        'uses'  => 'AdminController@edit',
+        'as'    => 'admin.edit'
     ]);
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
@@ -78,32 +78,32 @@ Route::group(['middleware' => 'auth'], function () {
 
         // DIBUJAR FORMULARIO
         Route::get('coleccion/{id}/form', [
-            'uses' => 'InputsController@drawForm',
-            'as' => 'form'
+            'uses'  => 'InputsController@drawForm',
+            'as'    => 'form'
         ]);
 
         // SAVE FORMULARIO
         Route::get('coleccion/form/{id}/new', [
-            'uses' => 'DvarcharController@storeFormData',
-            'as' => 'admin.colecciones.form.data.store'
+            'uses'  => 'DvarcharController@storeFormData',
+            'as'    => 'admin.colecciones.form.data.store'
         ]);
 
         // SHOW DATA FROM COLLECTION
         Route::get('coleccion/form/{id}/lista', [
-            'uses' => 'DvarcharController@index',
-            'as' => 'admin.colecciones.form.data.index'
+            'uses'  => 'DvarcharController@index',
+            'as'    => 'admin.colecciones.form.data.index'
         ]);
 
         // DESTROY ROW DATA
         Route::delete('coleccion/form/lista/row/{id}/delete', [
-            'uses' => 'DvarcharController@destroy',
-            'as' => 'admin.colecciones.form.data.list.destroy'
+            'uses'  => 'DvarcharController@destroy',
+            'as'    => 'admin.colecciones.form.data.list.destroy'
         ]);
 
         // SAVE FORMULARIO
         Route::put('coleccion/form/lista/row/{id}/update', [
-            'uses' => 'DvarcharController@update',
-            'as' => 'admin.colecciones.form.data.list.update.input'
+            'uses'  => 'DvarcharController@update',
+            'as'    => 'admin.colecciones.form.data.list.update.input'
         ]);
 
 
@@ -113,18 +113,27 @@ Route::group(['middleware' => 'auth'], function () {
 
         // VIEW STATISTICS
         Route::get('estadisticas', [
-            'uses' => 'StatisticController@index',
-            'as' => 'admin.statistics.index'
+            'uses'  => 'StatisticController@index',
+            'as'    => 'admin.statistics.index'
         ]);
 
         Route::post('estadisticas/colums', [
-            'uses' => 'StatisticController@showColums',
-            'as' => 'admin.statistics.index.columns'
+            'uses'  => 'StatisticController@showColums',
+            'as'    => 'admin.statistics.index.columns'
         ]);
 
         Route::post('estadisticas/colums/data', [
-            'uses' => 'StatisticController@getDataColumns',
-            'as' => 'admin.statistics.index.columns.data'
+            'uses'  => 'StatisticController@getDataColumns',
+            'as'    => 'admin.statistics.index.columns.data'
+        ]);
+
+        /*
+         * EXCEL
+         */
+
+        Route::get('export-all', [
+            'uses'  => 'ExcelController@exportAll',
+            'as'    => 'admin.export.all'
         ]);
 
     });

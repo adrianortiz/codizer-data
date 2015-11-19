@@ -102,7 +102,6 @@ class Dvarchar extends Model
      */
     static function byVar( $datos )
     {
-
         $valRepetidos['categories'] = array();
         $series['data'] = array();
         foreach( array_count_values( Dvarchar::arrayDatosNum($datos) )  as $key => $value)
@@ -129,8 +128,8 @@ class Dvarchar extends Model
      * @param $group
      * @return mixed
      */
-    static function byAutoInterval( $datos, $group ){
-
+    static function byAutoInterval( $datos, $group )
+    {
         $array[1] = 'Alumnos';
         $array[3] = $datos[0]->dtitle; // Name columna
 
@@ -144,7 +143,8 @@ class Dvarchar extends Model
      * @param $datos
      * @return array
      */
-    static function arrayDatosNum( $datos ) {
+    static function arrayDatosNum( $datos )
+    {
         $array = array();
         foreach ($datos as $numerico) {
             $array[] = $numerico->content;
@@ -157,8 +157,8 @@ class Dvarchar extends Model
      * @param $datos
      * @return float
      */
-    static function media($datos) {
-
+    static function media($datos)
+    {
         return array_sum( Dvarchar::arrayDatosNum($datos) ) / count( Dvarchar::arrayDatosNum($datos) );
     }
 
@@ -166,7 +166,8 @@ class Dvarchar extends Model
      * @param $datos
      * @return float
      */
-    static function mediana($datos){
+    static function mediana($datos)
+    {
         $array = Dvarchar::arrayDatosNum($datos);
         sort($array);
 
@@ -184,8 +185,8 @@ class Dvarchar extends Model
      * @param $datos
      * @return mixed|string
      */
-    static function moda($datos){
-
+    static function moda($datos)
+    {
         $control = 0;
 
         foreach( array_count_values(Dvarchar::arrayDatosNum($datos)) as $dato) {
@@ -206,24 +207,45 @@ class Dvarchar extends Model
 
     }
 
-
-    static function order($datos){
+    /**
+     * @param $datos
+     * @return array
+     */
+    static function order($datos)
+    {
         $array = Dvarchar::arrayDatosNum($datos);
         $distinct = array_unique($array);
         sort($distinct);
         return $distinct;
     }
 
-    static function range($datos){
+    /**
+     * @param $datos
+     * @return mixed
+     */
+    static function range($datos)
+    {
         $order = Dvarchar::order($datos);
         return ($order[count($order) - 1] - $order[0]) + 1;
     }
 
-    static function width($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return float
+     */
+    static function width($datos, $group)
+    {
         return ceil(Dvarchar::range($datos) / $group);
     }
 
-    static function f_group($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return array
+     */
+    static function f_group($datos, $group)
+    {
         $f1 = Dvarchar::order($datos)[0] - 0.5;
 
         $fi = array();
@@ -238,7 +260,13 @@ class Dvarchar extends Model
         return $f_group = array(0 => $fi, 1 => $ff);
     }
 
-    static function marca($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return array
+     */
+    static function marca($datos, $group)
+    {
         $f_group = Dvarchar::f_group($datos, $group);
         $marca = array();
         for($i = 0; $i < $group; $i++){
@@ -248,7 +276,12 @@ class Dvarchar extends Model
         return $marca;
     }
 
-    static function limit($datos){
+    /**
+     * @param $datos
+     * @return int
+     */
+    static function limit($datos)
+    {
         $limit = 0;
         for($i = 1; $i <= 15; $i++){
             if((Dvarchar::range($datos) / $i) >= 1){
@@ -258,7 +291,13 @@ class Dvarchar extends Model
         return $limit;
     }
 
-    static function freq($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return array
+     */
+    static function freq($datos, $group)
+    {
         $f_group = Dvarchar::f_group($datos, $group);
         $array = Dvarchar::arrayDatosNum($datos);
         sort($array);
@@ -287,7 +326,13 @@ class Dvarchar extends Model
         return $freq;
     }
 
-    static function freqacum($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return array
+     */
+    static function freqacum($datos, $group)
+    {
         $freqacum[] = Dvarchar::freq($datos, $group)[0];
         for($i = 1; $i < $group; $i++){
             $freqacum[] = $freqacum[$i - 1] + Dvarchar::freq($datos, $group)[$i];
@@ -295,7 +340,13 @@ class Dvarchar extends Model
         return $freqacum;
     }
 
-    static function desvm($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return float
+     */
+    static function desvm($datos, $group)
+    {
         $desvm = array();
         for($i = 0; $i < $group; $i++){
             $desvm[] = Dvarchar::marca($datos, $group)[$i] - Dvarchar::media($datos);
@@ -305,7 +356,13 @@ class Dvarchar extends Model
         return array_sum($desvm) / array_sum(Dvarchar::freq($datos, $group));
     }
 
-    static function desves($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return float
+     */
+    static function desves($datos, $group)
+    {
         $deses = array();
         for($i = 0; $i < $group; $i++){
             $deses[] = (Dvarchar::marca($datos, $group)[$i] - Dvarchar::media($datos))^2;
@@ -315,7 +372,13 @@ class Dvarchar extends Model
         return sqrt( array_sum($deses) / array_sum(Dvarchar::freq($datos, $group)) );
     }
 
-    static function varianza($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return float
+     */
+    static function varianza($datos, $group)
+    {
         $varz = array();
         for($i = 0; $i < $group; $i++){
             $varz[] = (Dvarchar::marca($datos, $group)[$i] - Dvarchar::media($datos))^2;
@@ -324,7 +387,13 @@ class Dvarchar extends Model
         return array_sum($varz) / array_sum(Dvarchar::freq($datos, $group));
     }
 
-    static function mo($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return array
+     */
+    static function mo($datos, $group)
+    {
         $mo = array();
         for($i = 0; $i < 3; $i++){
             for($j = 0; $j < $group; $j++) {
@@ -336,19 +405,43 @@ class Dvarchar extends Model
         return $mo;
     }
 
-    static function sesgomo($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return float
+     */
+    static function sesgomo($datos, $group)
+    {
         return (Dvarchar::media($datos) - Dvarchar::moda($datos)) / Dvarchar::desves($datos, $group);
     }
 
-    static function sesgomediana($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return float
+     */
+    static function sesgomediana($datos, $group)
+    {
         return 3 * (Dvarchar::media($datos) - Dvarchar::mediana($datos)) / Dvarchar::desves($datos, $group);
     }
 
-    static function sesgoa($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return float
+     */
+    static function sesgoa($datos, $group)
+    {
         return Dvarchar::mo($datos, $group)[1] / pow(Dvarchar::desves($datos, $group), 3);
     }
 
-    static function curtosisa($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return array|null|string
+     */
+    static function curtosisa($datos, $group)
+    {
         $curtosisa=null;
         $res = Dvarchar::mo($datos, $group)[2] / pow(Dvarchar::desves($datos, $group), 4);
         if($res == 3){
@@ -361,7 +454,13 @@ class Dvarchar extends Model
         return $curtosisa;
     }
 
-    static function minimoscuadrados($datos, $group){
+    /**
+     * @param $datos
+     * @param $group
+     * @return array
+     */
+    static function minimoscuadrados($datos, $group)
+    {
         $sumXY = array();
         $sumXsquare = array();
 
