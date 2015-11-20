@@ -162,6 +162,7 @@ class DvarcharController extends Controller
     public function storeFormData(Request $request, $id)
     {
 
+        // dd( $request->all());
         $typeValidations = ['val_text', 'val_text_num', 'val_num', 'val_double', 'val_date'];
 
 

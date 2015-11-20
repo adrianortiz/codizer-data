@@ -127,6 +127,8 @@ Route::group(['middleware' => 'auth'], function () {
             'as'    => 'admin.statistics.index.columns.data'
         ]);
 
+
+
         /*
          * EXCEL
          */
@@ -134,6 +136,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('export-all', [
             'uses'  => 'ExcelController@exportAll',
             'as'    => 'admin.export.all'
+        ]);
+
+        Route::post('{id}/import-all', [
+            'uses'  => 'ExcelController@importAllToCollection',
+            'as'    => 'admin.import.all'
         ]);
 
     });

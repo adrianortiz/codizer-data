@@ -171,6 +171,10 @@ function getDataToGraphics()
             if(res[0][7] == 'intervalAutOji')
                 byAutoIntervalOji(res, graphDiv, items, colorB);
 
+            // byAutoIntervalDisp
+            if(res[0][7] == 'intervalAutDisp')
+                byAutoIntervalDisp(res, graphDiv, items, colorB);
+
             $('#graph' + graphDiv).css({'height': 'auto', 'width': '44%'});
 
             $('#graphA' + graphDiv).append('<div><h3 style="text-align: center">Datos analizados</h3> </div>');
@@ -304,56 +308,6 @@ function saveImg( toImage )
 }
 
 
-/*
-    ORDENAR LOS DATOS DE MENOAR A MAYOR O DE MAYOR A MENOR
- */
-function deMenorAMayor(elem1, elem2)
-{
-    return elem1-elem2;
-}
-
-function deMayorAMenor(elem1, elem2)
-{
-    return elem2-elem1;
-}
-
-
-
-
-
-/*
-    GRÁFICA BASE
- */
-function base(res, graphDiv, item)
-{
-    $('#graphB' + graphDiv).highcharts({
-        chart: {
-            // type: 'column'
-        },
-        title: {
-            text: res[0][1] + '->' + res[0][3] // Alumnos
-        },
-        xAxis: {
-            categories: res[0][0]['categories'].sort() // Categories
-        },
-        yAxis: {
-            title: {
-                text: res[0][1] // Alumnos
-            }
-        },
-        series: [{
-            name: res[0][3], // Edad
-            data: res[0][2]['data']
-            // }, {
-            //    name: 'John',
-            //    data: [5, 7, 3]
-        }],
-        colors: [item, '#434348', '#90ed7d', '#f7a35c', '#1A91F2',
-            '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1']
-    });
-}
-
-
 
 
 
@@ -363,30 +317,22 @@ function base(res, graphDiv, item)
 
 function byVar(res, graphDiv, colorA, colorB) {
 
-    var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+    console.log( res[0][2]['data'] );
+    console.log( res[0][0]['categories'] );
 
     var barChartData = {
         // labels : ["January","February","March","April","May","June","July"],
-        labels : res[0][0]['categories'].sort(deMenorAMayor),
+        labels : res[0][0]['categories'],
         label: "My First dataset",
 
         datasets : [
             {
-
                 fillColor : colorB,
                 strokeColor : colorB,
                 highlightFill : colorB,
                 highlightStroke : colorB,
                 data : res[0][2]['data']
             }
-            /*
-            {
-                fillColor : "rgba(44, 44, 44, 0.8)",
-                strokeColor : "rgba(44, 44, 44, 0.8)",
-                highlightFill: "rgba(44, 44, 44, 0.9)",
-                highlightStroke: "rgba(44, 44, 44, 0.9)",
-                data : res[0][0]['categories'].sort()
-            }*/
         ]
 
         };
@@ -418,7 +364,6 @@ function byVar(res, graphDiv, colorA, colorB) {
  */
 
 function byAutoInterval(res, graphDiv, colorA, colorB) {
-    var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
     var barChartData = {
         labels : res[0][4], // X
         label: "HISTOGRAMA",
@@ -453,24 +398,61 @@ function byAutoInterval(res, graphDiv, colorA, colorB) {
 
 
 /*
- * GRAFICAR POR VARIABLE
+ * GRAFICAR POR OJIVA
  */
 
 function byAutoIntervalOji(res, graphDiv, colorA, colorB) {
-    var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
     var barChartData = {
         labels : res[0][4], // X
         label: "OJIVA",
         datasets : [
             {
                 label: "My First dataset",
-                fillColor: "rgba(220,220,220,0.2)",
+                fillColor: "rgba(220,220,220,0)",
                 strokeColor: "#E5E5E5",
                 pointColor: "rgba(220,220,220,1)",
                 pointStrokeColor: "#fff",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(220,220,220,1)",
-                data : res[0][5]
+                data : res[0][6]
+            }
+        ]
+    };
+    var ctx = document.getElementById('graphB' + graphDiv ).getContext("2d");
+    var myBarChart = new Chart(ctx).Line(barChartData, {
+        responsive : true,
+        animateScale: true,
+        animationSteps: 60
+    });
+
+    $('#graphB' + graphDiv).click(
+        function(evt){
+            var activeBars = myBarChart.getBarsAtEvent(evt);
+            activeBars.forEach(function(dato) {
+                console.log(dato);
+            });
+        }
+    );
+}
+
+
+/*
+    GRÁFICA POR DISPERSIÓN
+ */
+function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
+    var barChartData = {
+        labels : res[0][4], // X
+        label: "OJIVA",
+        datasets : [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0)",
+                strokeColor: "#E5E5E5",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data : res[0][8]
             }
         ]
     };

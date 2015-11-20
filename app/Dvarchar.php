@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Dvarchar extends Model
@@ -134,24 +135,31 @@ class Dvarchar extends Model
         $array[3] = $datos[0]->dtitle; // Name columna
 
         $array[4] = Dvarchar::f_group($datos, $group)[0];
-        $array[5] = Dvarchar::freq($datos, $group);
+        $array[5] = Dvarchar::densidad($datos, $group);
         $array[6] = Dvarchar::freqacum($datos, $group);
+        $array[8] = Dvarchar::freq($datos, $group);
         return $array;
     }
 
     /**
+     * Obtener datos y ordenarlos de menor a mayor
      * @param $datos
      * @return array
      */
     static function arrayDatosNum( $datos )
     {
+
         $array = array();
         foreach ($datos as $numerico) {
             $array[] = $numerico->content;
         }
+
+        /**
+         * Ordenar de menor a mayor
+         */
+        sort($array);
         return $array;
     }
-
 
     /**
      * @param $datos
@@ -303,7 +311,7 @@ class Dvarchar extends Model
         sort($array);
 
         $count = array();
-        $acum=0;
+        $acum = 0;
 
         for($i = 0; $i < $group; $i++){
             for($j = 0; $j < count($array); $j++){
@@ -338,6 +346,15 @@ class Dvarchar extends Model
             $freqacum[] = $freqacum[$i - 1] + Dvarchar::freq($datos, $group)[$i];
         }
         return $freqacum;
+    }
+
+    static function densidad($datos, $group){
+        $densidad = array();
+        for($i = 0; $i < $group; $i++){
+            $densidad[] = Dvarchar::freq($datos, $group)[$i] / Dvarchar::width($datos, $group);
+        }
+        return $densidad;
+
     }
 
     /**

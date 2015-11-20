@@ -77,6 +77,9 @@ class StatisticController extends Controller
         // respuesta
         $res = null;
 
+       // dd(Dvarchar::freq($arrayDataType[0]->all(),$groups),
+         //   Dvarchar::width($arrayDataType[0]->all(),$groups));
+
         /*
          * GRAFICAR POR VARIABLE
          */
@@ -100,6 +103,14 @@ class StatisticController extends Controller
             $res = Dvarchar::byAutoInterval($arrayDataType[0]->all(), $groups);
             $res[7] = 'intervalAutOji';
         }
+
+        //
+        if( $request->frecuencia == 'intervalAutDisp' )
+        {
+            $res = Dvarchar::byAutoInterval($arrayDataType[0]->all(), $groups);
+            $res[7] = 'intervalAutDisp';
+        }
+
 
         // RESPUESTA JSON PARA GRAFICAR
         return response()->json([

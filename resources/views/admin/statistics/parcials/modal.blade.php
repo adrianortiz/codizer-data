@@ -56,12 +56,10 @@
                         <div class="form-group">
                             <label for="frecuencia">Gráficar</label>
                             {!! Form::select('frecuencia', array(
-                                'intervalAut' => 'Intervalo Auntomatico - Histograma',
-                                'intervalAutOji' => 'Intervalo Auntomatico - Ojiva',
-                                'histograma' => 'Histograma',
-                                'estadistico' => 'Estadisticos',
-                                'grafico' => 'Graficos',
-                                'porvar' => 'Por Variable',
+                                'intervalAut'       => 'Intervalo Auntomatico - Histograma',
+                                'intervalAutOji'    => 'Intervalo Auntomatico - Ojiva',
+                                'intervalAutDisp'   => 'Invervalo Automatico - Dispersión',
+                                'porvar'            => 'Por Variable',
                             ), 'frecuencia', ['id' => 'frecuencia', 'class' => 'form-control']) !!}
                         </div>
                         {!! Form::hidden('form', '123', ['id' => 'controlX']) !!}
@@ -86,7 +84,7 @@
 
             <div class="form-preview" id="div-data">
                 @for( $i = -1; $i <= 100; $i++)
-                    <div id="graph{{$i}}" class="graphX">
+                    <div id="graph{{$i}}" class="graphX" style="height: auto; width: auto;">
                         <div id="graphA{{$i}}" style="width: 100%; display: inline-block;"></div>
                         <canvas id="graphB{{$i}}"></canvas>
                         <div id="graphC{{$i}}" style="width: 100%; display: inline-block;"></div>
