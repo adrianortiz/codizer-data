@@ -76,7 +76,6 @@ class StatisticController extends Controller
 
         // respuesta
         $res = null;
-
        // dd(Dvarchar::freq($arrayDataType[0]->all(),$groups),
          //   Dvarchar::width($arrayDataType[0]->all(),$groups));
 

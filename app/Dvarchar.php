@@ -131,10 +131,15 @@ class Dvarchar extends Model
      */
     static function byAutoInterval( $datos, $group )
     {
+        $intervalo = array();
+        for($i = 0; $i < $group; $i++){
+            $intervalo[] = Dvarchar::f_group($datos, $group)[0][$i] . " - " . Dvarchar::f_group($datos, $group)[1][$i];
+        }
+
         $array[1] = 'Alumnos';
         $array[3] = $datos[0]->dtitle; // Name columna
 
-        $array[4] = Dvarchar::f_group($datos, $group)[0];
+        $array[4] = $intervalo;
         $array[5] = Dvarchar::densidad($datos, $group);
         $array[6] = Dvarchar::freqacum($datos, $group);
         $array[8] = Dvarchar::freq($datos, $group);
