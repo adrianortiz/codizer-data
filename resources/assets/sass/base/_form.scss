@@ -104,3 +104,8 @@ input:focus, select:focus, textarea:focus {
     border: solid 1px $azul-100;
   }
 }
+
+.btn-danger.active, .btn-danger:active, .open>.dropdown-toggle.btn-danger {
+  background-color: $gris-input-placeholder !important;
+  border-color: $gris-background !important;
+}

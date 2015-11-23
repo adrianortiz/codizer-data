@@ -11,22 +11,19 @@
     </div>
 
     <div class="container-inputs-list min-top">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">My panel</div>
-                    <div class="panel-body">
-                        <ul>
-                            <li><a href="{{ route('admin.edit', Auth::user()->id) }}">Edit profile</a></li>
-                            <li><a href="#">Change password</a></li>
-                            <p>
-                            </p>
-                        </ul>
-                    </div>
-                </div>
+
+        <div class="container-form">
+            <div class="container-form-titulo">
+                <div id="container-form-icon-collection" class="container-form-icon"></div>
+                <div><h3>Panel</h3></div>
             </div>
+            <ul>
+                <li><a href="{{ route('admin.edit', Auth::user()->id) }}">Edit profile</a></li>
+                <li><a href="#">Change password</a></li>
+                <p>
+                </p>
+            </ul>
         </div>
     </div>
-    </div>
+
 @endsection

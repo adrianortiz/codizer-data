@@ -21,16 +21,19 @@
                 <button id="btnCorto" class="btn btn-default" title="Generar estadistica" onclick="showModalInputs('modal-textoCorto');"><span style="margin-right: 10px;"><img src="{{ asset('/images/icon-estadistica.svg') }}"></span>Generar estadística</button>
             </div>
         </div>
-
-        <div id="collection-menu">
-            <p>Selecciona los datos de la colección a graficar.</p>
-        </div>
-
     </div>
 
-    <div class="container-inputs-list">
+    <div class="container-inputs-list min-top">
 
-        <h1>Hola</h1>
+        <div class="container-form">
+            <div class="container-form-titulo">
+                <div id="container-form-icon-collection" class="container-form-icon"></div>
+                <div><h3>Estadísticas</h3></div>
+            </div>
+
+            <p>Selecciona los datos de la colección a graficar.</p>
+
+        </div>
 
     </div>
 
@@ -55,12 +58,15 @@
     <script src="{{ asset('/js/chart.min.js') }}"></script>
 
 
+    <!--
     <link rel="stylesheet" href="{{ asset('/css/nv.d3.css') }}">
 
     <script src="{{ asset('/js/d3/d3.min.js') }}"></script>
     <script src="{{ asset('/js/d3/nv.d3.min.js') }}"></script>
     <script src="{{ asset('/js/d3/stream_layers.js') }}"></script>
+    -->
 
+    <script src="{{ asset("/js/codizer_charts.js") }}"></script>
     <script src="{{ asset('/js/statistics.js') }}"></script>
 
 @endsection

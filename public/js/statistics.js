@@ -109,7 +109,7 @@ $("#get-data").click( function()
     var columsGraph = $('#num_colums').val();
     var numColSelect = 0;
 
-    if( $('#group').val() >= 2 ) {
+    if( $('#group').val() >= 2 && $('#group').val() <= 15 ) {
 
         $('input:checkbox:checked').each( function() { numColSelect++; });
 
@@ -130,7 +130,7 @@ $("#get-data").click( function()
 
         numColSelect = 0;
     } else {
-        hideShowAlert('msj-danger', 'La graficación en grupos tiene que ser igual o mayor a 2.');
+        hideShowAlert('msj-danger', 'La graficación en grupos tiene que estar en un rango de 2 a 15.');
     }
 
 });
@@ -150,6 +150,8 @@ function getDataToGraphics()
     var rint = Math.round(0xffffff * Math.random());
     var colorA = 'rgba(' + (rint >> 16) + ',' + (rint >> 8 & 255) + ',' + (rint & 255);
     var colorB = items[Math.floor(Math.random()*items.length)];
+    colorB = "#B3B7BC";
+    colorB = "#9688FC";
 
     $.ajax({
         url: route,
@@ -162,6 +164,9 @@ function getDataToGraphics()
             $(".alert").click();
             graphDiv++;
 
+            $('#graph' + graphDiv).css({'height': 'auto', 'width': '44%'});
+            $('#graphB' + graphDiv).css({'height': 'auto', 'width': '100%'});
+
             if(res[0][7] == 'byVar')
                 byVar(res, graphDiv, items, colorB);
 
@@ -171,15 +176,21 @@ function getDataToGraphics()
             if(res[0][7] == 'intervalAutOji')
                 byAutoIntervalOji(res, graphDiv, items, colorB);
 
-            // byAutoIntervalDisp
-            if(res[0][7] == 'intervalAutDisp')
-                byAutoIntervalDisp(res, graphDiv, items, colorB);
 
-            $('#graph' + graphDiv).css({'height': 'auto', 'width': '44%'});
-
-            $('#graphA' + graphDiv).append('<div><h3 style="text-align: center">Datos analizados</h3> </div>');
-            $('#graphA' + graphDiv).append('<p style="text-align: center"> ' + res[0][1] + ' -> ' + res[0][3] + '<p><div class="tag-collect"> ' + res[0][1] + ' </div></dvi><div class="btn-group" style="float: right;" role="group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span><img src="/images/icon-menu.svg" class="icon-button"></span><span class="caret"></span></button><ul class="dropdown-menu dropdown-menu-right"> <li class="dropdown-header">Descargar imagen de:</li> <li><a href="#" onclick="saveImg(\'#graphB'+ graphDiv +'\');">Solo gráfica</a></li><li><a href="#" onclick="saveImg(\'#graphC'+ graphDiv +'\');">Medidas de dispersión</a></li><li role="separator" class="divider"></li><li><a href="#" onclick="$(\'#graph'+ graphDiv +'\').fadeOut().empty();">Eliminar gráfica</a></li></ul></div>');
+            $('#graphA' + graphDiv).append('<div><h3 style="text-align: center">Datos analizados</h3> </div> <p style="text-align: center"> ' + res[0][1] + ' -> ' + res[0][3] + '<p><div class="tag-collect"> ' + res[0][1] + ' </div></dvi><div class="btn-group" style="float: right;" role="group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span><img src="/images/icon-menu.svg" class="icon-button"></span><span class="caret"></span></button><ul class="dropdown-menu dropdown-menu-right"> <li class="dropdown-header">Descargar imagen de:</li> <li><a href="#" onclick="saveImg(\'#graphB'+ graphDiv +'\');">Solo gráfica</a></li><li><a href="#" onclick="saveImg(\'#graphC'+ graphDiv +'\');">Medidas extra</a></li><li role="separator" class="divider"></li><li><a href="#" onclick="$(\'#graph'+ graphDiv +'\').fadeOut().empty();">Eliminar gráfica</a></li></ul></div>');
             $('#graphC' + graphDiv).append('<div class="tag-var"><span> ' + res[0][3] + ' </span></div>');
+
+
+
+
+            // byAutoIntervalDisp
+            if(res[0][7] == 'intervalAutDisp') {
+                byAutoIntervalDisp(res, graphDiv, items, colorB);
+                $('#graphC' + graphDiv).append('<div class="container-radios"><h4>Dispersión <a href="#" class="btn btn-primary btn-sm float-der">Enviar datos</a></h4><div><label class="radio-inline"><input type="radio" name="radio-disp' + graphDiv + '" id="radio1' + graphDiv + '" value="0" checked="checked"> Valor1 = <span id="span1'+ graphDiv +'">0</span></label><br><label class="radio-inline"><input type="radio" name="radio-disp' + graphDiv + '" id="radio2'+ graphDiv +'" value="0"> Valor2 = <span id="span2'+ graphDiv +'">0</span></label></div><div><p> = <span>0</span></p></div></div>');
+            }
+
+
+            // Medidas de dispersión
             $('#graphC' + graphDiv).append('<div class="container-rangos"> <div><div></div><h3>' + res[0][4].toFixed(2)  + '</h3><p>Media</p></div> <div><div></div><h3>' + res[0][5] + '</h3><p>Mediana</p></div> <div><div></div><h3>'+res[0][6]+'</h3><p>Moda</p></div> </div>');
 
         }
@@ -305,170 +316,4 @@ function saveImg( toImage )
             document.body.removeChild(canvas);
         }
     });
-}
-
-
-
-
-
-/*
-* GRAFICAR POR VARIABLE
- */
-
-function byVar(res, graphDiv, colorA, colorB) {
-
-    console.log( res[0][2]['data'] );
-    console.log( res[0][0]['categories'] );
-
-    var barChartData = {
-        // labels : ["January","February","March","April","May","June","July"],
-        labels : res[0][0]['categories'],
-        label: "My First dataset",
-
-        datasets : [
-            {
-                fillColor : colorB,
-                strokeColor : colorB,
-                highlightFill : colorB,
-                highlightStroke : colorB,
-                data : res[0][2]['data']
-            }
-        ]
-
-        };
-
-    var ctx = document.getElementById('graphB' + graphDiv ).getContext("2d");
-    var myBarChart = new Chart(ctx).Bar(barChartData, {
-        responsive : true,
-        animateScale: true,
-        animationSteps: 60,
-    });
-
-        $('#graphB' + graphDiv).click(
-            function(evt){
-
-                var activeBars = myBarChart.getBarsAtEvent(evt);
-
-                activeBars.forEach(function(dato) {
-                    console.log(dato);
-                });
-
-
-            }
-        );
-}
-
-
-/*
- * GRAFICAR POR VARIABLE
- */
-
-function byAutoInterval(res, graphDiv, colorA, colorB) {
-    var barChartData = {
-        labels : res[0][4], // X
-        label: "HISTOGRAMA",
-        datasets : [
-            {
-                fillColor : colorB,
-                strokeColor : colorB,
-                highlightFill : colorB,
-                highlightStroke : colorB,
-                data : res[0][5]
-            }
-        ]
-    };
-    var ctx = document.getElementById('graphB' + graphDiv ).getContext("2d");
-    var myBarChart = new Chart(ctx).Bar(barChartData, {
-        responsive : true,
-        animateScale: true,
-        animationSteps: 60
-    });
-
-    $('#graphB' + graphDiv).click(
-        function(evt){
-
-            var activeBars = myBarChart.getBarsAtEvent(evt);
-
-            activeBars.forEach(function(dato) {
-                console.log(dato);
-            });
-        }
-    );
-}
-
-
-/*
- * GRAFICAR POR OJIVA
- */
-
-function byAutoIntervalOji(res, graphDiv, colorA, colorB) {
-    var barChartData = {
-        labels : res[0][4], // X
-        label: "OJIVA",
-        datasets : [
-            {
-                label: "My First dataset",
-                fillColor: "rgba(220,220,220,0)",
-                strokeColor: "#E5E5E5",
-                pointColor: "rgba(220,220,220,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data : res[0][6]
-            }
-        ]
-    };
-    var ctx = document.getElementById('graphB' + graphDiv ).getContext("2d");
-    var myBarChart = new Chart(ctx).Line(barChartData, {
-        responsive : true,
-        animateScale: true,
-        animationSteps: 60
-    });
-
-    $('#graphB' + graphDiv).click(
-        function(evt){
-            var activeBars = myBarChart.getBarsAtEvent(evt);
-            activeBars.forEach(function(dato) {
-                console.log(dato);
-            });
-        }
-    );
-}
-
-
-/*
-    GRÁFICA POR DISPERSIÓN
- */
-function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
-    var barChartData = {
-        labels : res[0][4], // X
-        label: "OJIVA",
-        datasets : [
-            {
-                label: "My First dataset",
-                fillColor: "rgba(220,220,220,0)",
-                strokeColor: "#E5E5E5",
-                pointColor: "rgba(220,220,220,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data : res[0][8]
-            }
-        ]
-    };
-    var ctx = document.getElementById('graphB' + graphDiv ).getContext("2d");
-    var myBarChart = new Chart(ctx).Line(barChartData, {
-        responsive : true,
-        animateScale: true,
-        animationSteps: 60
-    });
-
-    $('#graphB' + graphDiv).click(
-        function(evt){
-            var activeBars = myBarChart.getBarsAtEvent(evt);
-            activeBars.forEach(function(dato) {
-                console.log(dato);
-            });
-        }
-    );
 }

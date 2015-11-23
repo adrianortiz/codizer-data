@@ -83,8 +83,33 @@
             <h1 id="nav" class="text-center">Gráficas</h1>
 
             <div class="form-preview" id="div-data">
+
+<!--
+                <div class="container-radios">
+                    <h4>Dispersión <a href="#" class="btn btn-primary btn-sm float-der">Enviar datos</a></h4>
+                    <div>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio-disp" id="radio1" value="0"> Valor1 = <span>0</span>
+                        </label>
+                        <br>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio-disp" id="radio2" value="0"> Valor2 = <span>0</span>
+                        </label>
+                    </div>
+                    <div>
+                        <p> = <span>0</span></p>
+                    </div>
+                </div>
+
+-->
+
+
+
+
+
+
                 @for( $i = -1; $i <= 100; $i++)
-                    <div id="graph{{$i}}" class="graphX" style="height: auto; width: auto;">
+                    <div id="graph{{$i}}" class="graphX" style="height: auto; width: 0;">
                         <div id="graphA{{$i}}" style="width: 100%; display: inline-block;"></div>
                         <canvas id="graphB{{$i}}"></canvas>
                         <div id="graphC{{$i}}" style="width: 100%; display: inline-block;"></div>

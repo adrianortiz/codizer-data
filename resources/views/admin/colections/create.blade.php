@@ -12,13 +12,23 @@
     </div>
 
     <div class="container-inputs-list min-top">
-        @include('partials.errors')
-        {!! Form::open(['route' => 'admin.colecciones.store', 'method' => 'POST']) !!}
 
-            @include('admin.colections.partials.filds')
-            <button type="submit" class="btn btn-primary">@lang('collections.btn_new_collection')</button>
+        <div class="container-form">
+            <div class="container-form-titulo">
+                <div id="container-form-icon-collection" class="container-form-icon"></div>
+                <div><h3>Nueva collección</h3></div>
+            </div>
 
-        {!! Form::close() !!}
+            @include('partials.errors')
+            {!! Form::open(['route' => 'admin.colecciones.store', 'method' => 'POST']) !!}
+
+                @include('admin.colections.partials.filds')
+                <a href="{{ url('/admin/colecciones') }}" class="btn btn-danger">Cancelar</a>
+                <button type="submit" class="btn btn-primary">@lang('collections.btn_new_collection')</button>
+
+            {!! Form::close() !!}
+        </div>
+
     </div>
 
 
