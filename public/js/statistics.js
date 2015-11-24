@@ -186,7 +186,7 @@ function getDataToGraphics()
             // byAutoIntervalDisp
             if(res[0][7] == 'intervalAutDisp') {
                 byAutoIntervalDisp(res, graphDiv, items, colorB);
-                $('#graphC' + graphDiv).append('<div class="container-radios"><h4>Dispersión <a href="#" class="btn btn-primary btn-sm float-der">Enviar datos</a></h4><div><label class="radio-inline"><input type="radio" name="radio-disp' + graphDiv + '" id="radio1' + graphDiv + '" value="0" checked="checked"> Valor1 = <span id="span1'+ graphDiv +'">0</span></label><br><label class="radio-inline"><input type="radio" name="radio-disp' + graphDiv + '" id="radio2'+ graphDiv +'" value="0"> Valor2 = <span id="span2'+ graphDiv +'">0</span></label></div><div><p> = <span>0</span></p></div></div>');
+                $('#graphC' + graphDiv).append('<div class="container-radios"><h4>Punto selecto <a href="#" class="btn btn-primary btn-sm float-der">Enviar datos</a></h4><div><label class="radio-inline"><input type="radio" name="radio-disp' + graphDiv + '" id="radio1' + graphDiv + '" value="0" checked="checked"> Punto 1 = <span id="span1'+ graphDiv +'">0</span></label><br><label class="radio-inline"><input type="radio" name="radio-disp' + graphDiv + '" id="radio2'+ graphDiv +'" value="0"> Punto 2 = <span id="span2'+ graphDiv +'">0</span></label></div><div><p> = <span>0</span></p></div></div>');
             }
 
 

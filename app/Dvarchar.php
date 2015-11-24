@@ -143,6 +143,8 @@ class Dvarchar extends Model
         $array[5] = Dvarchar::densidad($datos, $group);
         $array[6] = Dvarchar::freqacum($datos, $group);
         $array[8] = Dvarchar::freq($datos, $group);
+        $array[9] = Dvarchar::minimoscuadrados($datos, $group);
+
         return $array;
     }
 
@@ -200,24 +202,13 @@ class Dvarchar extends Model
      */
     static function moda($datos)
     {
-        $control = 0;
+        $moda = array_count_values(Dvarchar::arrayDatosNum($datos));
 
-        foreach( array_count_values(Dvarchar::arrayDatosNum($datos)) as $dato) {
-            if($dato >= 1) {
-                $control = $control+1;
-            }
-        }
-
-        if( $control == 0)
-        {
-            $moda   =  array_count_values(Dvarchar::arrayDatosNum($datos));
-            arsort($moda);
-            return key($moda);
-
-        }else{
-                return "No hay moda";
-        }
-
+        if($moda==2){
+           return "No hay moda";
+        }else
+        arsort($moda);
+        return key($moda);
     }
 
     /**
@@ -499,4 +490,227 @@ class Dvarchar extends Model
 
         return $minimoscuadrados = array('a0' => $da0 / $dA, 'a1' => $da1 / $dA);
     }
+
+
+    /**
+     * @param $datos
+     * @param $group
+     * @return mixed
+     */
+    static function Decil_1($datos,$group) {
+
+        $frec = Dvarchar::freq($datos, $group);
+        $frec_acum = Dvarchar::freqacum($datos, $group);
+        $intervalos = Dvarchar::f_group($datos,$group);
+        $ancho = Dvarchar::width($datos,$group);
+
+        $F_inicial = $intervalos[0];
+        $decil1 = ((1)*array_sum($frec))/10;
+
+        $result = (
+            $F_inicial[0]+(($decil1-$frec_acum[0])/$frec[0])*$ancho
+        );
+
+        dd($result,"RESULTADO DECIL",$decil1,"ANCHO",$ancho,
+            "FRECUANCIA_ACUM",$frec_acum,"FRECUENCIA",$frec,
+            "FRECUENCIA_INICIAL",$F_inicial);
+        return $result;
+    }
+
+    static function Decil_5($datos,$group) {
+
+        $frec = Dvarchar::freq($datos, $group);
+        $frec_acum = Dvarchar::freqacum($datos, $group);
+        $intervalos = Dvarchar::f_group($datos,$group);
+        $ancho = Dvarchar::width($datos,$group);
+
+        $F_inicial = $intervalos[0];
+        $decil5 = ((5)*array_sum($frec))/10;
+
+        return "";
+    }
+
+
+    static function Decil_9($datos,$group) {
+
+        $frec = Dvarchar::freq($datos, $group);
+        $frec_acum = Dvarchar::freqacum($datos, $group);
+        $intervalos = Dvarchar::f_group($datos,$group);
+        $ancho = Dvarchar::width($datos,$group);
+
+        $F_inicial = $intervalos[0];
+        $decil9 = ((9)*array_sum($frec))/10;
+
+        $indice= null;
+        if($group>=3){
+            foreach($frec_acum as $key => $dato){
+                if($decil9<=$dato and $decil9>$frec_acum[$key-1]){
+                    $indice = $key;
+                }
+            }
+
+            $result = (
+                $F_inicial[$indice]+(($decil9-$frec_acum[$indice-1])/$frec[$indice])*$ancho
+            );
+        }else if($group==2){
+            foreach($frec_acum as $key => $dato){
+                if($decil9<=$dato and $decil9>=$frec_acum[$key] or $decil9<=$frec_acum[$key]){
+                    $indice = $key;
+                }
+            }
+
+            $result = (
+                $F_inicial[$indice]+(($decil9-$frec_acum[$indice])/$frec[$indice])*$ancho
+            );
+
+        }
+
+
+        dd($result,"RESULTADO DECIL",$decil9,"ANCHO",$ancho,
+            "FRECUANCIA_ACUM",$frec_acum[$indice-1],"FRECUENCIA",$frec[$indice],
+            "FRECUENCIA_INICIAL",$F_inicial[$indice]);
+        return $result;
+    }
+
+
+    static function Percentil_10($datos,$group)
+    {
+        $frec = Dvarchar::freq($datos, $group);
+        $frec_acum = Dvarchar::freqacum($datos, $group);
+        $intervalos = Dvarchar::f_group($datos,$group);
+        $ancho = Dvarchar::width($datos,$group);
+
+        $F_inicial = $intervalos[0];
+        $Percentil10 = ((10)*array_sum($frec))/100;
+
+        $result = (
+            $F_inicial[0]+(($Percentil10-$frec_acum[0])/$frec[0])*$ancho
+        );
+
+        dd($result,"RESULTADO DECIL",$Percentil10,"ANCHO",$ancho,
+            "FRECUANCIA_ACUM",$frec_acum,"FRECUENCIA",$frec,
+            "FRECUENCIA_INICIAL",$F_inicial);
+        return $result;
+    }
+
+
+    static function Percentil_50($datos,$group)
+    {
+        $frec = Dvarchar::freq($datos, $group);
+        $frec_acum = Dvarchar::freqacum($datos, $group);
+        $intervalos = Dvarchar::f_group($datos,$group);
+        $ancho = Dvarchar::width($datos,$group);
+    }
+
+
+    static function Percentil_90($datos,$group)
+    {
+        $frec = Dvarchar::freq($datos, $group);
+        $frec_acum = Dvarchar::freqacum($datos, $group);
+        $intervalos = Dvarchar::f_group($datos,$group);
+        $ancho = Dvarchar::width($datos,$group);
+
+        $F_inicial = $intervalos[0];
+        $Percentil90 = ((90)*array_sum($frec))/100;
+
+        $indice= null;
+        if($group>=3){
+            foreach($frec_acum as $key => $dato){
+                if($Percentil90<=$dato and $Percentil90>$frec_acum[$key-1]){
+                    $indice = $key;
+                }
+            }
+
+            $result = (
+                $F_inicial[$indice]+(($Percentil90-$frec_acum[$indice-1])/$frec[$indice])*$ancho
+            );
+        }else if($group==2){
+            foreach($frec_acum as $key => $dato){
+                if($Percentil90<=$dato and $Percentil90>=$frec_acum[$key] or $Percentil90<=$Percentil90[$key]){
+                    $indice = $key;
+                }
+            }
+
+            $result = (
+                $F_inicial[$indice]+(($Percentil90-$frec_acum[$indice])/$frec[$indice])*$ancho
+            );
+        }
+
+        dd($result,"RESULTADO DECIL",$Percentil90,"ANCHO",$ancho,
+            "FRECUANCIA_ACUM",$frec_acum[$indice-1],"FRECUENCIA",$frec[$indice],
+            "FRECUENCIA_INICIAL",$F_inicial[$indice]);
+        return $result;
+    }
+
+    static function Cuartil1($datos,$group)
+    {
+        $frec = Dvarchar::freq($datos, $group);
+        $frec_acum = Dvarchar::freqacum($datos, $group);
+        $intervalos = Dvarchar::f_group($datos,$group);
+        $ancho = Dvarchar::width($datos,$group);
+
+        $F_inicial = $intervalos[0];
+        $cuartil1 = ((1)*array_sum($frec))/4;
+
+        $result = (
+            $F_inicial[0]+(($cuartil1-$frec_acum[0])/$frec[0])*$ancho
+        );
+
+        dd($result,"RESULTADO DECIL",$cuartil1,"ANCHO",$ancho,
+            "FRECUANCIA_ACUM",$frec_acum,"FRECUENCIA",$frec,
+            "FRECUENCIA_INICIAL",$F_inicial);
+        return $result;
+
+    }
+
+    static function Cuartil2($datos,$group)
+    {
+        $frec = Dvarchar::freq($datos, $group);
+        $frec_acum = Dvarchar::freqacum($datos, $group);
+        $intervalos = Dvarchar::f_group($datos,$group);
+        $ancho = Dvarchar::width($datos,$group);
+
+    }
+
+    static function Cuartil3($datos,$group)
+    {
+        $frec = Dvarchar::freq($datos, $group);
+        $frec_acum = Dvarchar::freqacum($datos, $group);
+        $intervalos = Dvarchar::f_group($datos,$group);
+        $ancho = Dvarchar::width($datos,$group);
+
+        $F_inicial = $intervalos[0];
+        $cuartil3 = ((3)*array_sum($frec))/4;
+
+        $indice= null;
+        if($group>=3){
+            foreach($frec_acum as $key => $dato){
+                if($cuartil3<=$dato and $cuartil3>$frec_acum[$key-1]){
+                    $indice = $key;
+                }
+            }
+
+            $result = (
+                $F_inicial[$indice]+(($cuartil3-$frec_acum[$indice-1])/$frec[$indice])*$ancho
+            );
+        }else if($group==2){
+            foreach($frec_acum as $key => $dato){
+                if($cuartil3<=$dato and $cuartil3>=$frec_acum[$key] or $cuartil3<=$frec_acum[$key]){
+                    $indice = $key;
+                }
+            }
+
+            $result = (
+                $F_inicial[$indice]+(($cuartil3-$frec_acum[$indice])/$frec[$indice])*$ancho
+            );
+        }
+
+        dd($result,"RESULTADO DECIL",$cuartil3,"ANCHO",$ancho,
+            "FRECUANCIA_ACUM",$frec_acum[$indice-1],"FRECUENCIA",$frec[$indice],
+            "FRECUENCIA_INICIAL",$F_inicial[$indice]);
+        return $result;
+
+    }
+
+
 }

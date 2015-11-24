@@ -129,6 +129,8 @@ function byAutoIntervalOji(res, graphDiv, colorA, colorB) {
 /*
  GRÁFICA POR DISPERSIÓN
  */
+
+var labelA, lalebB;
 function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
     var barChartData = {
         labels : res[0][4], // X
@@ -143,7 +145,18 @@ function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(220,220,220,1)",
                 data : res[0][8]
-            }
+            },
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0)",
+                strokeColor: "#E5E5E5",
+                pointColor: colorB,
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data : res[0][9]
+            },
+
         ]
     };
     var ctx = document.getElementById('graphB' + graphDiv ).getContext("2d");
@@ -157,16 +170,25 @@ function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
         function(evt){
             var activeBars = myBarChart.getPointsAtEvent(evt);
             activeBars.forEach(function(dato) {
-                // console.log(dato);
+
+                console.log(dato);
                 if( $('#radio1' + graphDiv).prop('checked') ) {
                     $('#radio1' + graphDiv).val(dato.value);
+                    $('#radio3' + graphDiv).val(dato.value);
                     $('#span1' + graphDiv).text(dato.value);
+                    labelA = dato.label;
                 }
 
                 if( $('#radio2' + graphDiv).prop('checked') ) {
                     $('#radio2' + graphDiv).val(dato.value);
+                    $('#radio4' + graphDiv).val(dato.value);
                     $('#span2' + graphDiv).text(dato.value);
+                    lalebB = dato.label;
                 }
+
+                console.log(labelA);
+                console.log(lalebB);
+
 
             });
         }
