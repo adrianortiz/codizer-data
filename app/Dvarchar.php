@@ -250,7 +250,22 @@ class Dvarchar extends Model
      */
     static function f_group($datos, $group)
     {
-        $f1 = Dvarchar::order($datos)[0] - 0.5;
+        $f1 = null;
+        for($i = 0; $i < count(Dvarchar::order($datos)); $i++){
+            $pos = strpos(Dvarchar::order($datos)[$i],'.');
+            if($pos !== false){
+                $str = count(substr(Dvarchar::order($datos)[$i],$pos + 1));
+                if($str == 1){
+                    $f1 = Dvarchar::order($datos)[0] - 0.25;
+                }else if($str == 2){
+                    $f1 = Dvarchar::order($datos)[0] - 0.125;
+                }else if($str == 3){
+                    $f1 = Dvarchar::order($datos)[0] - 0.0625;
+                }
+            }else {
+                $f1 = Dvarchar::order($datos)[0] - 0.5;
+            }
+        }
 
         $fi = array();
         $ff = array();
@@ -260,8 +275,7 @@ class Dvarchar extends Model
             $f1 = $f1 + Dvarchar::width($datos, $group);
             $ff[$i] = $f1;
         }
-
-        return $f_group = array(0 => $fi, 1 => $ff);
+        return  $f_group = array(0 => $fi, 1 => $ff);
     }
 
     /**
@@ -488,7 +502,12 @@ class Dvarchar extends Model
         $da1 = ($group * array_sum($sumXY)) -
             (array_sum(Dvarchar::f_group($datos, $group)[0]) * array_sum(Dvarchar::freq($datos, $group)));
 
-        return $minimoscuadrados = array('a0' => $da0 / $dA, 'a1' => $da1 / $dA);
+        $minimoscuadrados = array();
+        for($i = 0; $i < $group; $i++){
+            $minimoscuadrados[] = ($da0 / $dA) + ( ($da1 / $dA) * Dvarchar::f_group($datos, $group)[0][$i] );
+        }
+
+        return $minimoscuadrados;
     }
 
 
@@ -712,5 +731,11 @@ class Dvarchar extends Model
 
     }
 
-
+    static function freqre($datos, $group){
+        $freqre = array();
+        for($i = 0; $i < $group; $i++){
+            $freqre[] = Dvarchar::freq($datos, $group)[$i] / array_sum(Dvarchar::freq($datos, $group));
+        }
+        return $freqre;
+    }
 }
