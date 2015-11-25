@@ -127,6 +127,11 @@ Route::group(['middleware' => 'auth'], function () {
             'as'    => 'admin.statistics.index.columns.data'
         ]);
 
+        Route::get('estadisticas/dispersion/puntos/data', [
+           'uses'   => 'StatisticController@getPoints' ,
+            'as'    => 'statistics.dispersion.puntos.data'
+        ]);
+
 
 
         /*

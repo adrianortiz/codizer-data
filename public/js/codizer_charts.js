@@ -145,7 +145,7 @@ function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(220,220,220,1)",
                 data : res[0][8]
-            },
+            },/*
             {
                 label: "My First dataset",
                 fillColor: "rgba(220,220,220,0)",
@@ -155,8 +155,7 @@ function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(220,220,220,1)",
                 data : res[0][9]
-            },
-
+            },*/
         ]
     };
     var ctx = document.getElementById('graphB' + graphDiv ).getContext("2d");
@@ -174,23 +173,74 @@ function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
                 console.log(dato);
                 if( $('#radio1' + graphDiv).prop('checked') ) {
                     $('#radio1' + graphDiv).val(dato.value);
-                    $('#radio3' + graphDiv).val(dato.value);
+                    $('#radio3' + graphDiv).val(dato.label);
                     $('#span1' + graphDiv).text(dato.value);
-                    labelA = dato.label;
                 }
 
                 if( $('#radio2' + graphDiv).prop('checked') ) {
                     $('#radio2' + graphDiv).val(dato.value);
-                    $('#radio4' + graphDiv).val(dato.value);
+                    $('#radio4' + graphDiv).val(dato.label);
                     $('#span2' + graphDiv).text(dato.value);
-                    lalebB = dato.label;
                 }
-
-                console.log(labelA);
-                console.log(lalebB);
-
 
             });
         }
     );
+}
+
+
+/*
+    VALIDAR DATOS DE PUNTOS SELECTO AL FOMULARIO
+    VALIDAR PARA ENVIAR
+ */
+function getDataPuntos(graphDiv)
+{
+    $('#punto1X').val( $('#radio1' + graphDiv).val() );
+    $('#punto1Y').val( $('#radio3' + graphDiv).val() );
+    $('#punto2X').val( $('#radio2' + graphDiv).val() );
+    $('#punto2Y').val( $('#radio4' + graphDiv).val() );
+
+    if( $('#radio1' + graphDiv).val() == null || $('#radio1' + graphDiv).val() == ''
+        || $('#radio2' + graphDiv).val() == null || $('#radio2' + graphDiv).val() == ''
+        || $('#radio3' + graphDiv).val() == null || $('#radio3' + graphDiv).val() == ''
+        || $('#radio4' + graphDiv).val() == null || $('#radio4' + graphDiv).val() == '')
+    {
+
+        $('#msj-danger-state').empty();
+        hideShowAlert('msj-danger', 'Por favor selecciona los dos puntos.');
+
+    } else {
+        getDataPuntosToGraph(graphDiv);
+    }
+}
+
+function getDataPuntosToGraph(graphDiv)
+{
+    var datos = $("#form-points-data").serializeArray();
+    var route = $("#form-points-data").attr('action');
+
+    $.ajax({
+        url: route,
+        type: 'GET',
+        dataType: 'json',
+        // async: false,
+        data: datos,
+
+        success: function (result)
+        {
+            alert('Se recibio: ' + result);
+        }
+
+    }).fail(function( jqXHR, textStatus )
+    {
+
+        alert('Error al enviar');
+
+    });
+
+}
+
+function addDataMinCuadrado(graphDiv, datosX )
+{
+    console.log( graphDiv + " Data: " + datosX.length );
 }

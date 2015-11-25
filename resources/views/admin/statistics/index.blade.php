@@ -36,8 +36,17 @@
         </div>
 
     </div>
-
+    <!--
     {!! Form::open(['route' => ['admin.colecciones.destroy', ':USER_ID'], 'method' => 'DELETE', 'id' => 'form-delete']) !!}
+    {!! Form::close() !!}
+    -->
+
+    {!! Form::open(['route' => ['statistics.dispersion.puntos.data'], 'method' => 'GET', 'id' => 'form-points-data']) !!}
+        {!! Form::hidden('punto1X', '0', ['id'=>'punto1X']) !!}
+        {!! Form::hidden('punto1Y', '0', ['id'=>'punto1Y']) !!}
+
+        {!! Form::hidden('punto2X', '0', ['id'=>'punto2X']) !!}
+        {!! Form::hidden('punto2Y', '0', ['id'=>'punto2Y']) !!}
     {!! Form::close() !!}
 
 

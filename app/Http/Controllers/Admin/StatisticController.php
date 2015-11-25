@@ -119,5 +119,23 @@ class StatisticController extends Controller
 
     }
 
+    public function getPoints(Request $request) {
+
+        if ($request->ajax()) {
+
+            $x1 = $request->punto1X;
+            $y1 = $request->punto1Y;
+            $x2 = $request->punto2X;
+            $y2 = $request->punto2Y;
+
+            return response()->json([
+                // "respuesta" => "Mi respuesta correcta"
+                $request
+            ]);
+        }
+
+        return null;
+    }
+
 
 }
