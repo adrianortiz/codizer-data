@@ -123,19 +123,17 @@ class StatisticController extends Controller
 
         if ($request->ajax()) {
 
-            $x1 = $request->punto1X;
-            $y1 = $request->punto1Y;
-            $x2 = $request->punto2X;
-            $y2 = $request->punto2Y;
+            $y1 = $request->punto1X;
+            $x1 = $request->punto1Y;
+            $y2 = $request->punto2X;
+            $x2 = $request->punto2Y;
 
             return response()->json([
                 // "respuesta" => "Mi respuesta correcta"
-                $request
+                Dvarchar::puntos_selectos($x1,$y1, $x2,$y2)
             ]);
         }
 
         return null;
     }
-
-
 }
