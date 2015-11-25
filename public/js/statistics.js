@@ -140,6 +140,9 @@ $("#get-data").click( function()
  GET COLUMNS DATA FROM COLUMNS SELECTED
  */
 var graphDiv = 0;
+var char = null;
+var resX = null;
+
 function getDataToGraphics()
 {
     var datos = $("#form-columns-data").serializeArray();
@@ -183,8 +186,9 @@ function getDataToGraphics()
 
             // byAutoIntervalDisp
             if(res[0][7] == 'intervalAutDisp') {
-                byAutoIntervalDisp(res, graphDiv, items, colorB);
-                $('#graphC' + graphDiv).append('<div class="container-radios"><h4>Punto selecto <a href="#" class="btn btn-primary btn-sm float-der" onclick="getDataPuntos(' + graphDiv + ');">Obtener punto selecto</a> <a href="#" class="btn btn-primary btn-sm float-der" onclick="addDataMinCuadrado(graphDiv, [' + res[0][9] + ']);">Obtener minimos cuadrados</a></h4><div><label class="radio-inline"><input type="radio" name="radio-disp' + graphDiv + '" id="radio1' + graphDiv + '" value="" checked="checked"> Punto 1 = <span id="span1'+ graphDiv +'">0</span></label><br><label class="radio-inline"><input type="radio" name="radio-disp' + graphDiv + '" id="radio2'+ graphDiv +'" value=""> Punto 2 = <span id="span2'+ graphDiv +'">0</span></label></div><div><p> = <span>0</span></p></div></div> <input type="hidden" id="radio3'+ graphDiv +'" value=""/> <input type="hidden" id="radio4'+ graphDiv +'" value=""/> ');
+                char = byAutoIntervalDisp(res, graphDiv, items, colorB);
+                resX = res;
+                $('#graphC' + graphDiv).append('<div class="container-radios"><h4>Punto selecto <a href="#" class="btn btn-primary btn-sm float-der" onclick="getDataPuntos(' + graphDiv + ');">Obtener punto selecto</a> <a href="#" class="btn btn-primary btn-sm float-der" id="addDataMinCuadrado" onclick="addDataMinCuadrado(graphDiv, resX, char);">Obtener minimos cuadrados</a></h4><div><label class="radio-inline"><input type="radio" name="radio-disp' + graphDiv + '" id="radio1' + graphDiv + '" value="" checked="checked"> Punto 1 = <span id="span1'+ graphDiv +'">0</span></label><br><label class="radio-inline"><input type="radio" name="radio-disp' + graphDiv + '" id="radio2'+ graphDiv +'" value=""> Punto 2 = <span id="span2'+ graphDiv +'">0</span></label></div><div><p> = <span>0</span></p></div></div> <input type="hidden" id="radio3'+ graphDiv +'" value=""/> <input type="hidden" id="radio4'+ graphDiv +'" value=""/> ');
             }
 
 

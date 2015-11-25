@@ -112,7 +112,8 @@ function byAutoIntervalOji(res, graphDiv, colorA, colorB) {
     var myBarChart = new Chart(ctx).Line(barChartData, {
         responsive : true,
         animateScale: true,
-        animationSteps: 60
+        animationSteps: 60,
+        bezierCurve: false
     });
 
     $('#graphB' + graphDiv).click(
@@ -137,7 +138,7 @@ function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
         label: "OJIVA",
         datasets : [
             {
-                label: "My First dataset",
+                label: "Intervalo automatico por dispersion",
                 fillColor: "rgba(220,220,220,0)",
                 strokeColor: "#E5E5E5",
                 pointColor: colorB,
@@ -145,29 +146,23 @@ function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(220,220,220,1)",
                 data : res[0][8]
-            },/*
-            {
-                label: "My First dataset",
-                fillColor: "rgba(220,220,220,0)",
-                strokeColor: "#E5E5E5",
-                pointColor: colorB,
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data : res[0][9]
-            },*/
+            }
         ]
     };
+
     var ctx = document.getElementById('graphB' + graphDiv ).getContext("2d");
-    var myBarChart = new Chart(ctx).Line(barChartData, {
+
+    var myLiveChart = new Chart(ctx).Line(barChartData, {
         responsive : true,
         animateScale: true,
-        animationSteps: 60
+        animationSteps: 60,
+        bezierCurve: false
     });
+
 
     $('#graphB' + graphDiv).click(
         function(evt){
-            var activeBars = myBarChart.getPointsAtEvent(evt);
+            var activeBars = myLiveChart.getPointsAtEvent(evt);
             activeBars.forEach(function(dato) {
 
                 console.log(dato);
@@ -186,8 +181,10 @@ function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
             });
         }
     );
-}
 
+    return myLiveChart;
+
+}
 
 /*
     VALIDAR DATOS DE PUNTOS SELECTO AL FOMULARIO
@@ -240,7 +237,69 @@ function getDataPuntosToGraph(graphDiv)
 
 }
 
-function addDataMinCuadrado(graphDiv, datosX )
+function addDataMinCuadrado(graphDiv, resX, charX )
 {
-    console.log( graphDiv + " Data: " + datosX.length );
+
+    // console.log("Minimos cuadrados" + resX[0][9]);
+    // console.log("Labels" + resX[0][4] );
+
+    var labels = resX[0][4];
+    var medDis = resX[0][8];
+    var minCua = resX[0][9];
+
+
+    var myNewDataset = {
+        fillColor: "rgba(151,187,205,0.2)",
+        strokeColor: "rgba(151,187,205,1)",
+        pointColor: "rgba(151,187,205,1)",
+        pointStrokeColor: "#fff",
+        data : resX[0][9]
+    };
+
+    // console.log("ALGO AQUI: " + charX.datasets[0].points[0].label);
+    // console.log("ALGO AQUI: " + charX.datasets.length + 1 + " + " + charX.datasets.length + " + " + 0);
+    // console.log("Mis labels = " + myNewDataset.data);
+    // new Chart(ctx).Line(barChartData, {
+    // charX.datasets[0].points[2].value = 50;
+    // Would update the first dataset's value of 'March' to be 50
+
+
+    var puntos = []
+
+    myNewDataset.data.forEach(function (value, i) {
+        console.log(value);
+    });
+
+    myNewDataset.data.forEach(function (value, i) {
+        puntos.push(new charX.PointClass({
+            value: value,
+            label: charX.datasets[0].points[i].label,
+            x: charX.scale.calculateX(charX.datasets.length + 1, charX.datasets.length, i),
+            y: charX.scale.endPoint
+        }))
+    });
+
+
+    charX.datasets.push({
+        points: puntos,
+        fillColor: "rgba(151,187,205,0.2)",
+        strokeColor: "rgba(151,187,205,1)",
+        pointColor: "rgba(151,187,205,1)",
+        pointStrokeColor: "#fff",
+    });
+
+    charX.update();
+
+    /*
+    var i = 0;
+    for (i in minCua) {
+        // charX.addData(minCua[i], labels[i]);
+        // console.log( minCua[i] + " OK " + labels[i] );
+
+        // charX.datasets[1].points[ i ].value = minCua[i];
+        // charX.update();
+
+        // charX.removeData();
+    }*/
+
 }
