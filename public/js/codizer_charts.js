@@ -40,7 +40,7 @@ function byVar(res, graphDiv, colorA, colorB) {
             var activeBars = myBarChart.getBarsAtEvent(evt);
 
             activeBars.forEach(function(dato) {
-                console.log(dato);
+                // console.log(dato);
             });
 
 
@@ -80,7 +80,7 @@ function byAutoInterval(res, graphDiv, colorA, colorB) {
             var activeBars = myBarChart.getBarsAtEvent(evt);
 
             activeBars.forEach(function(dato) {
-                console.log(dato);
+                // console.log(dato);
             });
         }
     );
@@ -120,7 +120,7 @@ function byAutoIntervalOji(res, graphDiv, colorA, colorB) {
         function(evt){
             var activeBars = myBarChart.getPointsAtEvent(evt);
             activeBars.forEach(function(dato) {
-                console.log(dato);
+                // console.log(dato);
             });
         }
     );
@@ -163,20 +163,23 @@ function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
     $('#graphB' + graphDiv).click(
         function(evt){
             var activeBars = myLiveChart.getPointsAtEvent(evt);
-            activeBars.forEach(function(dato) {
 
-                console.log(dato);
-                if( $('#radio1' + graphDiv).prop('checked') ) {
+            contador = 0;
+            activeBars.forEach(function(dato) {
+                // console.log(dato);
+                if( $('#radio1' + graphDiv).prop('checked') && contador == 0) {
                     $('#radio1' + graphDiv).val(dato.value);
                     $('#radio3' + graphDiv).val(dato.label);
                     $('#span1' + graphDiv).text(dato.value);
                 }
 
-                if( $('#radio2' + graphDiv).prop('checked') ) {
+                if( $('#radio2' + graphDiv).prop('checked') && contador == 0) {
                     $('#radio2' + graphDiv).val(dato.value);
                     $('#radio4' + graphDiv).val(dato.label);
                     $('#span2' + graphDiv).text(dato.value);
                 }
+
+                contador++;
 
             });
         }
@@ -225,6 +228,10 @@ function getDataPuntosToGraph(graphDiv)
 
         success: function (result)
         {
+            console.log( result );
+            var x = result[0]['Punto 1']['X'] ;
+            var y = result[0]['Punto 1']['Y'] ;
+
             alert('Se recibio: ' + result);
         }
 
@@ -237,23 +244,21 @@ function getDataPuntosToGraph(graphDiv)
 
 }
 
-function addDataMinCuadrado(graphDiv, resX, charX )
+function addDataMinCuadrado(graphDiv )
 {
 
     // console.log("Minimos cuadrados" + resX[0][9]);
     // console.log("Labels" + resX[0][4] );
 
-    var labels = resX[0][4];
-    var medDis = resX[0][8];
-    var minCua = resX[0][9];
+    var labels = resX[graphDiv][0][4];
+    var medDis = resX[graphDiv][0][8];
+    var minCua = resX[graphDiv][0][9];
 
 
     var myNewDataset = {
-        fillColor: "rgba(151,187,205,0.2)",
-        strokeColor: "rgba(151,187,205,1)",
-        pointColor: "rgba(151,187,205,1)",
-        pointStrokeColor: "#fff",
-        data : resX[0][9]
+        pointColor: "#E5E5E5",
+        data : resX[graphDiv][0][9],
+        pointColor: "#E5E5E5"
     };
 
     // console.log("ALGO AQUI: " + charX.datasets[0].points[0].label);
@@ -264,31 +269,32 @@ function addDataMinCuadrado(graphDiv, resX, charX )
     // Would update the first dataset's value of 'March' to be 50
 
 
-    var puntos = []
+    var puntos = [];
 
     myNewDataset.data.forEach(function (value, i) {
-        console.log(value);
-    });
-
-    myNewDataset.data.forEach(function (value, i) {
-        puntos.push(new charX.PointClass({
+        puntos.push(new char[graphDiv].PointClass({
             value: value,
-            label: charX.datasets[0].points[i].label,
-            x: charX.scale.calculateX(charX.datasets.length + 1, charX.datasets.length, i),
-            y: charX.scale.endPoint
+            label: char[graphDiv].datasets[0].points[i].label,
+            x: char[graphDiv].scale.calculateX(char[graphDiv].datasets.length + 1, char[graphDiv].datasets.length, i),
+            y: char[graphDiv].scale.endPoint,
+            pointColor: "#E5E5E5"
         }))
     });
 
+    console.log( puntos );
 
-    charX.datasets.push({
-        points: puntos,
-        fillColor: "rgba(151,187,205,0.2)",
-        strokeColor: "rgba(151,187,205,1)",
-        pointColor: "rgba(151,187,205,1)",
-        pointStrokeColor: "#fff",
+    char[graphDiv].datasets.push({
+        label: "Minimos cuadrados",
+        fillColor: "rgba(220,220,220,0.1)",
+        strokeColor: "#E5E5E5",
+        pointColor: "#E5E5E5",
+        pointStrokeColor: "#E5E5E5",
+        pointHighlightFill: "#E5E5E5",
+        pointHighlightStroke: "#E5E5E5",
+        points: puntos
     });
 
-    charX.update();
+    char[graphDiv].update();
 
     /*
     var i = 0;
