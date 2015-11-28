@@ -674,4 +674,52 @@ class Dvarchar extends Model
         }
         return null;
     }
+
+    static function num_comb($n, $k){
+        if($n >= $k && $k >= 0 && $n >= 0){
+            return gmp_intval( gmp_fact( $n ) ) / ( gmp_intval( gmp_fact($k) ) * gmp_intval( gmp_fact($n - $k) ) );
+        }else {
+            return 'Tanto el numero de pruebas como de exitos deben ser mayor a 0, el numero de exitos no puede ser mayor'.
+            ' al de pruebas';
+        }
+    }
+
+    static function dist_binomial($n, $k, $p){
+        $fun_bin = array();
+        if($p > 0 && $p < 1 && $n >= $k && $k >= 0 && $n >= 0){
+            for($i = $k; $i >= 0; $i--) {
+                $fun_bin[] = Dvarchar::num_comb($n, $k - $i) * (pow($p, $k - $i)) * (pow((1 - $p), ($n - ($k - $i))));
+            }
+            return $array = array(
+                'X' => $fun_bin[$k],
+                'Maximo X' => array_sum($fun_bin)
+            );
+        }else {
+            return 'Datos incorrectos';
+        }
+    }
+
+    static function media_binomial($n, $p){
+        if($n > 0 && $p > 0 && $p < 1){
+            return $n * $p;
+        }else {
+            return 'Datos incorrectos';
+        }
+    }
+
+    static function varianza_binomial($n, $p){
+        if($n > 0 && $p > 0 && $p < 1){
+            return $n * $p * (1 - $p);
+        }else {
+            return 'Datos incorrectos';
+        }
+    }
+
+    static function desves_binomial($n, $p){
+        if($n > 0 && $p > 0 && $p < 1){
+            return sqrt( Dvarchar::varianza_binomial($n, $p) );
+        }else {
+            return 'Datos incorrectos';
+        }
+    }
 }
