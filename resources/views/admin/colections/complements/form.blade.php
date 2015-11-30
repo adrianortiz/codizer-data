@@ -25,12 +25,12 @@
                 <p>Aun no generas un formulario, usa > <a href="{{ route('admin.complements.edit', $form) }}">COMPLEMENTS</a></p>
 
             @else
-                {!! Form::open(['route' => ['admin.colecciones.form.data.store', $form], 'method' => 'GET']) !!}
+                {!! Form::open(['route' => ['admin.colecciones.form.data.store', $form], 'method' => 'GET', 'id'=>'save-data']) !!}
 
                     @foreach($inputs as $input)
                         <div class="form-group">
                             <label for="{{ $input->title }}">{{ $input->title }}</label>
-                            {!! Form::text( $input->type_validation . '[]', old('content'), ['id' => $input->title, 'class' => 'form-control', 'required', 'title' => $input->description, 'data-toggle' => 'tooltip', 'data-placement' => 'right']) !!}
+                            {!! Form::text( $input->type_validation . '[]', old('content'), ['id' => $input->title, 'class' => 'form-control form-group-validate ' . $input->type_validation, /*'onkeyup'=>'validacion("'. $input->type_validation .'")',*/ 'title' => $input->description, 'data-toggle' => 'tooltip', 'data-placement' => 'right']) !!}
                             {!! Form::hidden( $input->type_validation . 'x[]', $input->id) !!}
                             {!! Form::hidden( $input->type_validation . 'y[]', $input->title) !!}
                         </div>
@@ -38,8 +38,11 @@
 
                 <a href="{{ url('/admin/colecciones') }}" class="btn btn-danger">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Guardar datos</button>
+                <p>* Todos los campos son obligatorios.</p>
 
                 {!! Form::close() !!}
+
+                <!-- <button id="save-data">Validar</button> -->
 
             @endif
 
@@ -60,16 +63,20 @@
             <button type="submit" class="btn btn-success">Importar datos</button>
             {!! Form::close() !!}
 
+
         </div>
 
     </div>
 
 
+@include('partials.alert-ajax')
 
 @endsection
 
 @include('partials.errors')
 
 @section('scripts')
+    <script src="{{ asset('/js/codizer-alert.js') }}"></script>
+    <script src="{{ asset('/js/codizer-validate.js') }}"></script>
     <script src="{{ asset('/js/form.js') }}"></script>
 @endsection

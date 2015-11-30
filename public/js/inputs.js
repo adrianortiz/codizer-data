@@ -3,7 +3,7 @@
  */
 
 
-// LIST INPUTS
+// LIST INPUTS FROM API REST
 function listInputs()
 {
     var tablaDatos = $('#datos');
@@ -80,8 +80,7 @@ $("#registro-textoCorto").click( function()
 
         success: function (result) {
             closeModalInputs('modal-textoCorto');
-            $('#msj-success-state').html(result.message);
-            $('#msj-success').fadeIn();
+            hideShowAlert('msj-success', result.message);
             listInputs();
         }
 
@@ -89,12 +88,11 @@ $("#registro-textoCorto").click( function()
 
         $('#msj-danger-state').empty();
         $(jqXHR).each(function(key,error){
-            // console.log( error.responseJSON );
             if ( !(error.responseJSON.title == null) )
-                $('#msj-danger-state').append('<li>' + error.responseJSON.title + '</li>');
+                hideShowAlert('msj-danger', error.responseJSON.title);
 
             if ( !(error.responseJSON.description == null) )
-                $('#msj-danger-state').append('<li>' + error.responseJSON.description + '</li>');
+                hideShowAlert('msj-danger', error.responseJSON.description);
         });
 
         $('#msj-danger').fadeIn();
@@ -135,12 +133,12 @@ $('#si').click(function (e)
     $('.notificacion-text-fondo').fadeOut();
     $.post(url, data, function (result) {
         div.remove();
-        $('#msj-success-state').html('<li>' + result.message + '</li>');
-        $('#msj-success').fadeIn();
+        hideShowAlert('msj-success', result.message);
+
     }).fail(function () {
         div.fadeIn();
-        $('#msj-danger-state').html('<li>Input no eliminado</li>');
-        $('#msj-danger').fadeIn();
+        hideShowAlert('msj-danger', 'Input no eliminado');
+
     });
 });
 

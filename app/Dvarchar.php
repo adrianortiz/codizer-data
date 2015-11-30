@@ -111,8 +111,10 @@ class Dvarchar extends Model
             $series['data'][]               = (float) $value;
         }
 
+        $collectionName = Form::select('name')->where('id', $datos[0]->form_id)->get();
+
         $array[0] = $valRepetidos;
-        $array[1] = 'Alumnos';
+        $array[1] = $collectionName[0]->name;
         $array[2] = $series;
         $array[3] = $datos[0]->dtitle;
         $array[4] = Dvarchar::media( $datos );
@@ -136,7 +138,9 @@ class Dvarchar extends Model
             $intervalo[] = Dvarchar::f_group($datos, $group)[0][$i] . " - " . Dvarchar::f_group($datos, $group)[1][$i];
         }
 
-        $array[1] = 'Alumnos';
+        $collectionName = Form::select('name')->where('id', $datos[0]->form_id)->get();
+
+        $array[1] = $collectionName[0]->name;
         $array[3] = $datos[0]->dtitle; // Name columna
 
         $array[4] = $intervalo;

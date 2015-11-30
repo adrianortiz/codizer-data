@@ -75,6 +75,8 @@
     <script src="{{ asset('/js/d3/stream_layers.js') }}"></script>
     -->
 
+    <script src="{{ asset('/js/codizer-alert.js') }}"></script>
+
     <script src="{{ asset("/js/codizer_charts.js") }}"></script>
     <script src="{{ asset('/js/statistics.js') }}"></script>
 

@@ -124,5 +124,6 @@
 {!! Form::open(['route' => ['admin.inputs.destroy', ':USER_ID'], 'method' => 'DELETE', 'id' => 'form-delete']) !!}
 {!! Form::close() !!}
 @section('scripts')
+    <script src="{{ asset('/js/codizer-alert.js') }}"></script>
     <script src="{{ asset('/js/inputs.js') }}"></script>
 @endsection

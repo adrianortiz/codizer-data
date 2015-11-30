@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Dvarchar;
 use App\Form;
+use App\Input;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -96,6 +98,9 @@ class FormsController extends Controller
 
         $form = Form::findOrFail($id);
         $form->delete();
+
+        Input::where('form_id', $id)->delete();
+        Dvarchar::where('form_id', $id)->delete();
 
         $message = 'La colección ' . $form->name . ' fue eliminada';
 

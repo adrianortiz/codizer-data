@@ -36,8 +36,7 @@
                         <th scope="row"><h4 style="margin-top: 7px;">{{ $numList++ }}</h4></th>
                         @foreach($arrayRow++ as $row)
                             <td>
-                                <!-- {!! $row->content !!} -->
-                                {!! Form::text('content', $row->content, ['id' => $numList, 'class' => 'form-control input-base', 'onclick' => 'getVaInput(this);', 'onblur' => 'updateInput(this,'. $row->id .');']) !!}
+                                {!! Form::text('content', $row->content, ['id' => $numList, 'class' => 'form-control input-base ' . $row->type_validation, 'onclick' => 'getVaInput(this);', 'onblur' => 'updateInput(this,'. $row->id .');']) !!}
                             </td>
                             <div style="display: none;">{{ $rowIdDelete = $row->row_id }}</div>
                         @endforeach
@@ -68,6 +67,7 @@
         -->
 
 
+@include('partials.alert-ajax')
 @endsection
 
 @include('admin.colections.complements.partials.alert-delete')
@@ -80,5 +80,7 @@
 {!! Form::close() !!}
 
 @section('scripts')
+    <script src="{{ asset('/js/codizer-alert.js') }}"></script>
+    <script src="{{ asset('/js/codizer-validate.js') }}"></script>
     <script src="{{ asset('/js/lists.js') }}"></script>
 @endsection

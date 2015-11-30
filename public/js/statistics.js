@@ -228,20 +228,6 @@ function resetClear()
     });
 }
 
-// Hide alerts
-$(".alert").click(function()
-{
-    $(".alert").fadeOut();
-});
-
-
-function hideShowAlert(show, desc)
-{
-    $(".alert").click();
-    $('#' + show + '-state').html(desc);
-    $('#' + show).fadeIn();
-}
-
 
 
 function filterPath(string)

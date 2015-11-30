@@ -78,21 +78,31 @@ function updateInput(objThis, updateThis)
 
     if ( !(objY === objThis.value) ) {
 
-        $("#contentUpdate").val("" + objThis.value);
+        if (validateItem(objThis) == -1) {
 
-        var id = updateThis;
-        var form = $('#form-update');
-        var url = form.attr('action').replace(':USER_ID', id);
-        var data = form.serialize();
+            $("#contentUpdate").val("" + objThis.value);
 
-        $.post(url, data, function (result) {
-            console.log(result.message);
-            objThis.value = result.content;
+            var id = updateThis;
+            var form = $('#form-update');
+            var url = form.attr('action').replace(':USER_ID', id);
+            var data = form.serialize();
 
-        }).fail(function () {
-            alert('Input no actualizado');
+            $.post(url, data, function (result) {
+                objThis.value = result.content;
+                hideShowAlert('msj-success', result.message);
+
+            }).fail(function () {
+                hideShowAlert('msj-danger', 'Ocurrio un error');
+                objThis.value = objY;
+
+            });
+
+        } else {
+
+            hideShowAlert('msj-danger', 'El formato no es valido<br>Contenido restaurado');
             objThis.value = objY;
-        });
+            validateItem(objThis);
+        }
     }
 
 }
