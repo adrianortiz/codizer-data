@@ -56,6 +56,8 @@
 
 @include('admin.statistics.parcials.modal')
 
+@include('admin.statistics.parcials.modal-extra')
+
 @section('scripts')
 
 
@@ -77,7 +79,8 @@
 
     <script src="{{ asset('/js/codizer-alert.js') }}"></script>
 
-    <script src="{{ asset("/js/codizer_charts.js") }}"></script>
+    <script src="{{'/js/statistics-extra.js'}}"></script>
+    <script src="{{ asset('/js/codizer_charts.js') }}"></script>
     <script src="{{ asset('/js/statistics.js') }}"></script>
 
 @endsection

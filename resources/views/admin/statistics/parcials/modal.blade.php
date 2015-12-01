@@ -103,11 +103,6 @@
 
 -->
 
-
-
-
-
-
                 @for( $i = -1; $i <= 100; $i++)
                     <div id="graph{{$i}}" class="graphX" style="height: auto; width: 0;">
                         <div id="graphA{{$i}}" style="width: 100%; display: inline-block;"></div>

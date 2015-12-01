@@ -52,6 +52,31 @@ class StatisticController extends Controller
     public function getDataColumns(Request $request)
     {
 
+        /**
+         * STATISTICS EXTRAS
+         */
+        if ($request->has('extra')) {
+
+            // RESPUESTA JSON PARA GRAFICAR
+            return response()->json([
+                "msg" => "Controller say OK"
+            ]);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /*
          * Grupos a graficar
          */
