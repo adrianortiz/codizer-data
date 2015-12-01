@@ -17,30 +17,40 @@ function modalStacsExtra()
 }
 
 
-
 function addExtraDataStats(option,  graphDiv )
 {
-    modalStacsExtra();
 
     var datos = charConfig[graphDiv];
-    datos.push({name: "extra",value: option});
 
-    var route = $("#form-columns-data").attr('action');
+    if(option == 'clonar') {
 
-    $.ajax({
-        url: route,
-        type: 'POST',
-        dataType: 'json',
-        data: datos,
-        // async: false,
+        getDataToGraphics( option, datos );
+        console.log("Clonar");
 
-        success: function (result)
-        {
-            $('#opcion-extra-selected').text(result.msg);
-        }
-    }).fail(function( jqXHR, textStatus ) {
+    } else {
 
-            hideShowAlert('msj-danger', 'Ocurrio un problema al obtener los datos');
-    });
+        modalStacsExtra();
+
+        datos.push({name: "extra",value: option});
+
+        var route = $("#form-columns-data").attr('action');
+
+        $.ajax({
+            url: route,
+            type: 'POST',
+            dataType: 'json',
+            data: datos,
+            // async: false,
+
+            success: function (result)
+            {
+                $('#opcion-extra-selected').text(result.msg);
+            }
+        }).fail(function( jqXHR, textStatus ) {
+
+                hideShowAlert('msj-danger', 'Ocurrio un problema al obtener los datos');
+        });
+    }
+
 
 }
