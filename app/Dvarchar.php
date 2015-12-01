@@ -647,11 +647,11 @@ class Dvarchar extends Model
             return $puntos = array(
                 'Punto 1' =>
                     array(
-                        'X' => $dosX,
+                        'X' => $twoX,
                         'Y' => $a0 + ($a1 * $dosX)),
                 'Punto 2' =>
                     array(
-                        'X' => $unoX,
+                        'X' => $oneX,
                         'Y' => $a0 + ($a1 * $unoX))
             );
 
@@ -668,11 +668,11 @@ class Dvarchar extends Model
             return $puntos = array(
                 'Punto 1' =>
                     array(
-                        'X' => $unoX,
+                        'X' => $oneX,
                         'Y' => $a0 + ($a1 * $unoX)),
                 'Punto 2' =>
                     array(
-                        'X' => $dosX,
+                        'X' => $twoX,
                         'Y' => $a0 + ($a1 * $dosX))
             );
         }

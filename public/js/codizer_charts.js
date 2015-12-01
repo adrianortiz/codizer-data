@@ -1,19 +1,17 @@
 /**
  * Created by Codizer on 11/23/15.
  */
+
 /*
  * GRAFICAR POR VARIABLE
  */
 
 function byVar(res, graphDiv, colorA, colorB) {
 
-    // console.log( res[0][2]['data'] );
-    // console.log( res[0][0]['categories'] );
-
     var barChartData = {
         // labels : ["January","February","March","April","May","June","July"],
         labels : res[0][0]['categories'],
-        label: "My First dataset",
+        label: "Datos acumulados por variable",
 
         datasets : [
             {
@@ -56,7 +54,7 @@ function byVar(res, graphDiv, colorA, colorB) {
 function byAutoInterval(res, graphDiv, colorA, colorB) {
     var barChartData = {
         labels : res[0][4], // X
-        label: "HISTOGRAMA",
+        label: "Histograma",
         datasets : [
             {
                 fillColor : colorB,
@@ -94,16 +92,16 @@ function byAutoInterval(res, graphDiv, colorA, colorB) {
 function byAutoIntervalOji(res, graphDiv, colorA, colorB) {
     var barChartData = {
         labels : res[0][4], // X
-        label: "OJIVA",
+        label: "Ojiva 1",
         datasets : [
             {
-                label: "My First dataset",
+                label: "Datos de Ojiva",
                 fillColor: "rgba(220,220,220,0)",
                 strokeColor: "#E5E5E5",
-                pointColor: colorB,
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
+                pointColor: "#FFFFFF",
+                pointStrokeColor: "#6365DB",
+                pointHighlightFill: "#6365DB",
+                pointHighlightStroke: "#6365DB",
                 data : res[0][6]
             }
         ]
@@ -113,7 +111,9 @@ function byAutoIntervalOji(res, graphDiv, colorA, colorB) {
         responsive : true,
         animateScale: true,
         animationSteps: 60,
-        bezierCurve: false
+        bezierCurve: false,
+        pointDotStrokeWidth : 2,
+        datasetFill : false,
     });
 
     $('#graphB' + graphDiv).click(
@@ -131,20 +131,20 @@ function byAutoIntervalOji(res, graphDiv, colorA, colorB) {
  GRÁFICA POR DISPERSIÓN
  */
 
-var labelA, lalebB;
 function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
+
     var barChartData = {
         labels : res[0][4], // X
-        label: "OJIVA",
+        label: "OJIVA 2",
         datasets : [
             {
                 label: "Intervalo automatico por dispersion",
                 fillColor: "rgba(220,220,220,0)",
                 strokeColor: "#E5E5E5",
-                pointColor: colorB,
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
+                pointColor: "#FFFFFF",
+                pointStrokeColor: "#494949",
+                pointHighlightFill: "#494949",
+                pointHighlightStroke: "#494949",
                 data : res[0][8]
             }
         ]
@@ -156,7 +156,10 @@ function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
         responsive : true,
         animateScale: true,
         animationSteps: 60,
-        bezierCurve: false
+        bezierCurve: false,
+        pointDotStrokeWidth : 2,
+        datasetFill : false,
+        // multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
     });
 
 
@@ -166,7 +169,7 @@ function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
 
             contador = 0;
             activeBars.forEach(function(dato) {
-                // console.log(dato);
+
                 if( $('#radio1' + graphDiv).prop('checked') && contador == 0) {
                     $('#radio1' + graphDiv).val(dato.value);
                     $('#radio3' + graphDiv).val(dato.label);
@@ -186,8 +189,9 @@ function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
     );
 
     return myLiveChart;
-
 }
+
+
 
 /*
     VALIDAR DATOS DE PUNTOS SELECTO AL FOMULARIO
@@ -210,11 +214,13 @@ function getDataPuntos(graphDiv)
         hideShowAlert('msj-danger', 'Por favor selecciona los dos puntos.');
 
     } else {
-        getDataPuntosToGraph(graphDiv);
+        addDataPointSelected(graphDiv);
     }
 }
 
-function getDataPuntosToGraph(graphDiv)
+
+
+function addDataPointSelected(graphDiv)
 {
     var datos = $("#form-points-data").serializeArray();
     var route = $("#form-points-data").attr('action');
@@ -228,27 +234,99 @@ function getDataPuntosToGraph(graphDiv)
 
         success: function (result)
         {
-            console.log( result );
-            var x = result[0]['Punto 1']['X'] ;
-            var y = result[0]['Punto 1']['Y'] ;
 
-            alert('Se recibio: ' + result);
+            var punto1X = result[0]['Punto 1']['X'] ;
+            var punto1Y = result[0]['Punto 1']['Y'] ;
+
+            var punto2X = result[0]['Punto 2']['X'] ;
+            var punto2Y = result[0]['Punto 2']['Y'] ;
+
+            console.log("Cantidad de DataSets");
+            console.log(char[graphDiv].datasets.length);
+
+            /*
+             var dataChart = char[graphDiv].datasets.length;
+
+             for (var i = 1; i < dataChart; i++ ) {
+                char[graphDiv].datasets[i].points.forEach(function (value, i) {
+                    console.log(value);
+                    char[graphDiv].removeData();
+                });
+            }
+
+            for (var i = 0; i < 1; i++ ) {
+                console.log(i);
+                char[graphDiv].removeData();
+            }
+
+
+            char[graphDiv].datasets[1].points.forEach(function (value, i) {
+                console.log(value + " " + i);
+                // char[graphDiv].removeData();
+            });*/
+
+            var puntos = [];
+
+            char[graphDiv].datasets[0].points.forEach(function (valueChar, iChar) {
+
+                    if(char[graphDiv].datasets[0].points[iChar].label == punto1X ) {
+
+                        puntos.push(new char[graphDiv].PointClass({
+                            value: punto1Y,
+                            label: char[graphDiv].datasets[0].points[iChar].label,
+                            x: char[graphDiv].scale.calculateX(char[graphDiv].datasets.length + 1, char[graphDiv].datasets.length, iChar),
+                            y: char[graphDiv].scale.endPoint
+                        }))
+
+                    } else if( char[graphDiv].datasets[0].points[iChar].label == punto2X ) {
+
+                        puntos.push(new char[graphDiv].PointClass({
+                            value: punto2Y,
+                            label: char[graphDiv].datasets[0].points[iChar].label,
+                            x: char[graphDiv].scale.calculateX(char[graphDiv].datasets.length + 1, char[graphDiv].datasets.length, iChar),
+                            y: char[graphDiv].scale.endPoint
+                        }))
+
+                    } else {
+
+                        puntos.push(new char[graphDiv].PointClass({
+                            value: null,
+                            label: char[graphDiv].datasets[0].points[iChar].label,
+                            x: char[graphDiv].scale.calculateX(char[graphDiv].datasets.length + 1, char[graphDiv].datasets.length, iChar),
+                            y: char[graphDiv].scale.endPoint
+                        }))
+                    }
+            });
+
+
+            char[graphDiv].datasets.push({
+                label: [punto1X, punto2X],
+                points: puntos,
+                strokeColor: "#9688FC",
+                pointColor: "#9688FC",
+                pointStrokeColor: "#9688FC",
+                pointHighlightFill: "#9688FC",
+                pointHighlightStroke: "#9688FC"
+            });
+
+            char[graphDiv].update();
+
         }
 
-    }).fail(function( jqXHR, textStatus )
-    {
+    }).fail(function( jqXHR, textStatus ) {
 
-        alert('Error al enviar');
+        alert('Error al enviar ' + textStatus);
 
     });
 
 }
 
-function addDataMinCuadrado(graphDiv )
-{
 
-    // console.log("Minimos cuadrados" + resX[0][9]);
-    // console.log("Labels" + resX[0][4] );
+/*
+ ADD DATA MIN QUA
+ */
+function addDataMinCuadrado( graphDiv )
+{
 
     var labels = resX[graphDiv][0][4];
     var medDis = resX[graphDiv][0][8];
@@ -256,18 +334,8 @@ function addDataMinCuadrado(graphDiv )
 
 
     var myNewDataset = {
-        pointColor: "#E5E5E5",
-        data : resX[graphDiv][0][9],
-        pointColor: "#E5E5E5"
+        data : resX[graphDiv][0][9]
     };
-
-    // console.log("ALGO AQUI: " + charX.datasets[0].points[0].label);
-    // console.log("ALGO AQUI: " + charX.datasets.length + 1 + " + " + charX.datasets.length + " + " + 0);
-    // console.log("Mis labels = " + myNewDataset.data);
-    // new Chart(ctx).Line(barChartData, {
-    // charX.datasets[0].points[2].value = 50;
-    // Would update the first dataset's value of 'March' to be 50
-
 
     var puntos = [];
 
@@ -281,31 +349,16 @@ function addDataMinCuadrado(graphDiv )
         }))
     });
 
-    console.log( puntos );
-
     char[graphDiv].datasets.push({
         label: "Minimos cuadrados",
-        fillColor: "rgba(220,220,220,0.1)",
-        strokeColor: "#E5E5E5",
-        pointColor: "#E5E5E5",
-        pointStrokeColor: "#E5E5E5",
-        pointHighlightFill: "#E5E5E5",
-        pointHighlightStroke: "#E5E5E5",
+        strokeColor: "#E5863D",
+        pointColor: "#E5863D",
+        pointStrokeColor: "#E5863D",
+        pointHighlightFill: "#E5863D",
+        pointHighlightStroke: "#E5863D",
         points: puntos
     });
 
     char[graphDiv].update();
-
-    /*
-    var i = 0;
-    for (i in minCua) {
-        // charX.addData(minCua[i], labels[i]);
-        // console.log( minCua[i] + " OK " + labels[i] );
-
-        // charX.datasets[1].points[ i ].value = minCua[i];
-        // charX.update();
-
-        // charX.removeData();
-    }*/
 
 }
