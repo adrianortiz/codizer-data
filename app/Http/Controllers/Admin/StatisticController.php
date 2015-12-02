@@ -52,6 +52,34 @@ class StatisticController extends Controller
     public function getDataColumns(Request $request)
     {
 
+
+        /*
+         * Grupos a graficar
+         */
+        $groups = 0;
+        if($request->gruop > 1)
+            $groups = $request->gruop;
+
+
+        /*
+         * Obtener datos en base al request
+         */
+        $arrayDataType = array();
+        if ($request->has('title')) {
+            foreach ($request->input('title') as $titleX) {
+                $arrayDataType[] =  Dvarchar::select('dtitle', 'content', 'form_id')
+                    ->where('form_id', $request->form)
+                    ->where('dtitle', $titleX)
+                    ->get();
+            }
+        }
+
+
+
+
+
+
+
         /**
          * STATISTICS EXTRAS
          */
@@ -60,6 +88,47 @@ class StatisticController extends Controller
             // RESPUESTA JSON PARA GRAFICAR
             return response()->json([
                 "msg" => "Controller say OK"
+            ]);
+
+        }
+
+
+
+        /*
+         * STATISTICS 2 COLUMS
+         */
+        if ( $request->num_colums >= 2 ) {
+
+
+            $valRepetidos['value'] = array();
+            $series['label'] = array();
+
+            $ordenados = Dvarchar::arrayDatosNum($arrayDataType[0]);
+
+            foreach( $ordenados  as $key => $ordenado)
+            {
+                $valRepetidos['label'][] = $ordenado;
+
+                $hola = null;
+                foreach( $arrayDataType[0]->all()  as $keyB => $desordenado)
+                {
+                    if( $ordenado == $desordenado['content'] )
+                        $hola = $arrayDataType[1][$keyB]->content;
+                }
+
+                $series['label'][] = $hola;
+
+            }
+
+            $array[0] = $valRepetidos;
+            $array[1] = $series;
+
+
+            dd( $array );
+
+            // RESPUESTA JSON PARA GRAFICAR
+            return response()->json([
+                "msg" => "COLUMNOS 2 says OK"
             ]);
 
         }
@@ -77,27 +146,13 @@ class StatisticController extends Controller
 
 
 
-        /*
-         * Grupos a graficar
-         */
-        $groups = 0;
-        if($request->gruop > 1)
-        {
-            $groups = $request->gruop;
-        }
 
-        /*
-         * Obtener datos en base al request
-         */
-        $arrayDataType = array();
-        if ($request->has('title')) {
-            foreach ($request->input('title') as $titleX) {
-                $arrayDataType[] =  Dvarchar::select('dtitle', 'content', 'form_id')
-                                    ->where('form_id', $request->form)
-                                    ->where('dtitle', $titleX)
-                                    ->get();
-            }
-        }
+
+
+
+
+
+
         // respuesta
         $res = null;
        // dd(Dvarchar::freq($arrayDataType[0]->all(),$groups),
