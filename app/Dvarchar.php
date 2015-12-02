@@ -125,13 +125,33 @@ class Dvarchar extends Model
         return $array;
     }
 
+    static function getCollectionName($id){
+        $collectionName = Form::select('name')->where('id', $id)->get();
+        return $collectionName[0]->name;
+    }
 
     /**
      * @param $datos
      * @param $group
      * @return mixed
      */
-    static function byAutoInterval( $datos, $group )
+    static function byAutoIntervalHistograma( $datos, $group )
+    {
+        $intervalo = array();
+        for($i = 0; $i < $group; $i++){
+            $intervalo[] = Dvarchar::f_group($datos, $group)[0][$i] . " - " . Dvarchar::f_group($datos, $group)[1][$i];
+        }
+
+        $array[1] = Dvarchar::getCollectionName( $datos[0]->form_id );
+        $array[3] = $datos[0]->dtitle; // Name columna
+
+        $array[4] = $intervalo;
+        $array[5] = Dvarchar::densidad($datos, $group);
+
+        return $array;
+    }
+
+    static function byAutoIntervalOjiva( $datos, $group )
     {
         $intervalo = array();
         for($i = 0; $i < $group; $i++){
@@ -144,9 +164,21 @@ class Dvarchar extends Model
         $array[3] = $datos[0]->dtitle; // Name columna
 
         $array[4] = $intervalo;
-        $array[5] = Dvarchar::densidad($datos, $group);
         $array[6] = Dvarchar::freqacum($datos, $group);
-        $array[8] = Dvarchar::freq($datos, $group);
+
+        return $array;
+    }
+
+    static function byAutoIntervalDispersion( $datos, $group )
+    {
+        // pendiente
+        $collectionName = Form::select('name')->where('id', $datos[0]->form_id)->get();
+
+        $array[1] = $collectionName[0]->name;
+        $array[3] = $datos[0]->dtitle; // Name columna
+
+        // pendiente
+
         $array[9] = Dvarchar::minimoscuadrados($datos, $group);
 
         return $array;
