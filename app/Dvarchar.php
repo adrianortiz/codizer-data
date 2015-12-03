@@ -254,11 +254,12 @@ class Dvarchar extends Model
      * @param $group
      * @return mixed
      */
-    static function byAutoIntervalDispersion( $arrayDisp, $group )
+    static function byAutoIntervalDispersion( $arrayDispOne, $arrayDispTwo, $group )
     {
         $intervalo = array();
+        $xy = Dvarchar::twocolumns($arrayDispOne, $arrayDispTwo, $group );
         for($i = 0; $i < $group; $i++){
-            $intervalo[] = Dvarchar::f_group($arrayDisp[0], $group)[0][$i] . " - " . Dvarchar::f_group($arrayDisp[0], $group)[1][$i];
+            $intervalo[] = $xy[0][0][$i] . " - " . $xy[0][1][$i];
         }
 
         //$collectionName = Form::select('name')->where('id', $datos[0]->form_id)->get();
@@ -267,8 +268,8 @@ class Dvarchar extends Model
         // $array[3] = $datos[0]->dtitle; // Name columna
 
         $array[4] = $intervalo;
-        $array[8] = Dvarchar::twocolumnsY($arrayDisp, $group);
-        // $array[9] = Dvarchar::minimoscuadrados($arrayDisp, $group);
+        $array[8] = $xy[1];
+        $array[9] = Dvarchar::minimoscuadrados($arrayDispOne, $arrayDispTwo, $group);
 
         return $array;
     }
@@ -280,17 +281,17 @@ class Dvarchar extends Model
      */
     static function arrayDatosNum( $datos )
     {
-            $array = array();
+        $array = array();
 
-            foreach ($datos as $numerico) {
-                $array[] = $numerico->content;
-            }
+        foreach ($datos as $numerico) {
+            $array[] = $numerico->content;
+        }
 
-            /**
-             * Ordenar de menor a mayor
-             */
-            sort($array);
-            return $array;
+        /**
+         * Ordenar de menor a mayor
+         */
+        sort($array);
+        return $array;
 
     }
     /**
@@ -630,28 +631,27 @@ class Dvarchar extends Model
      * @param $group
      * @return array
      */
-    static function minimoscuadrados($datos, $group)
+    static function minimoscuadrados($arrayDispOne, $arrayDispTwo, $group)
     {
-        $intervalos = Dvarchar::f_group($datos, $group)[0];
-        $freq = Dvarchar::freq($datos, $group);
+        $xy = Dvarchar::twocolumns($arrayDispOne, $arrayDispTwo, $group);
 
         $sumXY = array();
         $sumXsquare = array();
 
         for($i = 0; $i < $group; $i++){
-            $sumXY[] = $intervalos[$i] * $freq[$i];
-            $sumXsquare[] = pow($intervalos[$i], 2);
+            $sumXY[] = $xy[0][0][$i] * $xy[1][$i];
+            $sumXsquare[] = pow($xy[0][0][$i], 2);
         }
 
-        $dA = ( $group * array_sum($sumXsquare) ) - pow( array_sum($intervalos), 2 );
-        $da0 = ( array_sum($freq) * array_sum($sumXsquare) ) -
-            ( array_sum($sumXY) * array_sum($intervalos) );
+        $dA = ( $group * array_sum($sumXsquare) ) - pow( array_sum($xy[0][0]), 2 );
+        $da0 = ( array_sum($xy[1]) * array_sum($sumXsquare) ) -
+            ( array_sum($sumXY) * array_sum($xy[0][0]) );
         $da1 = ( $group * array_sum($sumXY) ) -
-            ( array_sum($intervalos) * array_sum($freq) );
+            ( array_sum($xy[0][0]) * array_sum($xy[1]) );
 
         $minimoscuadrados = array();
         for($i = 0; $i < $group; $i++){
-            $minimoscuadrados[] = ($da0 / $dA) + ( ($da1 / $dA) * $intervalos[$i] );
+            $minimoscuadrados[] = ($da0 / $dA) + ( ($da1 / $dA) * $xy[0][0][$i] );
         }
 
         return $minimoscuadrados;
@@ -848,36 +848,117 @@ class Dvarchar extends Model
         }
     }
 
-    static function twocolumnsY($twoColumns, $group){
-        $f_group = Dvarchar::f_group($twoColumns[0], $group);
-
-        $array = Dvarchar::arrayDatosNum($twoColumns[0]);
-        sort($array);
-
-        $count = array();
-        $acum = 0;
-
-        for($i = 0; $i < $group; $i++){
-            for($j = 0; $j < count($array); $j++){
-                if( $array[$j] > $f_group[0][$i] && $array[$j] < $f_group[1][$i] ){
-                    $acum = $acum + $array[$i];
-                    $count[$i][] = $acum;
-                }else{
-                    $acum =0;
-                    $count[$i][] = $acum;
+    static function intervalosTwoColums($arrayDispOne, $group){
+        $x = Dvarchar::getData($arrayDispOne);
+        sort($x);
+        $f1 = null;
+        for($i = 0; $i < count($x); $i++){
+            $pos = strpos($x[$i],'.');
+            if($pos !== false){
+                $str = count(substr($x[$i],$pos + 1));
+                if($str == 1){
+                    $f1 = $x[0] - 0.25;
+                }else if($str == 2){
+                    $f1 = $x[0] - 0.125;
+                }else if($str == 3){
+                    $f1 = $x[0] - 0.0625;
                 }
+            }else {
+                $f1 = $x[0] - 0.5;
             }
         }
 
-        $y = array();
+        $rango = $x[count($x) - 1] - $x[0] + 1;
+        $ancho = ceil( $rango / $group );
+
+        $fi = array();
+        $ff = array();
 
         for($i = 0; $i < $group; $i++){
-            $y[] = max( array_unique( $count[$i] ) ) / $group;
+            $fi[$i] = $f1;
+            $f1 = $f1 + $ancho;
+            $ff[$i] = $f1;
         }
-
-
-
-        return $y;
+        return  $f_group = array(0 => $fi, 1 => $ff);
     }
 
+    static function getData($arrayDisp){
+        $array = array();
+
+        foreach ($arrayDisp as $numerico) {
+            $array[] = $numerico->content;
+        }
+
+        return $array;
+    }
+
+    static function twocolumns($arrayDispOne, $arrayDispTwo, $group){
+        $intervalos = Dvarchar::intervalosTwoColums($arrayDispOne, $group);
+        $x = Dvarchar::getData($arrayDispOne);
+        $y = Dvarchar::getData($arrayDispTwo);
+        $array = null;
+        $X = array();
+        $Y = array();
+
+        for($i = 0; $i < count($x); $i++){
+            $array[] = $x[$i] . '-' . $y[$i];
+        }
+
+        sort($array);
+
+        for($i = 0; $i < count($x); $i++){
+            if( strpos($array[$i], '-') ){
+                $X[] = substr( $array[$i], 0, strpos( $array[$i], '-' ) );
+                $Y[] = substr( $array[$i], strpos( $array[$i], '-' ) + 1 );
+            }else{
+                $X = null;
+                $Y = null;
+            }
+        }
+
+        $count = array();
+        $count[] =array_values( array_count_values($X) );
+
+        $arrayT = array();
+        $acum = 0;
+        for($i = 0; $i < count($count[0]) ; $i++){
+            $arrayT[] = array_slice($Y, $acum, $count[0][$i]);
+            $acum = $acum + $count[0][$i];
+        }
+
+        $arrayY = array();
+        for($i = 0; $i < count($arrayT) ; $i++){
+            $arrayY[] = array_sum($arrayT[$i]) / count($arrayT[$i]);
+        }
+
+        $arrayX = array_unique($X);
+        $arrayXY = array_combine($arrayX,$arrayY);
+
+        $cont = 0;
+        $megaY = array();
+        $ar = array_keys($arrayXY);
+
+        for($i = 0; $i < $group ; $i++) {
+            foreach($ar as $key) {
+                if ($key > $intervalos[0][$i] && $key < $intervalos[1][$i]) {
+                    $cont = $cont + $arrayXY[$key];
+                    $megaY[] = $cont;
+                } else {
+                    $cont = 0;
+                    $megaY[] = $cont;
+                }
+            }
+
+        }
+
+        $chunk = array_chunk($megaY, ( $group * count($arrayXY) ) / $group);
+        $defY= array();
+        for($i = 0; $i < count($chunk) ; $i++){
+            $defY[] = max($chunk[$i]);
+        }
+
+        return array(
+            $intervalos, $defY
+        );
+    }
 }

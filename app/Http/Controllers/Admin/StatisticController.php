@@ -118,7 +118,6 @@ class StatisticController extends Controller
 
 
 
-
         /*
          * STATISTICS 2 COLUMS
          * GRAFICA DE DISPERSION
@@ -147,10 +146,11 @@ class StatisticController extends Controller
             $arrayDisp[0] = $arrayDataType[0];
             $arrayDisp[1] = $arrayDataType[1];
 
+            //dd( Dvarchar::minimoscuadrados($arrayDisp[0],$arrayDisp[1], $groups));
             if( $request->frecuencia == 'intervalAutDisp' )
             {
                 // $arrayDataType[0]->all()
-                $res = Dvarchar::byAutoIntervalDispersion( $arrayDisp, $groups);
+                $res = Dvarchar::byAutoIntervalDispersion( $arrayDisp[0],$arrayDisp[1], $groups);
                 $res[7] = 'intervalAutDisp';
             }
 
