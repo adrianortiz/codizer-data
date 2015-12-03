@@ -247,7 +247,7 @@ function getDataToGraphics(option, newDataClone )
                 byAutoIntervalOji(res, graphDiv, items, colorB);
 
             optionsCData = null;
-            tendenCenter = '<li><a href="#" onclick="addExtraDataStats(\'medidasCentral\','+ graphDiv +');">Medidas de tendencias central</a></li>';
+            tendenCenter = '<li><a href="#" onclick="saveImg(\'#graphC'+ graphDiv +'\');">Medidas de tendencias central</a></li>';
 
             if( !(res[0][7] == 'byVar' ||  res[0][7] == 'intervalAutDisp') ) {
                 optionsCData = '<div class="btn-group" style="float: right;" role="group"><button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span><img src="/images/icon-estadistica.svg" class="icon-button "> <span>  <span class="caret"></span></button><ul class="dropdown-menu dropdown-menu-right"> <li class="dropdown-header">Mostrar:</li> ' + tendenCenter + ' <li><a href="#" onclick="addExtraDataStats(\'medidasDispersion\','+ graphDiv +');">Medidas de dispersión</a></li>     <li><a href="#" onclick="addExtraDataStats(\'medidasPosicion\','+ graphDiv +');">Medidas de posición</a></li>       <li><a href="#" onclick="addExtraDataStats(\'medidasDeformacion\','+ graphDiv +');">Medidas de deformación</a></li> <li role="separator" class="divider"></li> </ul></div>';
