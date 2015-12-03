@@ -5,7 +5,7 @@
         <h2 id="opcion-extra-selected">Extras</h2>
     </div>
 
-    <div class="form-config-statistic">
+    <div id="content-data-extra" style="color: darkgray;" class="form-config-statistic">
         <table class="table table-condensed">
             <thead>
             <tr>

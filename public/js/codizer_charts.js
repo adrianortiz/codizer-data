@@ -133,6 +133,8 @@ function byAutoIntervalOji(res, graphDiv, colorA, colorB) {
 
 function byAutoIntervalDisp(res, graphDiv, colorA, colorB) {
 
+    console.log( res );
+
     var barChartData = {
         labels : res[0][4], // X
         label: "OJIVA 2",

@@ -85,50 +85,78 @@ class StatisticController extends Controller
          */
         if ($request->has('extra')) {
 
+            $res = null;
+            if( $request->extra == 'medidasCentral'  )
+                $res = Dvarchar::tendenciaCetral($arrayDataType[0]->all());
+
+            if( $request->extra == 'medidasDispersion' )
+                $res = Dvarchar::medidasDispersion($arrayDataType[0]->all(), $groups);
+
+            if( $request->extra == 'medidasPosicion')
+                $res = Dvarchar::medidasPosicion($arrayDataType[0]->all(), $groups);
+
+            if( $request->extra == 'medidasDeformacion')
+                $res = Dvarchar::medidasDeformacion($arrayDataType[0]->all(), $groups);
+
+
             // RESPUESTA JSON PARA GRAFICAR
             return response()->json([
-                "msg" => "Controller say OK"
+                $res
             ]);
 
         }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
         /*
          * STATISTICS 2 COLUMS
+         * GRAFICA DE DISPERSION
          */
-        if ( $request->num_colums >= 2 ) {
+        $arrayDisp = array();
+        if ( $request->num_colums >= 2 )
+        {
 
-
-            $valRepetidos['value'] = array();
-            $series['label'] = array();
+            $labels['label'] = array();
+            $values['value'] = array();
 
             $ordenados = Dvarchar::arrayDatosNum($arrayDataType[0]);
 
             foreach( $ordenados  as $key => $ordenado)
             {
-                $valRepetidos['label'][] = $ordenado;
-
-                $hola = null;
+                $labels['label'][] = $ordenado;
+                $value = null;
                 foreach( $arrayDataType[0]->all()  as $keyB => $desordenado)
                 {
                     if( $ordenado == $desordenado['content'] )
-                        $hola = $arrayDataType[1][$keyB]->content;
+                        $value = $arrayDataType[1][$keyB]->content;
                 }
-
-                $series['label'][] = $hola;
-
+                $values['value'][] = $value;
             }
 
-            $array[0] = $valRepetidos;
-            $array[1] = $series;
+            $arrayDisp[0] = $arrayDataType[0];
+            $arrayDisp[1] = $arrayDataType[1];
 
+            if( $request->frecuencia == 'intervalAutDisp' )
+            {
+                // $arrayDataType[0]->all()
+                $res = Dvarchar::byAutoIntervalDispersion( $arrayDisp, $groups);
+                $res[7] = 'intervalAutDisp';
+            }
 
-            dd( $array );
-
-            // RESPUESTA JSON PARA GRAFICAR
+            // RESPUESTA JSON PARA GRAFICAR DISPERSIÓN
             return response()->json([
-                "msg" => "COLUMNOS 2 says OK"
+                $res
             ]);
 
         }
@@ -169,7 +197,7 @@ class StatisticController extends Controller
          */
         if( $request->frecuencia == 'intervalAut' )
         {
-            $res = Dvarchar::byAutoInterval($arrayDataType[0]->all(), $groups);
+            $res = Dvarchar::byAutoIntervalHistograma($arrayDataType[0]->all(), $groups);
             $res[7] = 'byAutoInterval';
         }
 
@@ -178,15 +206,8 @@ class StatisticController extends Controller
          */
         if( $request->frecuencia == 'intervalAutOji' )
         {
-            $res = Dvarchar::byAutoInterval($arrayDataType[0]->all(), $groups);
+            $res = Dvarchar::byAutoIntervalOjiva($arrayDataType[0]->all(), $groups);
             $res[7] = 'intervalAutOji';
-        }
-
-        //
-        if( $request->frecuencia == 'intervalAutDisp' )
-        {
-            $res = Dvarchar::byAutoInterval($arrayDataType[0]->all(), $groups);
-            $res[7] = 'intervalAutDisp';
         }
 
 

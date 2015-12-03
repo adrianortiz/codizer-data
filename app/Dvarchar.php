@@ -125,6 +125,79 @@ class Dvarchar extends Model
         return $array;
     }
 
+
+    /**
+     * @param $datos
+     * @return mixed
+     */
+    static function tendenciaCetral( $datos )
+    {
+        $array[4] = Dvarchar::media( $datos );
+        $array[5] = Dvarchar::mediana($datos);
+        $array[6] = Dvarchar::moda($datos);
+
+        $array[7] = 'Tendencia central';
+
+        return $array;
+    }
+
+
+    /**
+     * @param $datos
+     * @param $groups
+     * @return mixed
+     */
+    static function medidasDispersion( $datos, $groups)
+    {
+        $array[1] = Dvarchar::desvm( $datos, $groups);
+        $array[2] = Dvarchar::varianza( $datos, $groups);
+        $array[3] = Dvarchar::desves( $datos, $groups);
+
+        $array[7] = 'Medidas de dispersión';
+
+        return $array;
+    }
+
+    /**
+     * @param $datos
+     * @param $groups
+     * @return mixed
+     */
+    static function medidasPosicion($datos, $groups)
+    {
+        $array[1] = Dvarchar::deciles( $datos, $groups);
+        $array[2] = Dvarchar::percentiles( $datos, $groups);
+        $array[3] = Dvarchar::cuartiles( $datos, $groups);
+
+        $array[7] = 'Medidas de Posición';
+
+        return $array;
+    }
+
+
+    static function medidasDeformacion($datos, $groups)
+    {
+        $array[1] = Dvarchar::sesgomo( $datos, $groups);
+        $array[2] = Dvarchar::sesgomediana( $datos, $groups);
+        $array[3] = Dvarchar::sesgoper( $datos, $groups);
+        $array[4] = Dvarchar::sesgocuar( $datos, $groups);
+        $array[5] = Dvarchar::sesgoa( $datos, $groups);
+
+        $array[6] = Dvarchar::mo( $datos, $groups);
+        $array[7] = Dvarchar::curtosisQ( $datos, $groups);
+        $array[8] = Dvarchar::curtosis( $datos, $groups);
+        $array[9] = Dvarchar::curtosisa( $datos, $groups);
+
+        $array[7] = 'Medidas de Deformación';
+
+        return $array;
+    }
+
+
+    /**
+     * @param $id
+     * @return mixed
+     */
     static function getCollectionName($id){
         $collectionName = Form::select('name')->where('id', $id)->get();
         return $collectionName[0]->name;
@@ -151,6 +224,11 @@ class Dvarchar extends Model
         return $array;
     }
 
+    /**
+     * @param $datos
+     * @param $group
+     * @return mixed
+     */
     static function byAutoIntervalOjiva( $datos, $group )
     {
         $intervalo = array();
@@ -169,17 +247,28 @@ class Dvarchar extends Model
         return $array;
     }
 
-    static function byAutoIntervalDispersion( $datos, $group )
+    /**
+     * === PENDIENTE ===
+     *
+     * @param $datos
+     * @param $group
+     * @return mixed
+     */
+    static function byAutoIntervalDispersion( $arrayDisp, $group )
     {
-        // pendiente
-        $collectionName = Form::select('name')->where('id', $datos[0]->form_id)->get();
+        $intervalo = array();
+        for($i = 0; $i < $group; $i++){
+            $intervalo[] = Dvarchar::f_group($arrayDisp[0], $group)[0][$i] . " - " . Dvarchar::f_group($arrayDisp[0], $group)[1][$i];
+        }
 
-        $array[1] = $collectionName[0]->name;
-        $array[3] = $datos[0]->dtitle; // Name columna
+        //$collectionName = Form::select('name')->where('id', $datos[0]->form_id)->get();
 
-        // pendiente
+        // $array[1] = $collectionName[0]->name;
+        // $array[3] = $datos[0]->dtitle; // Name columna
 
-        $array[9] = Dvarchar::minimoscuadrados($datos, $group);
+        $array[4] = $intervalo;
+        $array[8] = Dvarchar::twocolumnsY($arrayDisp, $group);
+        // $array[9] = Dvarchar::minimoscuadrados($arrayDisp, $group);
 
         return $array;
     }
@@ -191,19 +280,19 @@ class Dvarchar extends Model
      */
     static function arrayDatosNum( $datos )
     {
+            $array = array();
 
-        $array = array();
-        foreach ($datos as $numerico) {
-            $array[] = $numerico->content;
-        }
+            foreach ($datos as $numerico) {
+                $array[] = $numerico->content;
+            }
 
-        /**
-         * Ordenar de menor a mayor
-         */
-        sort($array);
-        return $array;
+            /**
+             * Ordenar de menor a mayor
+             */
+            sort($array);
+            return $array;
+
     }
-
     /**
      * @param $datos
      * @return float
@@ -758,4 +847,37 @@ class Dvarchar extends Model
             return 'Datos incorrectos';
         }
     }
+
+    static function twocolumnsY($twoColumns, $group){
+        $f_group = Dvarchar::f_group($twoColumns[0], $group);
+
+        $array = Dvarchar::arrayDatosNum($twoColumns[0]);
+        sort($array);
+
+        $count = array();
+        $acum = 0;
+
+        for($i = 0; $i < $group; $i++){
+            for($j = 0; $j < count($array); $j++){
+                if( $array[$j] > $f_group[0][$i] && $array[$j] < $f_group[1][$i] ){
+                    $acum = $acum + $array[$i];
+                    $count[$i][] = $acum;
+                }else{
+                    $acum =0;
+                    $count[$i][] = $acum;
+                }
+            }
+        }
+
+        $y = array();
+
+        for($i = 0; $i < $group; $i++){
+            $y[] = max( array_unique( $count[$i] ) ) / $group;
+        }
+
+
+
+        return $y;
+    }
+
 }
