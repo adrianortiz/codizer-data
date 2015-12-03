@@ -7,23 +7,29 @@
 $("#close-modal-stats-extra").click(function()
 {
 
-    var title = $('#opcion-extra-selected');
     var content = $('#content-data-extra');
 
     content.empty();
-    title.text( 'Cargando....' );
-
-    content.append('<div id="loading-codizer"><svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke-linecap="round"><path d="m44.785 10.363c3.097-1.796 8.119-1.801 11.214-.013l24.29 14.03c3.096 1.789 5.614 6.148 5.624 9.717l.087 30.869c.01 3.578-2.477 7.963-5.543 9.787l-24.977 14.858c-3.071 1.827-8.06 1.834-11.138.017l-25.827-15.246c-3.08-1.818-5.549-6.196-5.516-9.769l.274-29.542c.033-3.577 2.564-7.929 5.668-9.729l25.842-14.982" stroke="#2C2C2C" stroke-width="10"/><path d="m44.785 10.363c3.097-1.796 8.119-1.801 11.214-.013l24.29 14.03c3.096 1.789 5.614 6.148 5.624 9.717l.087 30.869c.01 3.578-2.477 7.963-5.543 9.787l-24.977 14.858c-3.071 1.827-8.06 1.834-11.138.017l-25.827-15.246c-3.08-1.818-5.549-6.196-5.516-9.769l.274-29.542c.033-3.577 2.564-7.929 5.668-9.729l25.842-14.982" stroke="#3997ee" stroke-width="4"><animate attributeName="stroke-dashoffset" dur="2s" repeatCount="indefinite" from="0" to="502"/><animate attributeName="stroke-dasharray" dur="2s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"/></path></g></svg></div>');
-
     $('#modal-stats-extra').animate({left: '-320px'});
 });
 
 
 function modalStacsExtra()
 {
-    var modal = $('#modal-stats-extra');
+
     $('#close-modal-stats-extra').click();
+    var modal = $('#modal-stats-extra');
+    var content = $('#content-data-extra');
+
+    var title = $('#opcion-extra-selected');
+
+    title.text( 'Cargando....' );
+
+    content.append('<div id="loading-codizer"><svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="none" stroke-linecap="round"><path d="m44.785 10.363c3.097-1.796 8.119-1.801 11.214-.013l24.29 14.03c3.096 1.789 5.614 6.148 5.624 9.717l.087 30.869c.01 3.578-2.477 7.963-5.543 9.787l-24.977 14.858c-3.071 1.827-8.06 1.834-11.138.017l-25.827-15.246c-3.08-1.818-5.549-6.196-5.516-9.769l.274-29.542c.033-3.577 2.564-7.929 5.668-9.729l25.842-14.982" stroke="#2C2C2C" stroke-width="10"/><path d="m44.785 10.363c3.097-1.796 8.119-1.801 11.214-.013l24.29 14.03c3.096 1.789 5.614 6.148 5.624 9.717l.087 30.869c.01 3.578-2.477 7.963-5.543 9.787l-24.977 14.858c-3.071 1.827-8.06 1.834-11.138.017l-25.827-15.246c-3.08-1.818-5.549-6.196-5.516-9.769l.274-29.542c.033-3.577 2.564-7.929 5.668-9.729l25.842-14.982" stroke="#3997ee" stroke-width="4"><animate attributeName="stroke-dashoffset" dur="2s" repeatCount="indefinite" from="0" to="502"/><animate attributeName="stroke-dasharray" dur="2s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"/></path></g></svg></div>');
+
     modal.animate({left: '0px'});
+
+
 }
 
 
@@ -35,7 +41,6 @@ function addExtraDataStats(option,  graphDiv )
     if(option == 'clonar') {
 
         getDataToGraphics( option, datos );
-        console.log("Clonar");
 
     } else {
 
@@ -90,7 +95,6 @@ function addExtraDataStats(option,  graphDiv )
 
                 // Medidas de Posición
                 if( result[0][7] == 'Medidas de Posición'){
-                    console.log( result[0][1] );
 
                     title = ['Deciles', 'Percentiles', 'Cuartiles'];
 
@@ -113,21 +117,35 @@ function addExtraDataStats(option,  graphDiv )
                 if( result[0][7] == 'Medidas de Deformación'){
 
                     title = ['Sesgo Mo', 'Sesgo Mo Mediana', 'Sesgo Per', 'SesgoCuar', 'Sesgo A', 'Mo', 'Curtosis Q', 'Curtosis', 'Curtosis A'];
-                    // result[0][7] = result[0][i];
+                    result[0][7] = result[0][10];
                     for(var i = 1; i<= 9; i++ ){
                         tableContent += '<table class="table table-condensed"><thead><tr>';
-                        tableContent += '<th>' + title[i-1] + '</th></tr></thead>';
-                        tableContent += '<tbody>';
-                        tableContent += '<tr><td>' + result[0][i] + '</td></tr>';
+
+                        if( i == 6 ) {
+                            tableContent += '<th>#</th> <th>' + title[i-1] + '</th></tr></thead>';
+                            tableContent += '<tbody>';
+
+                            contador = 1;
+                            $(result[0][i]).each( function(key, value) {
+                                tableContent += '<tr><th scope="row">' + contador++ + '</th><td>' + value + '</td></tr>';
+                            });
+
+                        } else {
+
+                            tableContent += '<th>' + title[i - 1] + '</th></tr></thead>';
+                            tableContent += '<tbody>';
+                            tableContent += '<tr><td>' + result[0][i] + '</td></tr>';
+                        }
+
                         tableContent += '</tbody></table>';
+
                     }
                 }
 
                 content.append( tableContent );
-                console.log( result );
-
 
             }
+
         }).fail(function( jqXHR, textStatus ) {
 
                 hideShowAlert('msj-danger', 'Ocurrio un problema al obtener los datos');

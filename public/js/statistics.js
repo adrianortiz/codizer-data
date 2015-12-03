@@ -3,6 +3,16 @@
  */
 
 
+
+function stopRKey(evt) {
+    var evt = (evt) ? evt : ((event) ? event : null);
+    var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+    if ((evt.keyCode == 13) && (node.type=="number")) {return false;}
+}
+
+document.onkeypress = stopRKey;
+
+
 /**
  * OCULTAR DISPERCIÓN
  */
@@ -237,14 +247,19 @@ function getDataToGraphics(option, newDataClone )
                 byAutoIntervalOji(res, graphDiv, items, colorB);
 
             optionsCData = null;
+            tendenCenter = '<li><a href="#" onclick="addExtraDataStats(\'medidasCentral\','+ graphDiv +');">Medidas de tendencias central</a></li>';
+
             if( !(res[0][7] == 'byVar' ||  res[0][7] == 'intervalAutDisp') ) {
-                optionsCData = '<div class="btn-group" style="float: right;" role="group"><button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span><img src="/images/icon-menu.svg" class="icon-button "><span>Ver </span> </span><span class="caret"></span></button><ul class="dropdown-menu dropdown-menu-right"> <li class="dropdown-header">Mostrar:</li> <li><a href="#" onclick="addExtraDataStats(\'medidasCentral\','+ graphDiv +');">Medidas de tendencias central</a></li> <li><a href="#" onclick="addExtraDataStats(\'medidasDispersion\','+ graphDiv +');">Medidas de dispersión</a></li>     <li><a href="#" onclick="addExtraDataStats(\'medidasPosicion\','+ graphDiv +');">Medidas de posición</a></li>       <li><a href="#" onclick="addExtraDataStats(\'medidasDeformacion\','+ graphDiv +');">Medidas de deformación</a></li> <li role="separator" class="divider"></li> </ul></div>';
+                optionsCData = '<div class="btn-group" style="float: right;" role="group"><button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span><img src="/images/icon-estadistica.svg" class="icon-button "> <span>  <span class="caret"></span></button><ul class="dropdown-menu dropdown-menu-right"> <li class="dropdown-header">Mostrar:</li> ' + tendenCenter + ' <li><a href="#" onclick="addExtraDataStats(\'medidasDispersion\','+ graphDiv +');">Medidas de dispersión</a></li>     <li><a href="#" onclick="addExtraDataStats(\'medidasPosicion\','+ graphDiv +');">Medidas de posición</a></li>       <li><a href="#" onclick="addExtraDataStats(\'medidasDeformacion\','+ graphDiv +');">Medidas de deformación</a></li> <li role="separator" class="divider"></li> </ul></div>';
             } else {
+                if( res[0][7] == 'intervalAutDisp' )
+                    tendenCenter = "";
+
                 optionsCData = "";
             }
 
 
-            $('#graphA' + graphDiv).append('<div><h3 style="text-align: center">Datos analizados</h3> </div> <p style="text-align: center"> ' + res[0][1] + ' -> ' + res[0][3] + '<p><div class="tag-collect"> ' + res[0][1] + ' </div></dvi><div class="btn-group" style="float: right;" role="group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span><img src="/images/icon-menu.svg" class="icon-button"></span><span class="caret"></span></button><ul class="dropdown-menu dropdown-menu-right"> <li class="dropdown-header">Descargar imagen de:</li> <li><a href="#" onclick="saveImg(\'#graphB'+ graphDiv +'\');">Solo gráfica</a></li><li><a href="#" onclick="saveImg(\'#graphC'+ graphDiv +'\');">Medidas extra</a></li><li role="separator" class="divider"></li>     <li><a href="#" onclick="addExtraDataStats(\'clonar\','+ graphDiv +');">Clonar cofiguración base</a></li>    <li><a href="#" onclick="$(\'#graph'+ graphDiv +'\').fadeOut().empty();">Eliminar gráfica</a></li></ul></div>' + optionsCData);
+            $('#graphA' + graphDiv).append('<div><h3 style="text-align: center">Datos analizados</h3> </div> <p style="text-align: center"> ' + res[0][1] + ' -> ' + res[0][3] + '<p><div class="tag-collect"> ' + res[0][1] + ' </div></dvi>   <div class="btn-toolbar" role="toolbar"><div class="btn-group" style="float: right;" role="group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span><img src="/images/icon-menu.svg" class="icon-button"></span><span class="caret"></span></button><ul class="dropdown-menu dropdown-menu-right"> <li class="dropdown-header">Descargar imagen de:</li> <li><a href="#" onclick="saveImg(\'#graphB'+ graphDiv +'\');">Solo gráfica</a></li> ' + tendenCenter + ' <li role="separator" class="divider"></li>     <li><a href="#" onclick="addExtraDataStats(\'clonar\','+ graphDiv +');">Clonar cofiguración base</a></li>    <li><a href="#" onclick="$(\'#graph'+ graphDiv +'\').fadeOut().empty();">Eliminar gráfica</a></li></ul></div>' + optionsCData + '</div>');
             $('#graphC' + graphDiv).append('<div class="tag-var"><span> ' + res[0][3] + ' </span></div>');
 
             if(res[0][7] == 'byVar')
@@ -262,7 +277,7 @@ function getDataToGraphics(option, newDataClone )
                 $('#graphC' + graphDiv).append('<div class="container-radios"><div style="width: 100%;"> <label class="radio-inline"><input style="width: 14px !important;" type="radio" name="radio-disp' + graphDiv + '" id="radio1' + graphDiv + '" value="" checked="checked"> Punto 1 = <span id="span1'+ graphDiv +'">0</span></label> <br> <label class="radio-inline"> <input style="width: 14px !important;" type="radio" name="radio-disp' + graphDiv + '" id="radio2'+ graphDiv +'" value=""> Punto 2 = <span id="span2'+ graphDiv +'">0</span></label> </div>   </div>       <a href="#" class="btn btn-primary btn-sm" onclick="getDataPuntos(' + graphDiv + ');">Ver Punto selecto</a> <a href="#" class="btn btn-primary btn-sm" id="addDataMinCuadrado" onclick="addDataMinCuadrado(' + graphDiv + ');">Ver Minimos cuadrados</a>   ' + optionsCData + '       <input type="hidden" id="radio3'+ graphDiv +'" value=""/> <input type="hidden" id="radio4'+ graphDiv +'" value=""/> ');
             } else {
                 // Medidas de tendencia central
-                $('#graphC' + graphDiv).append('<div class="container-rangos"> <div><div></div><h3>' + res[0][4].toFixed(2)  + '</h3><p>Media</p></div> <div><div></div><h3>' + res[0][5] + '</h3><p>Mediana</p></div> <div><div></div><h3>'+res[0][6]+'</h3><p>Moda</p></div> </div>');
+                $('#graphC' + graphDiv).append('<div class="container-rangos"> <div><div></div><h3>' + res[0][20].toFixed(2)  + '</h3><p>Media</p></div> <div><div></div><h3>' + res[0][21] + '</h3><p>Mediana</p></div> <div><div></div><h3>'+res[0][22]+'</h3><p>Moda</p></div> </div>');
             }
 
         }

@@ -117,9 +117,11 @@ class Dvarchar extends Model
         $array[1] = $collectionName[0]->name;
         $array[2] = $series;
         $array[3] = $datos[0]->dtitle;
-        $array[4] = Dvarchar::media( $datos );
-        $array[5] = Dvarchar::mediana($datos);
-        $array[6] = Dvarchar::moda($datos);
+
+        $array[20] = Dvarchar::media( $datos );
+        $array[21] = Dvarchar::mediana($datos);
+        $array[22] = Dvarchar::moda($datos);
+
         $array[7] = 'byVar';
 
         return $array;
@@ -184,7 +186,7 @@ class Dvarchar extends Model
         $array[5] = Dvarchar::sesgoa( $datos, $groups);
 
         $array[6] = Dvarchar::mo( $datos, $groups);
-        $array[7] = Dvarchar::curtosisQ( $datos, $groups);
+        $array[10] = Dvarchar::curtosisQ( $datos, $groups);
         $array[8] = Dvarchar::curtosis( $datos, $groups);
         $array[9] = Dvarchar::curtosisa( $datos, $groups);
 
@@ -221,6 +223,10 @@ class Dvarchar extends Model
         $array[4] = $intervalo;
         $array[5] = Dvarchar::densidad($datos, $group);
 
+        $array[20] = Dvarchar::media( $datos );
+        $array[21] = Dvarchar::mediana($datos);
+        $array[22] = Dvarchar::moda($datos);
+
         return $array;
     }
 
@@ -243,6 +249,10 @@ class Dvarchar extends Model
 
         $array[4] = $intervalo;
         $array[6] = Dvarchar::freqacum($datos, $group);
+
+        $array[20] = Dvarchar::media( $datos );
+        $array[21] = Dvarchar::mediana($datos);
+        $array[22] = Dvarchar::moda($datos);
 
         return $array;
     }
