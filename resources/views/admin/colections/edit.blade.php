@@ -43,6 +43,14 @@
             </div>
 
             <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+
+
+                <a class="btn" href="{{ route('form', $form) }}">Nuevo registro</a>
+                <a class="btn" href="{{ route('admin.colecciones.form.data.index', $form) }}">Gestionar registros</a>
+                <a class="btn" href="{{ route('admin.complements.edit', $form) }}">Complements</a>
+                <a class="btn" href="{{ url('/admin/colecciones') }}">Cerrar colección</a>
+
+                <!--
                 <button type="button" class="btn btn-default">Nuevo registro</button>
                 <button type="button" class="btn btn-default">Gestionar registros</button>
                 <div class="btn-group" role="group">
@@ -78,6 +86,7 @@
                     </ul>
                 </div>
             </div>
+            -->
 
         </div>
 
