@@ -79,9 +79,15 @@ $("#registro-textoCorto").click( function()
         data: datos,
 
         success: function (result) {
-            closeModalInputs('modal-textoCorto');
-            hideShowAlert('msj-success', result.message);
-            listInputs();
+
+            if( result.message == 'Campo creado correctamente.') {
+                closeModalInputs('modal-textoCorto');
+                hideShowAlert('msj-success', result.message);
+                listInputs();
+            } else {
+                hideShowAlert('msj-danger', result.message);
+            }
+
         }
 
     }).fail(function( jqXHR, textStatus ) {

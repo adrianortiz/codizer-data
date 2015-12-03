@@ -12,8 +12,13 @@
         </div>
 
         <div id="collection-menu">
-            <button id="btnCorto" class="btn btn-default" title="Agregar nuevo input al formulario" onclick="showModalInputs('modal-textoCorto');"><span><img src="{{ asset('/images/input.svg') }}"></span>Nuevo campo</button>
-            <!--
+
+            @if( $existe <= 0 )
+                <button id="btnCorto" class="btn btn-default" title="Agregar nuevo input al formulario" onclick="showModalInputs('modal-textoCorto');"><span><img src="{{ asset('/images/input.svg') }}"></span>Nuevo campo</button>
+            @else
+                    <h5>* Ya no puedes crear nuevos inputs, debido a que ya ingresaste registros</h5>
+            @endif
+                    <!--
             <button id="btnLargo" class="btn btn-default"><span><img src="/images/textarea.svg"></span>Texto largo</button>
             <button id="btnSelect" class="btn btn-default"><span><img src="/images/select.svg"></span>Selección</button>
             <button id="btnOption" class="btn btn-default"><span><img src="/images/option.svg"></span>Opción</button>

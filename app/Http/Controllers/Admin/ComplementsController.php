@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Dvarchar;
 use App\Form;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -60,7 +61,9 @@ class ComplementsController extends Controller
     public function edit($id)
     {
         $form = Form::findOrFail($id);
-        return view('admin.colections.complements.builder', compact('form'));
+        $existe = Dvarchar::where('form_id', '=', $id)->count();
+
+        return view('admin.colections.complements.builder', compact('form', 'existe'));
     }
 
     /**

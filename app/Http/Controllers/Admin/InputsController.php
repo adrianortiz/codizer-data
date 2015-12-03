@@ -40,10 +40,21 @@ class InputsController extends Controller
     public function store(Requests\CreateInputRequest $request)
     {
         // if($request->ajax()) { return response()->json([ "mensaje" => $request->all() ]); }
+
+        //
+        $existeColumn = Input::where('form_id' , $request->form_id)->where('title' , $request->title)->count();
+
+        $msg = "";
+        if( $existeColumn == 0){
             Input::create($request->all());
-            return response()->json([
-               "message" => "Campo creado correctamente."
-            ]);
+            $msg = "Campo creado correctamente.";
+        } else {
+            $msg = "El Título del campo ya existe.";
+        }
+
+        return response()->json([
+           "message" => $msg
+        ]);
 
     }
 
