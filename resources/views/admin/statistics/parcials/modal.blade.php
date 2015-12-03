@@ -48,10 +48,6 @@
                         <div class="form-group"><label>Seleccionar columnas</label></div>
                         <div id="list-colums" class="btn-group-vertical" data-toggle="buttons" style="width: 233px;"></div>
 
-                        <div class="form-group">
-                            <label for="group">Grupos de...</label>
-                            {!! Form::number('gruop', 2, ['id'=> 'group', 'class' => 'form-control']) !!}
-                        </div>
 
                         <div class="form-group">
                             <label for="frecuencia">Gráficar</label>
@@ -62,6 +58,12 @@
                                 'porvar'            => 'Por Variable',
                             ), 'frecuencia', ['id' => 'frecuencia', 'class' => 'form-control']) !!}
                         </div>
+
+                        <div id="grupos-de-ou" class="form-group">
+                            <label for="group">Grupos de...</label>
+                            {!! Form::number('gruop', 2, ['id'=> 'group', 'class' => 'form-control']) !!}
+                        </div>
+
                         {!! Form::hidden('form', '123', ['id' => 'controlX']) !!}
                         <div class="form-group"><a id="get-data" class="btn btn-primary">GRÁFICAR</a></div>
                     {!! Form::close() !!}
@@ -80,9 +82,9 @@
         </div>
         <div class="builder-form-preview">
 
-            <h1 id="nav" class="text-center">Gráficas</h1>
+            <h1 id="nav" class="text-center" style="padding: 16px;;position: fixed; top: -13px; width: 78%; z-index: 99999;background-color: #FFFFFF">Gráficas</h1>
 
-            <div class="form-preview" id="div-data">
+            <div class="form-preview" id="div-data" style="padding-top: 100px">
 
 <!--
                 <div class="container-radios">
@@ -104,7 +106,7 @@
 -->
 
                 @for( $i = -1; $i <= 100; $i++)
-                    <div id="graph{{$i}}" class="graphX" style="height: auto; width: 0;">
+                    <div id="graph{{$i}}" class="graphX" style="height: 600px; width: 0;">
                         <div id="graphA{{$i}}" style="width: 100%; display: inline-block;"></div>
                         <canvas id="graphB{{$i}}"></canvas>
                         <div id="graphC{{$i}}" style="width: 100%; display: inline-block;"></div>
