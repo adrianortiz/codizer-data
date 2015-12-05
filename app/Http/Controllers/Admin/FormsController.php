@@ -67,8 +67,15 @@ class FormsController extends Controller
     public function edit($id)
     {
         $form = Form::findOrFail($id);
+        $tiene = Form::where('user_id', Auth::user()->id)
+            ->where('id', $id)->count();
 
-        return view('admin.colections.edit', compact('form'));
+        if($tiene == 1)
+            return view('admin.colections.edit', compact('form'));
+        else
+            return \Redirect::route('admin.colecciones.index');
+
+        return null;
     }
 
     /**

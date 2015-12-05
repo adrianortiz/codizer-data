@@ -116,7 +116,7 @@ function addExtraDataStats(option,  graphDiv )
                 // Medidas de Deformación
                 if( result[0][7] == 'Medidas de Deformación'){
 
-                    title = ['Sesgo Mo', 'Sesgo Mo Mediana', 'Sesgo Per', 'SesgoCuar', 'Sesgo A', 'Mo', 'Curtosis Q', 'Curtosis', 'Curtosis A'];
+                    title = ['Sesgo empleando Moda', 'Sesgo empleando Mediana', 'Sesgo empleando percentiles', 'Sesgo empleando cuartiles', 'Sesgo - A', 'Momento de orden', 'Curtosis - Q', 'Curtosis', 'Curtosis - A'];
                     result[0][7] = result[0][10];
                     for(var i = 1; i<= 9; i++ ){
                         tableContent += '<table class="table table-condensed"><thead><tr>';

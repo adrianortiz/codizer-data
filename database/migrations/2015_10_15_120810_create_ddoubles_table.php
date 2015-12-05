@@ -8,8 +8,8 @@ class CreateDdoublesTable extends Migration
     /**
      * Run the migrations.
      *
-     * @return void
-     */
+* @return void
+*/
     public function up()
     {
         Schema::create('ddoubles', function (Blueprint $table) {

@@ -277,7 +277,8 @@ function getDataToGraphics(option, newDataClone )
                 $('#graphC' + graphDiv).append('<div class="container-radios"><div style="width: 100%;"> <label class="radio-inline"><input style="width: 14px !important;" type="radio" name="radio-disp' + graphDiv + '" id="radio1' + graphDiv + '" value="" checked="checked"> Punto 1 = <span id="span1'+ graphDiv +'">0</span></label> <br> <label class="radio-inline"> <input style="width: 14px !important;" type="radio" name="radio-disp' + graphDiv + '" id="radio2'+ graphDiv +'" value=""> Punto 2 = <span id="span2'+ graphDiv +'">0</span></label> </div>   </div>       <a href="#" class="btn btn-primary btn-sm" onclick="getDataPuntos(' + graphDiv + ');">Ver Punto selecto</a> <a href="#" class="btn btn-primary btn-sm" id="addDataMinCuadrado" onclick="addDataMinCuadrado(' + graphDiv + ');">Ver Minimos cuadrados</a>   ' + optionsCData + '       <input type="hidden" id="radio3'+ graphDiv +'" value=""/> <input type="hidden" id="radio4'+ graphDiv +'" value=""/> ');
             } else {
                 // Medidas de tendencia central
-                $('#graphC' + graphDiv).append('<div class="container-rangos"> <div><div></div><h3>' + res[0][20].toFixed(2)  + '</h3><p>Media</p></div> <div><div></div><h3>' + res[0][21] + '</h3><p>Mediana</p></div> <div><div></div><h3>'+res[0][22]+'</h3><p>Moda</p></div> </div>');
+                // .toFixed(2)
+                $('#graphC' + graphDiv).append('<div class="container-rangos"> <div><div></div><h3>' + res[0][20]  + '</h3><p>Media</p></div> <div><div></div><h3>' + res[0][21] + '</h3><p>Mediana</p></div> <div><div></div><h3>'+res[0][22]+'</h3><p>Moda</p></div> </div>');
             }
 
         }
