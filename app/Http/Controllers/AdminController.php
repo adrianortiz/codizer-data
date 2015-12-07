@@ -57,11 +57,11 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        dd($user);
-        return view('admin/admin-edit');
+        return view('admin/admin-edit', compact('user'));
     }
 
     /**
@@ -71,9 +71,12 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\EditUserRequest $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->fill($request->all());
+        $user->save();
+        return redirect('admin');
     }
 
     /**

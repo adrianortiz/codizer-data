@@ -17,7 +17,7 @@ class DvarcharController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index(Request $request, $id)
     {
 
         $form = Form::findOrFail($id);
@@ -36,6 +36,7 @@ class DvarcharController extends Controller
             ->distinct()
             ->select('row_id')
             ->where('form_id', $id)
+            ->where('content', 'LIKE', "%" .trim($request->get('content')). "%")
             ->groupBy('row_id')
             ->paginate(40);
 

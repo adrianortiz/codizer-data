@@ -66,9 +66,15 @@ Route::group(['middleware' => 'auth'], function () {
     ]);
 
     Route::get('admin/{id}/editar', [
-        'uses'  => 'AdminController@edit',
-        'as'    => 'admin.edit'
+        'uses' => 'AdminController@edit',
+        'as' => 'admin.edit'
     ]);
+
+    Route::put('admin/{id}/update', [
+        'uses' => 'AdminController@update',
+        'as' => 'admin.update'
+    ]);
+
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 

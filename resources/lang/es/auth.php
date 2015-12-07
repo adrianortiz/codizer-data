@@ -20,12 +20,13 @@ return [
      * Incluidos por Adrian Ortiz
      */
 
-    'login_title'     => 'Login',
-    'login_button'    => 'Login',
-    'register_title'  => 'Register',
-    'register_button' => 'Register',
-    'remember' => 'Remember me',
-    'forgot_link' => 'Forgot your password?',
+    'login_title'     => 'Iniciar sesión',
+    'login_button'    => 'Iniciar sesión',
+    'register_title'  => 'Registrar',
+    'register_button' => 'Registrar',
+    'update_button' => 'Actualizar',
+    'remember' => 'No cerrar sesión',
+    'forgot_link' => '¿Olvidaste tu contraseña?',
     'errors_title' => 'Por favor revisa los siguientes errores',
 
 ];

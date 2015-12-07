@@ -47,4 +47,11 @@ class User extends Model implements AuthenticatableContract,
         // return \Carbon\Carbon::parse($this->created_at)->age;
         return $this->hasOne('App\Form');
     }
+
+    public function setPasswordAttribute($value)
+    {
+        if(!empty($value)){
+            $this->attributes['password'] = bcrypt($value);
+        }
+    }
 }

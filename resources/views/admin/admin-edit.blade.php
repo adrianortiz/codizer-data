@@ -11,7 +11,16 @@
     </div>
 
     <div class="container-inputs-list min-top">
-       <h1>AQUI MI FORM</h1>
+        @include('partials.errors')
+
+        {!! Form::model($user, ['route' => ['admin.update', $user], 'method' => 'PUT']) !!}
+        @include('partials.form')
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">
+                @lang('auth.update_button')
+            </button>
+        </div>
+        {!! Form::close() !!}
     </div>
 
 @endsection
