@@ -17,7 +17,6 @@
 
     @yield('msn-boton')
 
-
     <a href="http://codizer.com/" class="btn codizer">By Codizer - 2015</a>
 </div>
 

@@ -44,7 +44,7 @@
                     <li><a href="#" class="user-menu-top">Ayuda</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle user-menu-top" data-toggle="dropdown" role="button" aria-expanded="false">
-                            <span class="icon-button"><img src="/images/icon-user.svg"></span>
+                            <span class="icon-button"><img src="{{ asset('/images/icon-user.svg') }}"></span>
                                 {{ Auth::user()->name }}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -66,11 +66,11 @@
 <div class="admin-menu-left-list">
     <ul>
         <li><p>Administración</p></li>
-        <li><a href="{{ route('panel') }}"><div><span><img src="/images/icon-user.svg" class="icon-button"></span> Cuenta</div></a></li>
-        <li><a href="{{ url('/admin/colecciones') }}"><div><span><img src="/images/icon-complements.svg" class="icon-button"></span> Colecciones</div></a></li>
-        <li><a href="{{ route('admin.statistics.index') }}"><div><span><img src="/images/icon-estadistica.svg" class="icon-button"></span> Estadísticas</div></a></li>
+        <li><a href="{{ route('panel') }}"><div><span><img src="{{ asset('/images/icon-user.svg') }}" class="icon-button"></span> Cuenta</div></a></li>
+        <li><a href="{{ url('/admin/colecciones') }}"><div><span><img src="{{ asset('/images/icon-complements.svg') }}" class="icon-button"></span> Colecciones</div></a></li>
+        <li><a href="{{ route('admin.statistics.index') }}"><div><span><img src="{{ asset('/images/icon-estadistica.svg') }}" class="icon-button"></span> Estadísticas</div></a></li>
         <li><p>Datos</p></li>
-        <li><a href="#"><div><span><img src="/images/icon-codizer.svg" class="icon-button"></span> Acerca de...</div></a></li>
+        <li><a href="#"><div><span><img src="{{ asset('/images/icon-codizer.svg') }}" class="icon-button"></span> Acerca de...</div></a></li>
     </ul>
 </div>
 <div class="admin-contanier-global">

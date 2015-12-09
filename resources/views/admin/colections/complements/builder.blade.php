@@ -7,7 +7,7 @@
     <!-- REVISAR -->
     <div class="head-fixed">
         <div class="head-menu">
-            <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> COMPLEMENTS </h1>
+            <h1><span><img src="{{ asset('/images/icon-complements.svg') }}"></span> <span> > </span> COMPLEMENTS </h1>
             @include('admin.colections.complements.partials.menu')
         </div>
 

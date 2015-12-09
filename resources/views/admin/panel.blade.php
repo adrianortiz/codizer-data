@@ -6,7 +6,7 @@
 
     <div class="head-fixed">
         <div class="head-menu">
-            <h1><span><img src="/images/icon-user.svg"></span> <span> > </span> Hola {{ Auth::user()->name }} </h1>
+            <h1><span><img src="{{ asset('/images/icon-user.svg') }}"></span> <span> > </span> Hola {{ Auth::user()->name }} </h1>
         </div>
     </div>
 

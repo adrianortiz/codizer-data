@@ -7,7 +7,7 @@
         <!-- REVISAR -->
     <div class="head-fixed">
         <div class="head-menu">
-            <h1><span><img src="/images/icon-complements.svg"></span> <span> > </span> NUEVA COLECCIÓN </h1>
+            <h1><span><img src="{{ asset('/images/icon-complements.svg') }}"></span> <span> > </span> NUEVA COLECCIÓN </h1>
         </div>
     </div>
 
@@ -16,7 +16,7 @@
         <div class="container-form">
             <div class="container-form-titulo">
                 <div id="container-form-icon-collection" class="container-form-icon"></div>
-                <div><h3>Nueva collección</h3></div>
+                <div><h3>Nueva colección</h3></div>
             </div>
 
             @include('partials.errors')
