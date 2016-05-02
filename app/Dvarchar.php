@@ -5,6 +5,29 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Dvarchar
+ *
+ * @mixin \Eloquent
+ * @property integer $id
+ * @property string $dtitle
+ * @property string $content
+ * @property integer $form_id
+ * @property integer $input_id
+ * @property integer $row_id
+ * @property string $type_validation
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Dvarchar whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Dvarchar whereDtitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Dvarchar whereContent($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Dvarchar whereFormId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Dvarchar whereInputId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Dvarchar whereRowId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Dvarchar whereTypeValidation($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Dvarchar whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Dvarchar whereUpdatedAt($value)
+ */
 class Dvarchar extends Model
 {
     /**

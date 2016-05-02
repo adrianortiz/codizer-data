@@ -7,7 +7,7 @@
     <!-- REVISAR -->
     <div class="head-fixed">
         <div class="head-menu">
-            <h1><span><img src="{{ asset('/images/icon-complements.svg') }}"></span> <span> > </span> GESTIONAR DATOs: COLECCIÓN {{ $form->name  }}</h1>
+            <h1><span><img src="{{ asset('/images/icon-complements.svg') }}"></span> <span> > </span> Gestionar datos: Colección {{ $form->name  }}</h1>
             @include('admin.colections.complements.partials.menu')
             @include('admin.colections.partials.form-search')
         </div>
