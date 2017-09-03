@@ -68,7 +68,7 @@
   }
 }
 
-input, select, textarea {
+input:not([type=checkbox]), select, textarea {
   width: 235px !important;
   height: 36px !important;
   /* #F2F2F2 */

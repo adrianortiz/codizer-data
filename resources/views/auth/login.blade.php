@@ -37,7 +37,9 @@
 
             <div class="form-group">
                 <div class="checkbox">
-                        @lang('auth.remember') {!! Form::checkbox('remember') !!}
+                    <label>
+                        {!! Form::checkbox('remember') !!} @lang('auth.remember')
+                    </label>
                 </div>
             </div>
 
