@@ -40,11 +40,11 @@ Actualmente Codizer Data no esta terminado y posiblemente presente anomalias en 
 
 
 ## Imagenes
-![Codizer Data Login](https://github.com/adrianortiz/data/blob/master/public/media/git-hub-img/codizer-data-00.png)
+![Codizer Data Login](https://github.com/adrianortiz/data/blob/master/public/media/git-hub-img/codizer-data-00.jpg)
 
-![Codizer Data Collections](https://github.com/adrianortiz/data/blob/master/public/media/git-hub-img/codizer-data-01.png)
+![Codizer Data Collections](https://github.com/adrianortiz/data/blob/master/public/media/git-hub-img/codizer-data-01.jpg)
 
-![Codizer Data Collections](https://github.com/adrianortiz/data/blob/master/public/media/git-hub-img/codizer-data-02.png)
+![Codizer Data Collections](https://github.com/adrianortiz/data/blob/master/public/media/git-hub-img/codizer-data-02.jpg)
 
 
 ## Laravel PHP Framework
